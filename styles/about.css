@@ -1,0 +1,12 @@
+.contents_about{
+    margin: 40px 20%;
+}
+.content_about h1{
+    padding: 20px 10px;
+}
+.contents_about p{
+    padding-top: 20px;
+    font-size: 18px;
+    color: #444444;
+    line-height: 28px;
+}
