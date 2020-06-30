@@ -1,0 +1,27 @@
+{
+  "name": "foodfy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreTorquato/foodfy.git"
+  },
+  "keywords": [],
+  "author": "Andre Torquato",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreTorquato/foodfy/issues"
+  },
+  "homepage": "https://github.com/AndreTorquato/foodfy#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nunjucks": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

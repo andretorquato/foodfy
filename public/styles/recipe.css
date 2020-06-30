@@ -1,0 +1,74 @@
+p,
+li{
+    color: #777777;
+}
+.content_recipe{
+    max-width: 280px;
+    max-height: 940px;
+    margin: 20px auto auto;
+    display: grid;
+    justify-content: center;
+}
+.content_recipe .image_recipe img{
+    border-radius: 15px;
+}
+.content_recipe .info_content{
+    margin: auto;
+    line-height: 20px;
+}
+.content_recipe .info_content p.info_title{
+    color:#111;
+    font-size: 36px;
+    padding-top: 20px;
+    margin: auto;
+}
+.content_recipe .info_content p.sub_title{
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+}
+.rows{
+    max-width: 940px;
+    
+    display: grid;
+    
+    align-items: center;   
+    margin: 0 auto;
+}
+.row{
+    line-height: 28px;
+    padding:20px;
+    position: relative;
+}
+.row h1{
+    padding: 20px;
+}
+.row li{
+    padding-left:10px;
+    list-style: inside;
+}
+
+/* === DISPLAY === */
+.display{
+    opacity:1;
+    visibility:visible;
+}
+.buttons{
+    display: grid;
+    grid-template-columns: 50vh 0;
+    position: relative;
+    justify-content: left;
+}
+p.control{
+    max-width: 100px;
+    max-height: 40px;
+    margin: auto;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* === DISPLAY HIDE */
+.display.hide{
+    opacity:0;
+    visibility:hidden;
+}
