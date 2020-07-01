@@ -41,7 +41,8 @@ li{
     position: relative;
 }
 .row h1{
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .row li{
     padding-left:10px;
@@ -53,22 +54,24 @@ li{
     opacity:1;
     visibility:visible;
 }
-.buttons{
+.column{
     display: grid;
-    grid-template-columns: 50vh 0;
-    position: relative;
-    justify-content: left;
+    grid-template-columns: 50vh 10vh;
+    
+    
+    
+
 }
-p.control{
+p.button{
     max-width: 100px;
     max-height: 40px;
     margin: auto;
     border-radius: 12px;
     cursor: pointer;
+    
 }
 
 /* === DISPLAY HIDE */
 .display.hide{
-    opacity:0;
-    visibility:hidden;
+    display: none;
 }

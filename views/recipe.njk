@@ -22,9 +22,9 @@
         <main>
             <div class="rows">
             <div class="row">
-                <div class="buttons">
+                <div class="column">
                     <h1>Ingredientes</h1>
-                    <p class="control">MOSTRAR</p>
+                    <p class="button">ESCONDER</p>
                 </div>
                 
                 <div class="display">
@@ -36,9 +36,9 @@
                 </ul>
                 </div>
             <div class="row">
-                <div class="buttons">
+                <div class="column">
                     <h1>Modo de preparo</h1>
-                    <p class="control">MOSTRAR</p>
+                    <p class="button">ESCONDER</p>
                 </div>
                 
                 <div class="display">
@@ -49,14 +49,16 @@
                 </div>
             </div>
             <div class="row">
-                <div class="buttons">
+                <div class="column">
                 <h1>Informações adicionais</h1>
-                <p class="control">MOSTRAR</p>
+                <p class="button">ESCONDER</p>
                 </div>
                 <div class="display">
                 <p>{{item.information}}</p>
                 </div>
             </div>
             </div>
+           
         </main>
+         <script src="../scripts.js"></script>
     {% endblock content %}
