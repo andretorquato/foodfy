@@ -33,7 +33,7 @@ li{
     display: grid;
     
     align-items: center;   
-    margin: 0 auto;
+    margin: 0 auto 10% auto;
 }
 .row{
     line-height: 28px;

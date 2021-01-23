@@ -16,7 +16,14 @@ header{
     align-items: center;
     align-content: center;
 }
-
+.flex{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+}  
+.h-40{
+    max-height: 40px;
+}
 .show{
     display: flex;
     padding: 2% 30%;
@@ -58,11 +65,13 @@ header{
     margin-left: 1%;
 }
 .cards{
-    margin-top: 2%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10%;
-
+    
+    width:54%;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    
 }
 .card{
     width: 20vw;
@@ -74,8 +83,10 @@ header{
 }
 
 .card .image img{
-    max-width: 14vw;
-    max-height: 16vh;
+    flex:50%;
+    display: block;
+    width: 14vw;
+    object-fit: contain;
     border-radius:8px;
 
 }
@@ -115,6 +126,7 @@ header{
 }
 .show .info div img{
     width: 100%;
+    object-fit: contain;
     border-radius: 20px;
     margin: 2% 0;
     box-shadow: 3px 2px 5px 3px rgba(0,0,0,0.4);
@@ -138,7 +150,7 @@ header{
 
 /* EDIT */
 .edit{
-    
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     padding: 2% 30%;
@@ -156,6 +168,10 @@ header{
     justify-content: flex-end;
 }
 /* FIELDS */
+.column{
+    display: flex !important;
+    flex-direction: column !important;
+}
 .item{
     margin-top: 3%;
     width: 40vw;
@@ -171,6 +187,7 @@ header{
     border: 1px solid #DDDDDD;
     border-radius:6px;
     margin: 1% 0;
+    padding-left: 1%;
 }
 .item .add{
     font-weight: 700;

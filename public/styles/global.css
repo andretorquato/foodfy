@@ -9,20 +9,19 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 nav.menu{
-    width:100%;
-    height:60px;
-    margin: auto;
-    top: 35px;
-    position: relative;
+   width: 100%;
+   display: flex;
+   justify-content: flex-start;
+   align-items: baseline;
+   margin: 2% auto;
+
+}
+nav a:nth-child(1){
+    font-size: 28px; 
+    margin-left: 20%;
 }
 nav .title{
-    font-size: 28px;
-    left:20%;
-    position: absolute;
-}
-nav .option{
-    position: absolute;
-    left: 34%;
+    font-size: 28px; 
 }
 nav .option a{
     font-size: 20px;
@@ -35,9 +34,11 @@ nav a{
 }
 
 footer{
+    position: fixed;
+    bottom: 0;
     margin-top: 30px;
     width: 100%;
-    height: 62px;
+    height: 92px;
     background:#EEEEEE;
     bottom: 0;
  
@@ -49,4 +50,11 @@ footer p{
     color: #999999;
     text-align: center;
     
+}
+.links{
+    opacity: 0.8;
+}
+.active{
+    opacity: 1;
+    font-weight: bold;
 }

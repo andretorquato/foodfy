@@ -1,7 +1,10 @@
 {% extends 'admin/layout.njk' %};
 {% block content %}
 <div class="content">
-<h1>Gerenciar Receitas</h1>
+<div class="header flex">
+        <h1>Gerenciar Receitas</h1>
+        <a class="button h-40" href="admin/create">Criar Receita</a>
+    </div>
 <div class="cards">
     {% for recipe in recipes %}
     <div class="card">
@@ -12,7 +15,7 @@
             <div class="title">{{recipe.name}}</div>
             <div class="author"><p>por {{recipe.author}}</p></div>
             <div class="link">
-                <a href="/admin/1">Visualizar</a>
+                <a href="/admin/{{recipe.id}}">Visualizar</a>
             </div>
         </div>
     </div>
