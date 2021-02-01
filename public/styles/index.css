@@ -1,4 +1,9 @@
-
+.container {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .banner{
     width: 940px;
     height: 366px;

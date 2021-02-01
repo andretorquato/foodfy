@@ -7,7 +7,7 @@ const links = document.querySelectorAll('.links');
 for(let link of links){
     if(locale.includes(link.getAttribute('href')))
     link.classList.add('active');
-    console.log(locale);
+    
 }
 
 

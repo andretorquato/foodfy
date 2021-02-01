@@ -24,6 +24,31 @@ header{
 .h-40{
     max-height: 40px;
 }
+
+/* links */
+.links{
+    opacity: 0.7;
+}
+.links.active{
+    opacity: 1;
+}
+.links:hover{
+    filter: brightness(.6);
+    transition: 500ms;
+}
+.box-links{
+    display: inline-flex;
+    padding: 0 2%;
+}
+a.links {
+    color:#ffffff;
+    font-size: 1.2rem;
+    
+    text-decoration: none;
+    text-transform: uppercase;
+
+    padding: 0 4%;
+}
 .show{
     display: flex;
     padding: 2% 30%;
