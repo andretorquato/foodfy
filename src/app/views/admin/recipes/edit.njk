@@ -1,13 +1,13 @@
 {% extends 'admin/layout.njk' %}
 {% block content %}
-<form action="/admin/recipes?_method=PUT" method="post">
+<form action="/admin/recipes?_method=PUT" method="post" id="form-edit">
 <div class="edit">
     
     <div class="header">
         <h1>Editando receita</h1>
         <div class="buttons">
         <button type="button" class="button delete check">Deletar</button>   
-        <button type="submit"class="button check">Salvar Receita</button> 
+        <button type="submit" class="button check recipe">Salvar Receita</button> 
         </div>
         
         
