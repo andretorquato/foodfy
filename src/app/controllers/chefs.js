@@ -1,11 +1,16 @@
-const fs = require("fs");
-const data = require("../../../data.json");
+const { date } = require("../../libs/utils");
+const Chefs = require("../models/chefs");
+
 module.exports = {
   redirect(req, res) {
     return res.redirect("admin/chefs");
   },
   index(req, res) {
-    return res.render("admin/chefs/index", { chefs: data.chefs });
+    Chefs.allChefs(function(chefs) {
+      console.log(chefs);
+      return res.render("admin/chefs/index", { chefs });
+    })
+    
   },
   show(req, res) {
     const { id } = req.params;
@@ -25,6 +30,7 @@ module.exports = {
     return res.render("admin/chefs/create");
   },
   post(req, res) {
+    console.log(req.body);
     const keys = Object.keys(req.body);
     for (let key of keys) {
       if (req.body[key] == "") {
@@ -34,26 +40,9 @@ module.exports = {
       }
     }
 
-    let id = 1;
-    let lastChef = data.chefs.length;
-    console.log(lastChef);
-    if (lastChef > 0) {
-      lastChef = data.chefs.length;
-      id = lastChef + 1;
-    }
-
-    const chef = {
-      id: Number(id),
-      ...req.body,
-    };
-
-    data.chefs.push(chef);
-
-    fs.writeFile("data.json", JSON.stringify(data, null, 2), function (err) {
-      if (err) return res.send("error write file");
-
-      return res.redirect("admin");
-    });
+    Chefs.post(req.body, function(chef) {
+      return res.redirect(`chefs/${chef.id}`);
+    })
   },
   put(req, res) {
     const { id } = req.body;

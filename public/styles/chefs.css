@@ -1,0 +1,23 @@
+.cards.chef{
+    
+    display: flex !important;
+    flex-flow: row wrap;
+
+}
+
+.card.chef{
+    max-width: 100px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.card.chef img{
+    
+    max-width: 80px;
+    border-radius: 50% !important;
+}
+.card.chef.content-card{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 2% !important;
+}
