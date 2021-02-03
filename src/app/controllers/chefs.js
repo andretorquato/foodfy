@@ -7,7 +7,6 @@ module.exports = {
   },
   index(req, res) {
     Chefs.allChefs(function(chefs) {
-      console.log(chefs);
       return res.render("admin/chefs/index", { chefs });
     })
     
@@ -15,16 +14,21 @@ module.exports = {
   show(req, res) {
     const { id } = req.params;
 
-    const findChef = data.chefs.find((chef) => chef.id == id);
-    if (!findChef) return res.render("admin/chefs/create");
-
-    return res.render("admin/chefs/show", { chef: findChef });
+    Chefs.find(id, function(chef) {
+      
+      return res.render("admin/chefs/show", { chef });
+    })
+    
   },
   edit(req, res) {
     const { id } = req.params;
-    const findChef = data.chefs.find((chef) => chef.id == id);
-
-    res.render("admin/chefs/edit", { chef: findChef });
+    
+    Chefs.find(id, function(chef) {
+      
+      return res.render("admin/chefs/edit", { chef });
+    })
+    
+    
   },
   create(req, res) {
     return res.render("admin/chefs/create");

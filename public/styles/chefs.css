@@ -18,6 +18,6 @@
 .card.chef.content-card{
     display:flex;
     flex-direction: column;
-    justify-content: center;
-    margin-right: 2% !important;
+    justify-content: baseline;    
+    align-items: baseline!important;
 }
