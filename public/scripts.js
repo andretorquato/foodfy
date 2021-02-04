@@ -26,7 +26,7 @@ for (let row of rows) {
     }
   });
 }
-const pageEdit = document.querySelector("#addIngredient");
+const pageEdit = document.querySelector("#form-edit");
 if (pageEdit) {
   document
     .querySelector("#addIngredient")
@@ -36,9 +36,6 @@ if (pageEdit) {
   querySelector("#addPass").
   addEventListener("click", addPass);
 
-  document.
-  querySelector(".delete").
-  addEventListener("click", deleteRecipe);
 
   document.querySelector("#form-edit").
   addEventListener("submit", checkInputs);
@@ -69,6 +66,10 @@ function addPass() {
   steps.appendChild(newPass);
 }
 
+const deleteButton = document.querySelector("#button-delete");
+if(deleteButton){
+  deleteButton.addEventListener("click", deleteRecipe);
+}
 function deleteRecipe() {
   const formDelete = document.querySelector(".form-remove");
   formDelete.submit();

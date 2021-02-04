@@ -72,7 +72,7 @@ a.links {
     color: #777777;    
 }
 .logo {
-    margin-left: 30%;
+    margin-left: 20%;
     
 }
 .logo img{
@@ -80,10 +80,11 @@ a.links {
 }
 
 .content {
-    padding: 2% 2%;
+    padding: 2% 18%;
     display: flex;
-    flex-flow: column wrap;
-    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-evenly;
 }
 
 .content h1{

@@ -1,7 +1,23 @@
 {% extends 'users/layout.njk' %}
 {% block head %}
 <title>Chefs</title>
-<link rel="stylesheet" href="../../chefs.css">
+<link rel="stylesheet" href="../../../styles/chefs.css">
 {% endblock head %}
 {% block content %}
+<div class="cards chef index">
+    {% for chef in chefs %}
+    
+    <div class="card chef index">
+        <div class="image">
+            <img src="{{chef.avatar_url}}" alt="{{chef.name}}">
+        </div>
+        <div class="content-card">
+            <div class="title">{{chef.name}}</div>
+            <div class="qtd-recipes">
+                <p> 3 receitas</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock content %}

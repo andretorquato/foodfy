@@ -34,7 +34,7 @@ module.exports = {
     return res.render("admin/chefs/create");
   },
   post(req, res) {
-    console.log(req.body);
+    
     const keys = Object.keys(req.body);
     for (let key of keys) {
       if (req.body[key] == "") {
@@ -49,35 +49,26 @@ module.exports = {
     })
   },
   put(req, res) {
-    const { id } = req.body;
-    let index = 0;
-    const findChef = data.chefs.find((chef, idChef) => {
-      if (chef.id == id) index = idChef;
-      return true;
-    });
-
-    if (!findChef) return res.send("error not found");
-    data.chefs[index] = {
-      ...req.body,
-    };
-    fs.writeFile("data.json", JSON.stringify(data, null, 2), function (err) {
-      if (err) return res.send("error write file");
-
-      res.redirect("/admin");
-    });
+    
+    const keys = Object.keys(req.body);
+    for (let key of keys) {
+      if (req.body[key] == "") {
+        res.redirect("admin/chefs/create");
+        alert("preencha todos os campos");
+        return;
+      }
+    }
+    
+    Chefs.put(req.body, function() {
+      return res.redirect(`/admin/chefs/${req.body.id[0]}`);
+    })
+    
   },
   delete(req, res) {
     const { id } = req.body;
-    const findChef = data.chefs.filter((chef) => chef.id != id);
-
-    if (!findChef) return res.send("not found");
-
-    data.chefs = findChef;
-
-    fs.writeFile("data.json", JSON.stringify(data, null, 2), function (err) {
-      if (err) return res.send("error write file");
-
-      return res.redirect("/admin");
-    });
+    Chefs.delete(id, function() {
+      return res.redirect("/admin/chefs");
+    })
+    
   },
 };

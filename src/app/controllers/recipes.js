@@ -1,4 +1,6 @@
 const data = require("../../../data.json");
+const Chefs = require("../models/chefs");
+
 module.exports = {
   index(req, res) {
     res.render("users/index", { items: data.recipes });
@@ -18,6 +20,9 @@ module.exports = {
     return res.render("users/about");
   },
   chefs(req, res) {
-    res.render("users/chefs");
+    Chefs.allChefs(function(chefs) {
+      return res.render("users/chefs", { chefs });
+    })
+    
   },
 };

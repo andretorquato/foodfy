@@ -6,7 +6,7 @@
     <div class="header">
         <h1>Editando dados do chef</h1>
         <div class="buttons">
-        <button type="button" class="button delete check">Deletar</button>   
+        <button type="button"  id="button-delete" class="button delete check">Deletar</button>   
         <button type="submit"class="button check">Salvar Alterações</button> 
         </div>
         
@@ -15,11 +15,11 @@
     <div class="form"> 
         {% include 'admin/chefs/fields.njk'%}
     </div>
-    <input type="hidden" name="id" value="{{recipe.id}}">
+    <input type="hidden" name="id" value="{{chef.id}}">
 </div>
 </form>
         <form action="/admin/chefs?_method=DELETE" method="post" class="form-remove" style="display:none;">
-        <input type="hidden" name="id" value="{{recipe.id}}">
+        <input type="hidden" name="id" value="{{chef.id}}">
         <button type="submit" class="button delete check">Deletar</button>   
         </form>
 {% endblock content %}

@@ -1,5 +1,8 @@
 {% extends 'admin/layout.njk' %}
-
+{% block header %}
+<title>{{chef.name}}</title>
+<link rel="stylesheet" href="../../../styles/chefs.css">
+{% endblock header %}
 {% block content %}
 <div class="show">
     <div class="header">
@@ -7,7 +10,7 @@
         <a class="button" href="{{chef.id}}/edit">Editar Chef</a>
     </div>
 
-    <div class="info">
+    <div class="info chef">
         <div>
             <img src="{{chef.avatar_url}}" alt="{{chef.name}}">
             <h1>{{chef.name}}</h1>
