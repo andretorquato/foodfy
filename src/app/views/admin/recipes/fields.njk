@@ -1,23 +1,23 @@
 <div class="item">
     <div class="title">Imagem da receita</div>
-    <input type="text" name="recipe_image" value="{{recipe.recipe_image}}">
+    <input type="text" name="image" value="{{recipe.image}}">
 </div>
 <div class="item">
     <div class="title">Nome da receita</div>
-    <input type="text" name="name" value="{{recipe.name}}">
+    <input type="text" name="title" value="{{recipe.title}}">
 </div>
 <div class="item">
     <div class="title">Autor receita</div>
-    <input type="text" name="author" value="{{recipe.author}}">
+    <input type="text" name="chef_id" value="{{recipe.chef_id}}">
 </div>
 <div class="item">
     <div class="title">Ingredientes</div>
     <div id="ingredient" class="column">
-    {% for ingredient in recipe.ingredient %}    
-        <input  class="ingredient" type="text" name="ingredient" value="{{ingredient}}">
+    {% for ingredient in recipe.ingredients %}    
+        <input  class="ingredient" type="text" name="ingredients" value="{{ingredients}}">
     {% endfor %}
     {% if recipe.ingredient == null %}
-        <input  class="ingredient" type="text" name="ingredient" value="{{ingredient}}">
+        <input  class="ingredient" type="text" name="ingredients" value="{{ingredients}}">
     {% endif %}
     </div>
     <p id="addIngredient" class="add">Adicionar novo ingrediente</p>
@@ -25,11 +25,11 @@
 <div class="item">
     <div class="title">Modo de prepararo</div>
     <div class="steps column">
-    {% for pass in recipe.pass %}
-    <input  class="pass" type="text" name="pass" value="{{pass}}">
+    {% for pass in recipe.preparations %}
+    <input  class="pass" type="text" name="preparations" value="{{preparations}}">
     {% endfor %}
-    {% if recipe.pass  == null %}
-    <input  class="pass" type="text" name="pass" value="{{pass}}">
+    {% if recipe.preparations  == null %}
+    <input  class="pass" type="text" name="preparations" value="{{preparations}}">
     {% endif %}
     </div>
     <p id="addPass" class="add">Adicionar novo passo</p>
@@ -37,5 +37,5 @@
 
 <div class="item">
     <div class="title">Informações adicionais</div>
-    <textarea name="additional" cols="30" rows="10" class="big input">{{recipe.additional}}</textarea>
+    <textarea name="information" cols="30" rows="10" class="big input">{{recipe.information}}</textarea>
 </div>

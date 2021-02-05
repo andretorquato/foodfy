@@ -1,26 +1,26 @@
 const express = require('express');
 
+const users = require('./src/app/controllers/users');
 const recipes = require('./src/app/controllers/recipes');
-const admin = require('./src/app/controllers/admin');
 const chefs = require('./src/app/controllers/chefs');
 
 const routes = express.Router();
 
-routes.get('/', recipes.index);
-routes.get('/index', recipes.index);
-routes.get('/recipes', recipes.recipes);
-routes.get('/recipes/:index', recipes.recipesToItem);
-routes.get('/about', recipes.about);
-routes.get('/chefs', recipes.chefs);
+routes.get('/', users.redirect);
+routes.get('/index', users.index);
+routes.get('/recipes', users.recipes);
+routes.get('/recipes/:index', users.recipesToItem);
+routes.get('/about', users.about);
+routes.get('/chefs', users.chefs);
 
-routes.get('/admin', admin.redirect);
-routes.get('/admin/recipes', admin.index);
-routes.get('/admin/recipes/create', admin.create);
-routes.get('/admin/recipes/:id', admin.show);
-routes.get('/admin/recipes/:id/edit', admin.edit);
-routes.post('/admin/recipes', admin.post);
-routes.put('/admin/recipes', admin.put);
-routes.delete('/admin/recipes', admin.delete);
+routes.get('/admin', recipes.redirect);
+routes.get('/admin/recipes', recipes.index);
+routes.get('/admin/recipes/create', recipes.create);
+routes.get('/admin/recipes/:id', recipes.show);
+routes.get('/admin/recipes/:id/edit', recipes.edit);
+routes.post('/admin/recipes', recipes.post);
+routes.put('/admin/recipes', recipes.put);
+routes.delete('/admin/recipes', recipes.delete);
 
 routes.get('/admin/chefs', chefs.index);
 routes.get('/admin/chefs/create', chefs.create);

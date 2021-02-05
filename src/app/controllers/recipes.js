@@ -1,28 +1,76 @@
+const fs = require("fs");
 const data = require("../../../data.json");
-const Chefs = require("../models/chefs");
-
+const Recipes = require("../models/recipes");
 module.exports = {
+  redirect(req, res) {
+    return res.redirect("admin/recipes");
+  },
   index(req, res) {
-    res.render("users/index", { items: data.recipes });
+    return res.render("admin/recipes/index", { recipes: data.recipes });
   },
-  recipes(req, res) {
-    res.render("users/recipes", { items: data.recipes });
-  },
-  recipesToItem(req, res) {
-    const { index } = req.params;
+  show(req, res) {
+    const { id } = req.params;
 
-    findRecipe = data.recipes.find((recipe) => recipe.id == index);
-    if (!findRecipe) res.send(404);
+    const findRecipe = data.recipes.find((recipe) => recipe.id == id);
+    if (!findRecipe) return res.render("admin/recipes/create");
 
-    res.render("users/recipe", { item: findRecipe });
+    return res.render("admin/recipes/show", { recipe: findRecipe });
   },
-  about(req, res) {
-    return res.render("users/about");
+  edit(req, res) {
+    const { id } = req.params;
+    const findRecipe = data.recipes.find((recipe) => recipe.id == id);
+
+    res.render("admin/recipes/edit", { recipe: findRecipe });
   },
-  chefs(req, res) {
-    Chefs.allChefs(function(chefs) {
-      return res.render("users/chefs", { chefs });
-    })
+  create(req, res) {
+    return res.render("admin/recipes/create");
+  },
+  post(req, res) {
+    const keys = Object.keys(req.body);
+    for (let key of keys) {
+      if (req.body[key] == "") {
+        res.redirect("admin/recipes/create");
+        alert("preencha todos os campos");
+        return;
+      }
+    }
     
+    
+
+
+
+    
+  },
+  put(req, res) {
+    const { id } = req.body;
+    let index = 0;
+    const findRecipe = data.recipes.find((recipe, idRecipe) => {
+      if (recipe.id == id) index = idRecipe;
+      return true;
+    });
+
+    if (!findRecipe) return res.send("error not found");
+    data.recipes[index] = {
+      ...req.body,
+    };
+    fs.writeFile("data.json", JSON.stringify(data, null, 2), function (err) {
+      if (err) return res.send("error write file");
+
+      res.redirect("/admin");
+    });
+  },
+  delete(req, res) {
+    const { id } = req.body;
+    const findRecipe = data.recipes.filter((recipe) => recipe.id != id);
+
+    if (!findRecipe) return res.send("not found");
+
+    data.recipes = findRecipe;
+
+    fs.writeFile("data.json", JSON.stringify(data, null, 2), function (err) {
+      if (err) return res.send("error write file");
+
+      return res.redirect("/admin");
+    });
   },
 };
