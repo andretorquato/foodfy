@@ -14,19 +14,29 @@ module.exports = {
       });
       
     })
-    
-    
   },
   recipes(req, res) {
-    res.render("users/recipes", { items: data.recipes });
+    const { filter } = req.query;
+    if( filter ){
+      Recipes.findBy(filter, function(recipes) {
+        return res.render("users/recipes", { recipes, filter });
+      })
+
+    }else{
+      Recipes.allChefs(function(recipes){
+        return res.render("users/recipes", { recipes });  
+    });
+    
+    }
+    
+    
   },
   recipesToItem(req, res) {
-    const { index } = req.params;
-
-    findRecipe = data.recipes.find((recipe) => recipe.id == index);
-    if (!findRecipe) res.send(404);
-
-    res.render("users/recipe", { item: findRecipe });
+      const { index } = req.params;
+      Recipes.find(index, function(recipe){
+          return res.render("users/recipe", { item: recipe });
+      })
+    
   },
   about(req, res) {
     return res.render("users/about");

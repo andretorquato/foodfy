@@ -6,10 +6,7 @@ module.exports = {
   },
   index(req, res) {
     Recipes.allChefs(function(recipes){
-      Recipes.chefSelect(function(options){
-        return res.render("admin/recipes/index", { recipes, options });
-      });
-      
+        return res.render("admin/recipes/index", { recipes });  
     })
     
   },

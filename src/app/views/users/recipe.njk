@@ -10,11 +10,11 @@
         <header>
                  <div class="content_recipe">
                         <div class="image_recipe">
-                            <img src="{{item.recipe_image}}" alt="{{item.name}}">
+                            <img src="{{item.image}}" alt="{{item.title}}">
                         </div>
                         <div class="info_content">
-                            <p class="info_title">{{item.name}}</p>
-                            <p class="sub_title">{{item.author}}</p>
+                            <p class="info_title">{{item.title}}</p>                                  
+                            <p class="sub_title">{{item.chef_create}}</p>
                         </div>
                     </div>
 
@@ -29,7 +29,7 @@
                 
                 <div class="display">
                 <ul>
-                    {% for ingredient in item.ingredient%}
+                    {% for ingredient in item.ingredients%}
                          <li>{{ingredient}}</li>
                     {% endfor %}
                    
@@ -43,7 +43,7 @@
                 
                 <div class="display">
 
-                {% for preparation in item.pass %}
+                {% for preparation in item.preparations %}
                 <p>{{preparation}}<br></p>
                 {% endfor %}
                 </div>
@@ -54,7 +54,7 @@
                 <p class="button">ESCONDER</p>
                 </div>
                 <div class="display">
-                <p>{{item.additional}}</p>
+                <p>{{item.information}}</p>
                 </div>
             </div>
             </div>
