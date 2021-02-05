@@ -3,20 +3,25 @@
 {% block content %}
 <div class="show">
     <div class="header">
-        <h1>Receita: {{recipe.name}}</h1>
+        <h1>Receita: {{recipe.title}}</h1>
         <a class="button" href="{{recipe.id}}/edit">Editar Receita</a>
     </div>
 
     <div class="info">
         <div>
-            <img src="{{recipe.recipe_image}}" alt="{{recipe.name}}">
-            <h1>{{recipe.name}}</h1>
-            <p class="author">por {{recipe.author}}</p>
+            <img src="{{recipe.image}}" alt="{{recipe.title}}">
+            <h1>{{recipe.title}}</h1>
+            {% for chef in chefs %}
+            {% if recipe.chef_id == chef.id %}
+            <p class="author">por {{chef.name}}</p>
+            {% endif %}                
+            {% endfor %}
+            
         </div>
         <div class="recipe-info">
             <h2>Ingredientes</h2>
             <ul>
-                {% for ingredient in recipe.ingredient %}
+                {% for ingredient in recipe.ingredients %}
                 <li>- {{ingredient}}</li>
                 {% endfor %}
                 
@@ -25,7 +30,7 @@
         <div class="recipe-info">
             <h2>Modo de preparo</h2>
             <ul>
-               {% for pass in recipe.pass %}
+               {% for pass in recipe.preparations %}
                <li>
                 {{pass}}
                 </li>
@@ -36,7 +41,7 @@
         </div>
         <div class="recipe-info">
             <h2>Informações adicionais</h2>
-            <p>{{recipe.additional}}</p>
+            <p>{{recipe.information}}</p>
         </div>
     </div>
 

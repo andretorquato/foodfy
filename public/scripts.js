@@ -26,7 +26,7 @@ for (let row of rows) {
     }
   });
 }
-const pageEdit = document.querySelector("#form-edit");
+const pageEdit = document.querySelector("#addIngredient");
 if (pageEdit) {
   document
     .querySelector("#addIngredient")

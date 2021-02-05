@@ -1,12 +1,21 @@
 const data = require("../../../data.json");
 const Chefs = require("../models/chefs");
+const Recipes = require("../models/recipes");
 
 module.exports = {
   redirect(req, res) {
+    
     return res.redirect("/index");
   },
   index(req, res) {
-    res.render("users/index", { items: data.recipes });
+    Recipes.allChefs(function(recipes){
+      Recipes.chefSelect(function(options){
+        return res.render("users/index", { recipes, options });
+      });
+      
+    })
+    
+    
   },
   recipes(req, res) {
     res.render("users/recipes", { items: data.recipes });

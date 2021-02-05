@@ -8,15 +8,26 @@
 </div>
 <div class="item">
     <div class="title">Autor receita</div>
-    <input type="text" name="chef_id" value="{{recipe.chef_id}}">
+        <select name="chef_id">
+            {% for option in options %}
+            <option 
+                value="{{option.id}}" 
+                {% if option.id == recipe.chef_id %}
+                selected
+                {% endif %}
+            >
+            {{option.name}}
+            </option>
+            {% endfor %}
+            </select>
 </div>
 <div class="item">
     <div class="title">Ingredientes</div>
     <div id="ingredient" class="column">
-    {% for ingredient in recipe.ingredients %}    
+    {% for ingredients in recipe.ingredients %}    
         <input  class="ingredient" type="text" name="ingredients" value="{{ingredients}}">
     {% endfor %}
-    {% if recipe.ingredient == null %}
+    {% if recipe.ingredients.length == undefined %}
         <input  class="ingredient" type="text" name="ingredients" value="{{ingredients}}">
     {% endif %}
     </div>
@@ -26,9 +37,9 @@
     <div class="title">Modo de prepararo</div>
     <div class="steps column">
     {% for pass in recipe.preparations %}
-    <input  class="pass" type="text" name="preparations" value="{{preparations}}">
+    <input  class="pass" type="text" name="preparations" value="{{pass}}">
     {% endfor %}
-    {% if recipe.preparations  == null %}
+    {% if recipe.preparations  == undefined %}
     <input  class="pass" type="text" name="preparations" value="{{preparations}}">
     {% endif %}
     </div>

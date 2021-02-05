@@ -27,15 +27,20 @@
                     <strong>Mais acessadas</strong>
                 </h1>
                 <div class="contents">
-                    {% for item in items %}
+                    {% for item in recipes %}
                     
                     <div class="content_recipe" id ="{{item.id}}">
                         <div class="image_recipe">
-                            <img src="{{item.recipe_image}}" alt="{{item.name}}">
+                            <img src="{{item.image}}" alt="{{item.title}}">
                         </div>
                         <div class="info_content">
-                            <p class="info_title">{{item.name}}</p>
-                            <p class="sub_title">{{item.author}}</p>
+                            <p class="info_title">{{item.title}}</p>
+                            {% for chef in options %}
+                            {% if chef.id == item.chef_id %}
+                            <p class="sub_title">{{chef.name}}</p>
+                            {% endif %}
+                            {% endfor %}
+                            
                         </div>
                     </div>
 

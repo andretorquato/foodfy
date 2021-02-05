@@ -9,11 +9,16 @@
     {% for recipe in recipes %}
     <div class="card">
         <div class="image">
-            <img src="{{recipe.recipe_image}}" alt="{{recipe.name}}">
+            <img src="{{recipe.image}}" alt="{{recipe.title}}">
         </div>
         <div class="content-card">
-            <div class="title">{{recipe.name}}</div>
-            <div class="author"><p>por {{recipe.author}}</p></div>
+            <div class="title">{{recipe.title}}</div>
+              {% for chef in options %}
+            {% if recipe.chef_id == chef.id %}
+            <div class="author"><p>por {{chef.name}}</p></div>
+            {% endif %}                
+            {% endfor %}
+            
             <div class="link">
                 <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
             </div>
