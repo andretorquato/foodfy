@@ -1,52 +1,50 @@
-{% extends 'users/layout.njk' %}
-        
-        {% block head %}
-        <title>Receitas</title>    
-        <link rel="stylesheet" href="../styles/recipes.css">
-        {% endblock head %}
-    
-    
-        {% block content %}
-        <main>
-            <section>
-                {% if filter != undefined %}
-                    <h1>Buscando por:{{filter}}</h1>
-                    {% endif %}
-                <div class="contents_recipes">
-                    
-                    {% for item in recipes %}
-                    
-                    <div class="content_recipe" id="{{item.id}}">
-                        <div class="image_recipe">
-                            <img src="{{item.image}}" alt="{{item.title}}">
-                        </div>
-                        <div class="info_content">
-                            <p class="info_title">{{item.title}}</p>                            
-                            <p class="sub_title">{{item.chef_create}}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-                </div>
+{% extends 'users/layout.njk' %} {% block head %}
+<title>Receitas</title>
+<link rel="stylesheet" href="../styles/recipes.css" />
+{% endblock head %} {% block content %}
+<main>
+  <section>
+    {% if filter != undefined %}
+    <h1>Buscando por:{{ filter }}</h1>
+    {% endif %}
+    <div class="contents_recipes">
+      {% for item in recipes %}
 
-            </section>
-        </main>
+      <div class="content_recipe" id="{{ item.id }}">
+        <div class="image_recipe">
+          <img src="{{ item.image }}" alt="{{ item.title }}" />
+        </div>
+        <div class="info_content">
+          <p class="info_title">{{ item.title }}</p>
+          <p class="sub_title">{{ item.chef_create }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="paginate"
+        data-page="{{ pagination.page }}"
+        data-total="{{ pagination.total }}"
+        data-filter="{{ filter }}"
+    >
+    </div>
+  </section>
+</main>
 
-        {# <div class="modalRecipes hide">
-            <div class="modal">
-               <div class="subModal">
-                <div class="image_recipe">
-                    <img src="./assets/asinhas.png" alt="">
-                </div>
-                <div class="info_recipe">
-                    <h1>Asinhas de frango ao barbecue</h1>
-                    <p>por Vania Steroski</p>
-                </div>
-                </div>
-                   <div class="close_modal">
-                    Fechar Modal
-                </div>
-            </div>
-         
-        </div> #}
-        <script src="scripts.js"></script>
-    {% endblock content %}
+{#
+<div class="modalRecipes hide">
+  <div class="modal">
+    <div class="subModal">
+      <div class="image_recipe">
+        <img src="./assets/asinhas.png" alt="" />
+      </div>
+      <div class="info_recipe">
+        <h1>Asinhas de frango ao barbecue</h1>
+        <p>por Vania Steroski</p>
+      </div>
+    </div>
+    <div class="close_modal">Fechar Modal</div>
+  </div>
+</div>
+#}
+<script src="scripts.js"></script>
+{% endblock content %}

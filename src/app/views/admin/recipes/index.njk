@@ -6,9 +6,6 @@
         <a class="button h-40" href="recipes/create">Criar Receita</a>
     </div>
 <div class="cards">
-    {% if filter != undefined %}
-    <h1>Buscando por:{{filter}}</h1>
-    {% endif %}
     
     {% for recipe in recipes %}
     <div class="card">

@@ -1,4 +1,3 @@
-const data = require("../../../data.json");
 const Chefs = require("../models/chefs");
 const Recipes = require("../models/recipes");
 
@@ -16,20 +15,25 @@ module.exports = {
     })
   },
   recipes(req, res) {
-    const { filter } = req.query;
-    if( filter ){
-      Recipes.findBy(filter, function(recipes) {
-        return res.render("users/recipes", { recipes, filter });
-      })
+    let { filter, page, limit } = req.query;
 
-    }else{
-      Recipes.allChefs(function(recipes){
-        return res.render("users/recipes", { recipes });  
-    });
-    
+    page = page || 1;
+    limit = limit || 1;
+    let offset = limit * ( page - 1);
+    const params = {
+      page,
+      limit,
+      offset,
+      callback(recipes){
+        const pagination = {
+          total: Math.ceil(recipes[0].total / limit ),
+          page,
+          
+        }
+        return res.render("users/recipes", { recipes, pagination, filter });
+       }
     }
-    
-    
+    Recipes.paginate(params);
   },
   recipesToItem(req, res) {
       const { index } = req.params;

@@ -113,4 +113,33 @@ module.exports = {
       return callback(results.rows);
     });
   },
+  paginate(params) {
+    let { filter, limit, offset, callback } = params;
+
+    let query = "";
+    filterQuery = "";
+    totalQuery = `(SELECT count(*) FROM recipes) AS total`;
+
+    if( filter ){
+      filterQuery = ` WHERE recipes.name ILIKE '%filter%'`
+
+      totalQuery = `
+      (SELECT count(*) FROM recipes
+      ${filterQuery}
+      ) AS total`
+    }
+
+    query = `
+      SELECT recipes.*, ${totalQuery}, chefs.name AS chef_create
+      FROM recipes
+      LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+      ${filterQuery}
+      LIMIT $1 OFFSET $2
+    `
+    db.query(query,[limit, offset], function(err, results) {
+      if (err) throw `Database error ${err}`;
+
+      callback(results.rows);
+    })
+  }
 };

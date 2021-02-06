@@ -32,14 +32,9 @@ if (pageEdit) {
     .querySelector("#addIngredient")
     .addEventListener("click", addIngredient);
 
-  document.
-  querySelector("#addPass").
-  addEventListener("click", addPass);
+  document.querySelector("#addPass").addEventListener("click", addPass);
 
-
-  document.querySelector("#form-edit").
-  addEventListener("submit", checkInputs);
-  
+  document.querySelector("#form-edit").addEventListener("submit", checkInputs);
 }
 function addIngredient() {
   const ingredients = document.querySelector("#ingredient");
@@ -67,7 +62,7 @@ function addPass() {
 }
 
 const deleteButton = document.querySelector("#button-delete");
-if(deleteButton){
+if (deleteButton) {
   deleteButton.addEventListener("click", deleteRecipe);
 }
 function deleteRecipe() {
@@ -90,4 +85,57 @@ function checkInputs() {
   }
 }
 
+// Algoritmo de paginação
 
+function pagination(selectedPage, totalPages) {
+  let pages = [],
+    oldPage;
+
+  for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+    const firstAndLastPage = currentPage == 1 || currentPage == totalPages;
+    const pagesAfterSelectedPage = currentPage <= selectedPage + 2;
+    const pagesBeforeSelectedPage = currentPage >= selectedPage - 2;
+
+    if (
+      firstAndLastPage ||
+      (pagesBeforeSelectedPage && pagesAfterSelectedPage)
+    ) {
+      if (oldPage && currentPage - oldPage > 2) {
+        pages.push("...");
+      }
+      if (oldPage && currentPage - oldPage == 2) {
+        pages.push(oldPage + 1);
+      }
+
+      pages.push(currentPage);
+
+      oldPage = currentPage;
+    }
+  }
+  return pages;
+}
+function createPaginate(paginate) {
+  const filter = paginate.dataset.filter;
+  const page = +paginate.dataset.page;
+  const total = +paginate.dataset.total;
+  const pages = pagination(page, total);
+  let elements = "";
+
+  for (let page of pages) {
+    if (String(page).includes("...")) {
+      elements += `<span>${page}</span>`;
+    } else {
+      if (filter) {
+        elements += `<a href="?page=${page}&filter=${filter}">${page}</a>`;
+      } else {
+        elements += `<a href="?page=${page}">${page}</a>`;
+      }
+    }
+  }
+  paginate.innerHTML = elements;
+}
+const paginate = document.querySelector(".paginate");
+
+if (paginate) {
+  createPaginate(paginate);
+}

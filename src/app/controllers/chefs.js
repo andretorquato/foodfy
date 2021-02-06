@@ -1,4 +1,3 @@
-const { date } = require("../../libs/utils");
 const Chefs = require("../models/chefs");
 
 module.exports = {
@@ -15,9 +14,7 @@ module.exports = {
     const { id } = req.params;
 
     Chefs.find(id, function(chef) {
-      console.log(chef);   
       Chefs.myRecipes(id, function(recipes) {
-        console.log(recipes);
         return res.render("admin/chefs/show", { chef, recipes });
       })
       
