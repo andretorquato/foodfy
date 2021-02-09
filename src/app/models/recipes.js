@@ -121,7 +121,7 @@ module.exports = {
     totalQuery = `(SELECT count(*) FROM recipes) AS total`;
 
     if( filter ){
-      filterQuery = ` WHERE recipes.name ILIKE '%filter%'`
+      filterQuery = ` WHERE recipes.title ILIKE '%${filter}%'`
 
       totalQuery = `
       (SELECT count(*) FROM recipes

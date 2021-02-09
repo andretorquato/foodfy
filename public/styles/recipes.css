@@ -1,22 +1,28 @@
-main{
-    margin-top: 30px;
-}
+
 .contents_recipes{
+    width:60%;
+    height:57vh;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 20px;
-    margin: 0 30vh;
+    gap: 26px 20px;
+    margin: 2% auto;
 }
 .content_recipe{
     width: 300px;
     height: 200px;
     cursor: pointer;
 }
+section .search-name{
+    margin-left: 20%;
+}
 .content_recipe .image_recipe img{
    border-radius:15px;
+   max-width: 300px;
+   max-height: 180px;
    width: 100%;
    height: 100%;
+   
+   object-fit: cover;
 }
 .modal .info_recipe p,
 .info_content .sub_title{

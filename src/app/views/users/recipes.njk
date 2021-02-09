@@ -5,7 +5,7 @@
 <main>
   <section>
     {% if filter != undefined %}
-    <h1>Buscando por:{{ filter }}</h1>
+    <h1 class="search-name">Buscando por: "{{ filter }}"</h1>
     {% endif %}
     <div class="contents_recipes">
       {% for item in recipes %}

@@ -18,12 +18,13 @@ module.exports = {
     let { filter, page, limit } = req.query;
 
     page = page || 1;
-    limit = limit || 1;
+    limit = limit || 3;
     let offset = limit * ( page - 1);
     const params = {
       page,
       limit,
       offset,
+      filter,
       callback(recipes){
         const pagination = {
           total: Math.ceil(recipes[0].total / limit ),
