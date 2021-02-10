@@ -136,10 +136,7 @@ module.exports = {
       ${filterQuery}
       LIMIT $1 OFFSET $2
     `
-    db.query(query,[limit, offset], function(err, results) {
-      if (err) throw `Database error ${err}`;
-
-      callback(results.rows);
-    })
+    
+    return db.query(query,[limit, offset]);
   }
 };

@@ -25,7 +25,7 @@ header{
     max-height: 40px;
 }
 
-/* links */
+/* links and index recipes */
 .links{
     opacity: 0.7;
 }
@@ -91,29 +91,30 @@ a.links {
     margin-left: 1%;
 }
 .cards{
-    
-    width:54%;
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-    
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width:800px;
+    width: 100%;
+    margin: 0 10% 0 5%;
 }
 .card{
+    
     width: 20vw;
-    height: 10vh;
+    max-height: 80px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 176px 1fr;
     gap: 2%;
     margin:4%;
 }
 
 .card .image img{
-    flex:50%;
-    display: block;
-    width: 14vw;
-    object-fit: contain;
-    border-radius:8px;
+    max-width: 172px;
+    max-height:80px;
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    border-radius:8.57px;
 
 }
 
@@ -225,4 +226,27 @@ a.links {
     border-radius:6px;
     margin: 1% 0;
     border: 1px solid #DDDDDD;
+}
+
+/* PAGINATE  */
+
+.paginate{
+    width:200px;
+    margin: auto;
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1s 200ms;
+    box-sizing: border-box;
+}
+.paginate a{
+    font-size: 1.4rem;
+    text-decoration: none;
+    color:#6558C3;
+    padding: 1%;
+}
+
+.paginate a:hover{
+    border-bottom: 2px solid rgba(168, 51, 197, 0.247);
+    
 }

@@ -23,5 +23,11 @@
     </div>
     {% endfor %}
 </div>
+ <div class="paginate"
+        data-page="{{ pagination.page }}"
+        data-total="{{ pagination.total }}"
+        data-filter="{{ filter }}"
+    >
+    </div>
 </div>
 {% endblock content %}

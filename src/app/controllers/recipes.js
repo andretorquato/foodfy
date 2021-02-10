@@ -4,9 +4,34 @@ module.exports = {
   redirect(req, res) {
     return res.redirect("admin/recipes");
   },
-  index(req, res) {
+  async index(req, res) {
+    let { filter, page, limit } = req.query;
+
+    page = page || 1;
+    limit = limit || 3;
+    let offset = limit * ( page - 1);
+    const params = {
+      page,
+      limit,
+      offset,
+      filter,
+    }
+    try {
+    let recipes = await Recipes.paginate(params);
+    recipes = recipes.rows;
+    const pagination = {
+      total: Math.ceil(recipes[0].total / limit ),
+      page,
+      
+    }
+    return res.render("admin/recipes/index", { recipes, pagination, filter });  
+    } catch (error) {
+      console.log(error);
+    }
+   
+    
     Recipes.allChefs(function(recipes){
-        return res.render("admin/recipes/index", { recipes });  
+   
     })
     
   },

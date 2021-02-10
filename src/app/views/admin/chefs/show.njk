@@ -1,40 +1,41 @@
-{% extends 'admin/layout.njk' %}
+{% extends 'admin/layout.njk' %} 
 {% block header %}
-<title>{{chef.name}}</title>
-<link rel="stylesheet" href="../../../styles/chefs.css">
-{% endblock header %}
-{% block content %}
+<title>{{ chef.name }}</title>
+<link rel="stylesheet" href="../../../styles/chefs.css" />
+{% endblock header %} {% block content %}
 <div class="show">
-    <div class="header">
-        <h1>Chef: {{chef.name}}</h1>
-        <a class="button" href="{{chef.id}}/edit">Editar Chef</a>
-    </div>
+  <div class="header">
+    <h1>Chef: {{ chef.name }}</h1>
+    <a class="button" href="{{ chef.id }}/edit">Editar Chef</a>
+  </div>
 
-    <div class="info chef">
-        <div>
-            <img src="{{chef.avatar_url}}" alt="{{chef.name}}">
-            <h1>{{chef.name}}</h1>
-            <p class="author">{{chef.qtd_recipes}} Receitas</p>
-        </div>
-        <div class="chef-info">
-            <h2>Receitas</h2>
-             {% for recipe in recipes %}
-    <div class="card">
-        <div class="image">
-            <img src="{{recipe.image}}" alt="{{recipe.title}}">
-        </div>
-        <div class="content-card">
-            <div class="title">{{recipe.title}}</div>
-            <div class="author"><p>por {{recipe.author}}</p></div>
-            <div class="link">
-                <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+  <div class="info chef">
+    <div>
+      <img src="{{ chef.avatar_url }}" alt="{{ chef.name }}" />
+      <h1>{{ chef.name }}</h1>
+      <p class="author">{{ chef.qtd_recipes }} Receitas</p>
+    </div>
+    <div class="chef-info">
+      <h2>Receitas</h2>
+      <div class="cards-show">
+        {% for recipe in recipes %}
+        <div class="card">
+          <div class="image">
+            <img src="{{ recipe.image }}" alt="{{ recipe.title }}" />
+          </div>
+          <div class="content-card">
+            <div class="title">{{ recipe.title }}</div>
+            <div class="author">
+              <p>por {{ recipe.author }}</p>
             </div>
+            <div class="link">
+              <a href="/admin/recipes/{{ recipe.id }}">Visualizar</a>
+            </div>
+          </div>
         </div>
+        {% endfor %}
+      </div>
     </div>
-    {% endfor %}
-        </div>
-        
-    </div>
-
+  </div>
 </div>
 {% endblock content %}

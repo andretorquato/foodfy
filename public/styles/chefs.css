@@ -1,12 +1,27 @@
 
-.cards.chef{
-
-    display:grid;
-    grid-template-columns: 20% 20% 20% 20%;
-    gap: 5% 30%;
-    align-content: center;
+.card-chef img{
+    max-width:64px;
+    max-height:64px;
+    border-radius: 50%;
 }
-
+.card-chef{
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    align-items: center;
+}
+.card-chef .content-card .qtd-recipes{
+    color: #666666;
+}
+.cards-chef{
+    margin: 0 auto;
+    max-width:800px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.cards-chef.admin{
+    margin: 2% auto 0 6% !important;
+}
 .card.chef{
     display: flex;
     justify-content: center;
@@ -17,14 +32,12 @@
     max-width: 80px;
     border-radius: 50% !important;
 }
-.card.chef.content-card{
-    max-width: 40px;
-    display:flex;
-    flex-direction: column;
-    justify-content: baseline;    
-    align-items: baseline!important;
+.card-chef .link a{
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6558C3;
 }
-
 /* SHOW PAGE */
 .show{
     padding:0 !important;
@@ -60,4 +73,18 @@
 }
 .content-card{
     white-space: nowrap;
+}
+
+
+/* SHOW cards */
+
+.cards-show{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.cards-show .card .image img{
+    max-width:172px !important;
+    max-height:80px;
+    border-radius: 0 !important; 
+    object-fit:none;
 }

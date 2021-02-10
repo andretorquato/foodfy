@@ -14,7 +14,7 @@ module.exports = {
       
     })
   },
-  recipes(req, res) {
+  async recipes(req, res) {
     let { filter, page, limit } = req.query;
 
     page = page || 1;
@@ -25,16 +25,20 @@ module.exports = {
       limit,
       offset,
       filter,
-      callback(recipes){
-        const pagination = {
-          total: Math.ceil(recipes[0].total / limit ),
-          page,
-          
-        }
-        return res.render("users/recipes", { recipes, pagination, filter });
-       }
     }
-    Recipes.paginate(params);
+    try {
+    let recipes = await Recipes.paginate(params);
+    recipes = recipes.rows;
+    const pagination = {
+      total: Math.ceil(recipes[0].total / limit ),
+      page,
+      
+    }
+    return res.render("users/recipes", { recipes, pagination, filter });  
+    } catch (error) {
+      console.log(error);
+    }
+    
   },
   recipesToItem(req, res) {
       const { index } = req.params;
