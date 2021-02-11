@@ -139,3 +139,27 @@ const paginate = document.querySelector(".paginate");
 if (paginate) {
   createPaginate(paginate);
 }
+
+const PhotosUpload = {
+    input: "",
+    preview: document.querySelector("#photos-preview"),
+    uploadLimit:6,
+    files: [],
+    handleFileInput(event){
+      const { files: fileList} = event.target;
+      PhotosUpload.input = event.target;
+
+      if(PhotosUpload.hasLimit(event)) return;
+    },
+    hasLimit(e){
+      const { uploadLimit, input, preview } = PhotosUpload;
+      const { files: fileList } = input;
+
+      if(fileList.length > uploadLimit){
+         alert(`Envie no máximo ${ uploadLimit } imagens`);
+         event.preventDefault();
+         return true;
+      }
+
+    }
+}
