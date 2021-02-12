@@ -2,7 +2,7 @@ const { date } = require("../../libs/utils");
 const db = require("../../config/db");
 
 module.exports = {
-  post(data, callback) {
+  post(data) {
     const query = `
          INSERT INTO recipes(
              chef_id,
@@ -25,11 +25,7 @@ module.exports = {
       date(Date.now()).iso,
     ];
 
-    db.query(query, values, function (err, results) {
-      if (err) throw `Database error ${err}`;
-
-      callback(results.rows[0]);
-    });
+    return db.query(query, values);
   },
   allChefs(callback) {
     db.query(`

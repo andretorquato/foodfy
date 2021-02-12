@@ -1,5 +1,5 @@
 const Recipes = require("../models/recipes");
-
+const Files = require("../models/files");
 module.exports = {
   redirect(req, res) {
     return res.redirect("admin/recipes");
@@ -63,22 +63,45 @@ module.exports = {
     })
     
   },
-  post(req, res) {
+  async post(req, res) {
     
     const keys = Object.keys(req.body);
     
     for (let key of keys) {
       if (req.body[key] == "") {
-        res.redirect("admin/recipes/create");
-        alert("preencha todos os campos");
+      
+        res.send("preencha todos os campos");
         return;
       }
     }
-    console.log(req.body);
-    console.log(req.files);
-    // Recipes.post(req.body, function(recipe){
-    //   return res.redirect(`recipes/${recipe.id}`);
-    // })
+    if(req.files.length == 0) {
+      return res.send("Insira pelo menos uma imagem");
+    }
+    try {
+      let filesId = [];
+      let recipeId = await Recipes.post(req.body);
+      recipeId = recipeId.rows[0].id;
+
+      const filesPromise = req.files.map(file => {
+        let fileID = Files.create({
+          ...file,
+          path:`${file.path.replace(/\\/g, "/")}`,
+        })
+        // fileID = fileID.rows[0].id;
+        
+      
+      });
+      await Promise.all(filesPromise, recipeId).then(() => {
+        console.log(filesId); 
+      });
+
+      await console.log(filesPromise);
+      
+      return res.redirect(`/recipes/${recipeId}`);
+    } catch (error) {
+      console.log(error);
+    }
+   
   },
   put(req, res) {
     const keys = Object.keys(req.body);
