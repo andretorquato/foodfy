@@ -74,9 +74,11 @@ module.exports = {
         return;
       }
     }
-    Recipes.post(req.body, function(recipe){
-      return res.redirect(`recipes/${recipe.id}`);
-    })
+    console.log(req.body);
+    console.log(req.files);
+    // Recipes.post(req.body, function(recipe){
+    //   return res.redirect(`recipes/${recipe.id}`);
+    // })
   },
   put(req, res) {
     const keys = Object.keys(req.body);
