@@ -74,6 +74,7 @@ module.exports = {
         return;
       }
     }
+    
     Recipes.post(req.body, function(recipe){
       return res.redirect(`recipes/${recipe.id}`);
     })

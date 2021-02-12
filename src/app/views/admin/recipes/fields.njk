@@ -1,14 +1,18 @@
 <div class="item image">
     <div class="title">Imagem da receita</div>
-    <div id="photos-upload">
-        <input 
-        type="file"
-        name="images"
-        multiple
-        accept="image/"
-         >
+    <div class="content-images">
+        <div id="photos-upload">
+            <input 
+            type="file"
+            name="imagesRecipes"
+            multiple
+            accept="image/"
+            onchange="PhotosUpload.handleFileInput(event)"
+            >
+        </div>
+        <div id="photos-preview-add"><i class="material-icons">add</i></div>
+        <div id="photos-preview"></div>
     </div>
-    <div id="photos-preview"><i class="material-icons">add</i></div>
 </div>
 <div class="item">
     <div class="title">Nome da receita</div>
