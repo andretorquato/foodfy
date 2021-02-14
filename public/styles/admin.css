@@ -304,6 +304,7 @@ a.links {
 #photos-preview .photo{
     position: relative;
     max-width: 150px;
+    max-height: 150px;
 
 }
 #photos-preview .photo img{

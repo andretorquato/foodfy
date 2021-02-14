@@ -6,13 +6,21 @@ module.exports = {
     
     return res.redirect("/index");
   },
-  index(req, res) {
-    Recipes.allChefs(function(recipes){
-      Recipes.chefSelect(function(options){
-        return res.render("users/index", { recipes, options });
-      });
+  async index(req, res) {
+    
+    try {
+      let recipes = await Recipes.allChefs();
+      recipes = recipes.rows;
       
-    })
+      let chefs = await Recipes.chefSelect();
+      chefs = chefs.rows;
+      
+      return res.render("users/index", { recipes, options: chefs });  
+
+    } catch (error) {
+      console.log(error);
+    }
+    
   },
   async recipes(req, res) {
     let { filter, page, limit } = req.query;
@@ -40,11 +48,19 @@ module.exports = {
     }
     
   },
-  recipesToItem(req, res) {
+  async recipesToItem(req, res) {
       const { index } = req.params;
-      Recipes.find(index, function(recipe){
-          return res.render("users/recipe", { item: recipe });
-      })
+    try {
+      
+      let recipe = await Recipes.find(index);
+      recipe = recipe.rows[0];
+
+      return res.render("users/recipe", { item: recipe });
+
+    } catch (error) {
+      console.log(error);
+    }
+      
     
   },
   about(req, res) {

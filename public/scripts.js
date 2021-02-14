@@ -3,6 +3,7 @@ const rows = document.querySelectorAll(".row");
 const locale = location.pathname;
 const links = document.querySelectorAll(".links");
 const teste = "teste";
+
 // Algoritmo tratar imagens
 const PhotosUpload = {
   input: "",
@@ -90,7 +91,19 @@ const PhotosUpload = {
       PhotosUpload.input.files = PhotosUpload.getAllFiles();
 
       photoDiv.remove();
-  }
+  },
+  removeOldPhoto(event){
+		const photoDiv = event.target.parentNode;
+		console.log(photoDiv.id);
+		if( photoDiv.id ){
+			const removedFiles = document.querySelector('input[name="removed_files"]');
+			if( removedFiles ){
+				removedFiles.value += `${photoDiv.id},`
+			}
+
+		}
+			photoDiv.remove()
+	}
 }
 for (let link of links) {
   if (locale.includes(link.getAttribute("href"))) link.classList.add("active");
