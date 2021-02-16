@@ -6,18 +6,17 @@ module.exports = {
     const query = `
          INSERT INTO recipes(
              chef_id,
-             image,
              title,
              ingredients,
              preparations,
              information,
              created_at
-         ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+         ) VALUES ($1, $2, $3, $4, $5, $6)
          RETURNING id
         `;
+      
     const values = [
       data.chef_id,
-      data.image,
       data.title,
       Array(data.ingredients),
       Array(data.preparations),
@@ -65,16 +64,15 @@ module.exports = {
     const query = `
             UPDATE recipes SET
             chef_id=($1),
-            image=($2),
-            title=($3),
-            ingredients=($4),
-            preparations=($5),
-            information=($6)
-            WHERE id = $7
+            title=($2),
+            ingredients=($3),
+            preparations=($4),
+            information=($5)
+            WHERE id = $6
         `;
+        console.log(Array(data.ingredients).length)
     const values = [
       data.chef_id,
-      data.image,
       data.title,
       data.ingredients,
       data.preparations,
@@ -85,12 +83,10 @@ module.exports = {
     return db.query(query, values);
     
   },
-  delete(id, callback) {
-    db.query(`DELETE FROM recipes WHERE id = $1`, [id], function (err) {
-      if (err) throw `Database error ${err}`;
-
-      return callback();
-    });
+  delete(id) {
+      
+    return db.query(`DELETE FROM recipes WHERE id = $1`, [id]);
+    
   },
   chefSelect() {
     return db.query(`SELECT name, id FROM chefs`);

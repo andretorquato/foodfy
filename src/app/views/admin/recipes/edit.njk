@@ -16,10 +16,14 @@
         {% include 'admin/recipes/fields.njk'%}
     </div>
     <input type="hidden" name="id" value="{{recipe.id}}">
+    <input type="hidden" name="removed_files">
 </div>
 </form>
-        <form action="/admin/recipes?_method=DELETE" method="post" class="form-remove" style="display:none;">
+        <form action="/admin/recipes?_method=DELETE" method="post" class="form-delete" style="display:none;">
         <input type="hidden" name="id" value="{{recipe.id}}">
+        {% for file in files %}
+        <input type="hidden" name="files" value="{{file.id}}">
+        {% endfor %}
         <button type="submit" class="button delete check">Deletar</button>   
         </form>
 {% endblock content %}

@@ -2,22 +2,19 @@ const { date } = require("../../libs/utils");
 const db = require("../../config/db");
 
 module.exports = {
-  post(data, callback) {
+  post(data) {
     const query = `
          INSERT INTO chefs(
              name,
-             avatar_url,
+             file_id,
              created_at
          ) VALUES ($1, $2, $3)
          RETURNING id
         `;
-    const values = [data.name, data.avatar_url, date(Date.now()).iso];
+    const values = [data.name, data.file_id, date(Date.now()).iso];
 
-    db.query(query, values, function (err, results) {
-      if (err) throw `Database error ${err}`;
-
-      callback(results.rows[0]);
-    });
+    return db.query(query, values);
+    
   },
   allChefs(callback) {
     const query = `
@@ -34,7 +31,7 @@ module.exports = {
       return callback(results.rows);
     });
   },
-  find(id, callback) {
+  find(id) {
     const query = `
         SELECT chefs.*, count(recipes) AS qtd_recipes
         FROM chefs
@@ -43,34 +40,26 @@ module.exports = {
         GROUP BY chefs.id
         `;
 
-    db.query(query, [id], function (err, results) {
-      if (err) throw `Database error ${err}`;
-
-      return callback(results.rows[0]);
-    });
+      return db.query(query, [id]);    
   },
-  put(data, callback) {
+  put(data) {
     const query = `
             UPDATE chefs SET
             name=($1),
-            avatar_url=($2)
+            file_id=($2)
             WHERE id = $3
         `;
-    const values = [data.name, data.avatar_url, data.id];
-    db.query(query, values, function (err) {
-      if (err) throw `Database error ${err}`;
-
-      return callback();
-    });
+    const values = [data.name, data.file_id, data.id];
+    
+    return db.query(query, values);
+    
   },
-  delete(id, callback) {
-    db.query(`DELETE FROM chefs WHERE id = $1`, [id], function (err) {
-      if (err) throw `Database error ${err}`;
-
-      return callback();
-    });
+  delete(id) {
+    
+    return db.query(`DELETE FROM chefs WHERE id = $1`, [id]);
+    
   },
-  myRecipes(id, callback){
+  myRecipes(id){
       const query = `
       SELECT recipes.*
       FROM recipes
@@ -79,10 +68,6 @@ module.exports = {
       GROUP BY recipes.id
       `;
 
-      db.query(query, [id], function (err, results){
-          if (err) throw `Database error ${err}`;
-
-          return callback(results.rows);
-      })
+    return  db.query(query, [id]);      
   }
 };

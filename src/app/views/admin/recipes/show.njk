@@ -9,7 +9,30 @@
 
     <div class="info">
         <div>
-            <img src="{{recipe.image}}" alt="{{recipe.title}}">
+            <div class="gallery">
+                <div class="highlight">
+                    {% if not files[0] %}
+                    <img src="https://placehold.it/500x500?text=RECEITA%20SEM%20FOTO" alt="not-img">
+                    {%else%}
+                    <img src="{{files[0].src}}" alt="{{file[0].name}}">    
+                    {% endif %}
+                    
+                </div>
+                <div class="gallery-preview">
+                    {% for image in files %}
+                    <img 
+                    src="{{image.src}}" 
+                    alt="{{image.name}}"
+                    {% if loop.index0 == 0 %}
+                    class="active"
+                    {% endif %}
+                    onclick="ImageGallery.setImage(event)"
+                    >
+                    {% endfor %}
+                    
+                </div>
+            </div>
+            
             <h1>{{recipe.title}}</h1>
             {% for chef in chefs %}
             {% if recipe.chef_id == chef.id %}
@@ -22,7 +45,7 @@
             <h2>Ingredientes</h2>
             <ul>
                 {% for ingredient in recipe.ingredients %}
-                <li>- {{ingredient}}</li>
+                <li>{{ingredient}}</li>
                 {% endfor %}
                 
             </ul>

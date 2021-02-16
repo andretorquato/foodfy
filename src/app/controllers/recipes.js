@@ -45,8 +45,27 @@ module.exports = {
     
     let chefs = await Recipes.chefSelect();
     chefs = chefs.rows;  
+     
+    let filesPromise = [],
+        files = [];
+    let filesRecipeId = await Files.getIdRecipesFiles(recipe.id);
+    filesRecipeId = filesRecipeId.rows;
     
-    return res.render("admin/recipes/show", { recipe, chefs });
+    filesRecipeId.map(file => filesPromise.push(file.file_id));
+    
+    filesPromise = filesPromise.map(async id => {
+      let file = await Files.getFiles(id);
+      return  file,files.push(file.rows[0]);
+    })
+      
+    await Promise.all(filesPromise)
+    
+    files = files.map(file => ({
+      ...file,
+      src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+    }))
+        
+    return res.render("admin/recipes/show", { recipe, chefs, files });
     
     } catch (error) {
       console.log(error);
@@ -104,7 +123,7 @@ module.exports = {
     
     for (let key of keys) {
       if (req.body[key] == "") {
-      
+        
         res.send("preencha todos os campos");
         return;
       }
@@ -142,11 +161,11 @@ module.exports = {
   },
   async put(req, res) {
     const keys = Object.keys(req.body);
-    
+    console.log(req.body);
     for (let key of keys) {
       if (req.body[key] == "" && key != "removed_files") {
         res.redirect("admin/recipes/create");
-        alert("preencha todos os campos");
+        
         return;
       }
     };
@@ -160,16 +179,39 @@ module.exports = {
     await Promise.all(removedFilesPromise);
 
     }
-
-    
-    
-    Recipes.put(req.body);
-    
-    return res.redirect(`/admin/recipes/${req.body.id}`);
+  try {
+    if(req.files.length != 0){
+      let idFiles = [];
+     const filesPromise = req.files.map(async (file) => {
+       const id = await Files.create({
+         ...file,
+         path:`${file.path.replace(/\\/g, "/")}`,
+       })
+       idFiles.push(id.rows[0].id);
+     });
+ 
+     await Promise.all(filesPromise).then(() => {
+       idFiles.forEach(idFile => {
+         Files.createReferenceRecipeImages(req.body.id, idFile);
+       });
+     });
+    }
+     
+     
+     Recipes.put(req.body);
+     
+     return res.redirect(`/admin/recipes/${req.body.id}`);  
+  } catch (error) {
+    console.log(error);
+  }
+  
   },
   delete(req, res) {
-      Recipes.delete(req.body.id, function(){
-        return res.redirect("/admin");
-      });
+      const files = Array(req.body.files);
+      files.map(file => Files.delete(file));
+      
+      Recipes.delete(req.body.id);
+
+      return res.redirect("/admin");
   },
 };

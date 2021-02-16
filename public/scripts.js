@@ -3,6 +3,9 @@ const rows = document.querySelectorAll(".row");
 const locale = location.pathname;
 const links = document.querySelectorAll(".links");
 const teste = "teste";
+const formDelete = document.querySelector(".form-delete");
+const deleteButton = document.querySelector("#button-delete");
+
 
 // Algoritmo tratar imagens
 const PhotosUpload = {
@@ -25,7 +28,11 @@ const PhotosUpload = {
         image.src = String(reader.result);
 
         const div = PhotosUpload.getContainer(image);
+
+        
+        if(PhotosUpload.preview){
         PhotosUpload.preview.appendChild(div);
+        }
       }
       reader.readAsDataURL(file);
     })
@@ -41,18 +48,19 @@ const PhotosUpload = {
     }
 
     const photosDiv = [];
-    preview.childNodes.forEach(item => {
-      if(item.classList && item.classList.value == "photo")
-        photosDiv.push(item);
-    })
-    
-    const totalPhotos = fileList.length + photosDiv.length;
-    if(totalPhotos > uploadLimit){
-      alert("Você atingiu o limite máximo de fotos");
-      event.preventDefault();
-      return true;
+    if(preview){
+      preview.childNodes.forEach(item => {
+        if(item.classList && item.classList.value == "photo")
+          photosDiv.push(item);
+      })
+      
+      const totalPhotos = fileList.length + photosDiv.length;
+      if(totalPhotos > uploadLimit){
+        alert("Você atingiu o limite máximo de fotos");
+        event.preventDefault();
+        return true;
+      }
     }
-
     return false;
   },
   getAllFiles(){
@@ -105,6 +113,20 @@ const PhotosUpload = {
 			photoDiv.remove()
 	}
 }
+// Galeria de Imagens
+const ImageGallery = {
+  highlight: document.querySelector('.gallery .highlight > img'),
+  previews: document.querySelectorAll('.gallery-preview > img'),
+  setImage(e){
+    const { target } = e;
+    ImageGallery.previews.forEach(preview => preview.classList.remove('active'));
+    target.classList.add('active');
+
+    ImageGallery.highlight.src = target.src;
+
+  }
+}
+
 for (let link of links) {
   if (locale.includes(link.getAttribute("href"))) link.classList.add("active");
 }
@@ -163,13 +185,18 @@ function addPass() {
   steps.appendChild(newPass);
 }
 
-const deleteButton = document.querySelector("#button-delete");
-if (deleteButton) {
-  deleteButton.addEventListener("click", deleteRecipe);
-}
-function deleteRecipe() {
-  const formDelete = document.querySelector(".form-remove");
-  formDelete.submit();
+
+
+if(formDelete && deleteButton){
+  deleteButton.addEventListener("click", function(){
+    const confirmation = confirm("Você realmente deseja deletar?");
+    if(!confirmation)
+    event.preventDefault();
+    else
+    formDelete.submit();
+    console.log(confirmation);
+  })
+  
 }
 
 function checkInputs() {

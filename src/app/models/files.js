@@ -44,5 +44,8 @@ module.exports = {
         const deleteFromRecipesFiles = await db.query(`DELETE FROM recipe_files WHERE file_id = $1;`,[id]);
 
         return deleteFromRecipesFiles, db.query(`DELETE FROM files WHERE id = $1`, [id]);
+    },
+    async deleteChefImg(id){
+
     }
 }
