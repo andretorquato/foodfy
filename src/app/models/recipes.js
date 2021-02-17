@@ -70,7 +70,20 @@ module.exports = {
             information=($5)
             WHERE id = $6
         `;
-        console.log(Array(data.ingredients).length)
+    
+        
+    
+    
+    if(typeof data.ingredients == 'string'){
+      data.ingredients = Array(data.ingredients);
+    }
+    if(typeof data.preparations == 'string'){
+      data.preparations = Array(data.preparations);
+    }
+
+    data.preparations.map(preparation => preparation != "");
+    data.ingredients.map(ingredient => ingredient != "");
+    
     const values = [
       data.chef_id,
       data.title,

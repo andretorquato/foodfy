@@ -60,9 +60,11 @@
     white-space: nowrap;
 }
 .info.chef   div:first-child img {
-    width: 100%;
+    width: 200px;
+    height: 200px;
     border-radius: 50% !important;
     margin: auto !important;
+    object-fit: cover;
 }
 
 /*  USERS CHEFS  */

@@ -161,7 +161,7 @@ module.exports = {
   },
   async put(req, res) {
     const keys = Object.keys(req.body);
-    console.log(req.body);
+    
     for (let key of keys) {
       if (req.body[key] == "" && key != "removed_files") {
         res.redirect("admin/recipes/create");

@@ -1,5 +1,5 @@
 {% extends 'users/layout.njk' %}
-       
+{% import "parts/gallery.njk" as view %}}       
         {% block head %}
         <title>Home</title>
         <link rel="stylesheet" type="text/css" href="../styles/recipe.css">
@@ -8,16 +8,7 @@
 
     <div class="container">
         <header>
-                 <div class="content_recipe">
-                        <div class="image_recipe">
-                            <img src="{{item.image}}" alt="{{item.title}}">
-                        </div>
-                        <div class="info_content">
-                            <p class="info_title">{{item.title}}</p>                                  
-                            <p class="sub_title">{{item.chef_create}}</p>
-                        </div>
-                    </div>
-
+           {{ view.gallery(item, files, chefs) }}
         </header>
         <main>
             <div class="rows">

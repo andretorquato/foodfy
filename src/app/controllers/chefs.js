@@ -47,9 +47,8 @@ module.exports = {
     
     for (let key of keys) {
       if (req.body[key] == "") {
-        res.redirect("admin/chefs/create");
-        alert("preencha todos os campos");
-        return;
+        
+        return res.send(req.body[key] + "vazio");
       }
     }
     
@@ -86,24 +85,29 @@ module.exports = {
         return;
       }
     }
+    
     if(req.files.length == 0) {
       return res.send("Insira uma foto de usuário");
     }
     
     try {      
-      const deleteImageChef = await Files.deleteChefImg(req.body.file_id);
+      
       const chefImage = await Files.create({
         ...req.files[0],
         path:`${req.files[0].path.replace(/\\/g, "/")}`
       })
-      
       const data = {
         ...req.body,
         file_id: chefImage.rows[0].id
       }
+    
       const chef = await Chefs.put(data);
+      
+
+      await Files.deleteChefImg(req.body.file_id)
+      
      
-      return res.redirect(`/admin/chefs/${chef.rows[0].id}`);
+      return res.redirect(`/admin/chefs/${req.body.id}`);
 
     } catch (error) {
       console.log(error);

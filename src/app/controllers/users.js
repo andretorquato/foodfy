@@ -1,6 +1,6 @@
 const Chefs = require("../models/chefs");
 const Recipes = require("../models/recipes");
-
+const Files = require("../models/files");
 module.exports = {
   redirect(req, res) {
     
@@ -50,16 +50,41 @@ module.exports = {
   },
   async recipesToItem(req, res) {
       const { index } = req.params;
-    try {
-      
-      let recipe = await Recipes.find(index);
-      recipe = recipe.rows[0];
+      try {
 
-      return res.render("users/recipe", { item: recipe });
+        let recipe = await Recipes.find(index);
+        recipe = recipe.rows[0];
+        
+        let chefs = await Recipes.chefSelect();
+        chefs = chefs.rows;  
+         
+        let filesPromise = [],
+            files = [];
+        let filesRecipeId = await Files.getIdRecipesFiles(recipe.id);
+        filesRecipeId = filesRecipeId.rows;
+        
+        filesRecipeId.map(file => filesPromise.push(file.file_id));
+        
+        filesPromise = filesPromise.map(async id => {
+          let file = await Files.getFiles(id);
+          return  file,files.push(file.rows[0]);
+        })
+          
+        await Promise.all(filesPromise)
+        
+        files = files.map(file => ({
+          ...file,
+          src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        }))
+        
+        return res.render("users/recipe", { item: recipe, chefs, files });
 
-    } catch (error) {
-      console.log(error);
-    }
+        } catch (error) {
+          console.log(error);
+        }
+
+
+
       
     
   },

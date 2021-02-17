@@ -34,24 +34,21 @@ li{
     text-align: center;
 }
 .rows{
-    max-width: 940px;
-    
-    display: grid;
-    
-    align-items: center;   
-    margin: 0 auto 10% auto;
+    max-width: 1000px;
+    margin: auto;
 }
 .row{
     line-height: 28px;
-    padding:20px;
+    text-align: left;
+    
     position: relative;
 }
 .row h1{
-    padding-top: 20px;
-    padding-bottom: 20px;
+    text-align: left;
+    padding: 1% 0;
 }
 .row li{
-    padding-left:10px;
+    text-align: left;
     list-style: inside;
 }
 
@@ -61,17 +58,13 @@ li{
     visibility:visible;
 }
 .column{
-    display: grid;
-    grid-template-columns: 50vh 10vh;
-    
-    
-    
-
+    display:flex;
+    justify-content:flex-start;
+    align-items:baseline;
 }
 p.button{
-    max-width: 100px;
-    max-height: 40px;
-    margin: auto;
+    
+    margin-left: 4%;
     border-radius: 12px;
     cursor: pointer;
     

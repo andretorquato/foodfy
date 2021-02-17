@@ -102,7 +102,7 @@ const PhotosUpload = {
   },
   removeOldPhoto(event){
 		const photoDiv = event.target.parentNode;
-		console.log(photoDiv.id);
+		
 		if( photoDiv.id ){
 			const removedFiles = document.querySelector('input[name="removed_files"]');
 			if( removedFiles ){
@@ -194,7 +194,7 @@ if(formDelete && deleteButton){
     event.preventDefault();
     else
     formDelete.submit();
-    console.log(confirmation);
+    
   })
   
 }

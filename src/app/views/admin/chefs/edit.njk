@@ -1,6 +1,6 @@
 {% extends 'admin/layout.njk' %}
 {% block content %}
-<form action="/admin/chefs?_method=PUT" method="post">
+<form action="/admin/chefs?_method=PUT" method="post" enctype="multipart/form-data">
 <div class="edit">
     
     <div class="header">
@@ -16,6 +16,7 @@
         {% include 'admin/chefs/fields.njk'%}
     </div>
     <input type="hidden" name="id" value="{{chef.id}}">
+    <input type="hidden" name="file_id" value="{{chef.file_id}}">
 </div>
 </form>
         <form action="/admin/chefs?_method=DELETE" method="post"class="form-delete"  style="display:none;">
