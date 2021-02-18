@@ -125,6 +125,7 @@ module.exports = {
       FROM recipes
       LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
       ${filterQuery}
+      ORDER BY updated_at DESC
       LIMIT $1 OFFSET $2
     `;
 

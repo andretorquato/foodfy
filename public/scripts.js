@@ -6,20 +6,19 @@ const teste = "teste";
 const formDelete = document.querySelector(".form-delete");
 const deleteButton = document.querySelector("#button-delete");
 
-
 // Algoritmo tratar imagens
 const PhotosUpload = {
   input: "",
   preview: document.querySelector("#photos-preview"),
-  uploadLimit:6,
+  uploadLimit: 6,
   files: [],
-  handleFileInput(event){
-    const { files: fileList} = event.target;
+  handleFileInput(event) {
+    const { files: fileList } = event.target;
     PhotosUpload.input = event.target;
 
-    if(PhotosUpload.hasLimit(event)) return;
+    if (PhotosUpload.hasLimit(event)) return;
 
-    Array.from(fileList).forEach(file => {
+    Array.from(fileList).forEach((file) => {
       PhotosUpload.files.push(file);
       const reader = new FileReader();
 
@@ -29,33 +28,32 @@ const PhotosUpload = {
 
         const div = PhotosUpload.getContainer(image);
 
-        
-        if(PhotosUpload.preview){
-        PhotosUpload.preview.appendChild(div);
+        if (PhotosUpload.preview) {
+          PhotosUpload.preview.appendChild(div);
         }
-      }
+      };
       reader.readAsDataURL(file);
-    })
+    });
   },
-  hasLimit(e){
+  hasLimit(e) {
     const { uploadLimit, input, preview } = PhotosUpload;
     const { files: fileList } = input;
 
-    if(fileList.length > uploadLimit){
-       alert(`Envie no máximo ${ uploadLimit } imagens`);
-       event.preventDefault();
-       return true;
+    if (fileList.length > uploadLimit) {
+      alert(`Envie no máximo ${uploadLimit} imagens`);
+      event.preventDefault();
+      return true;
     }
 
     const photosDiv = [];
-    if(preview){
-      preview.childNodes.forEach(item => {
-        if(item.classList && item.classList.value == "photo")
+    if (preview) {
+      preview.childNodes.forEach((item) => {
+        if (item.classList && item.classList.value == "photo")
           photosDiv.push(item);
-      })
-      
+      });
+
       const totalPhotos = fileList.length + photosDiv.length;
-      if(totalPhotos > uploadLimit){
+      if (totalPhotos > uploadLimit) {
         alert("Você atingiu o limite máximo de fotos");
         event.preventDefault();
         return true;
@@ -63,69 +61,71 @@ const PhotosUpload = {
     }
     return false;
   },
-  getAllFiles(){
-    const dataTransfer = new ClipboardEvent("").clipboardData || new DataTransfer();
+  getAllFiles() {
+    const dataTransfer =
+      new ClipboardEvent("").clipboardData || new DataTransfer();
 
-    PhotosUpload.files.forEach(file => dataTransfer.items.add(file));
+    PhotosUpload.files.forEach((file) => dataTransfer.items.add(file));
 
     return DataTransfer.files;
-
   },
-  getContainer(image){
+  getContainer(image) {
     const div = document.createElement("div");
-    div.classList.add('photo');
+    div.classList.add("photo");
 
     div.onclick = PhotosUpload.removePhoto;
 
     div.appendChild(image);
 
     div.appendChild(PhotosUpload.getRemoveButton());
-    
+
     return div;
   },
-  getRemoveButton(){
-    const button = document.createElement("i") ;
-    button.classList.add('material-icons');
+  getRemoveButton() {
+    const button = document.createElement("i");
+    button.classList.add("material-icons");
     button.innerHTML = "close";
-    
+
     return button;
   },
-  removePhoto(event){
-      const photoDiv = event.target.parentNode;
-      const photosArray = Array.from(PhotosUpload.preview.children);
-      const index = photosArray.indexOf(photoDiv);
+  removePhoto(event) {
+    const photoDiv = event.target.parentNode;
+    const photosArray = Array.from(PhotosUpload.preview.children);
+    const index = photosArray.indexOf(photoDiv);
 
-      PhotosUpload.files.splice(index, 1);
-      PhotosUpload.input.files = PhotosUpload.getAllFiles();
+    PhotosUpload.files.splice(index, 1);
+    PhotosUpload.input.files = PhotosUpload.getAllFiles();
 
-      photoDiv.remove();
+    photoDiv.remove();
   },
-  removeOldPhoto(event){
-		const photoDiv = event.target.parentNode;
-		
-		if( photoDiv.id ){
-			const removedFiles = document.querySelector('input[name="removed_files"]');
-			if( removedFiles ){
-				removedFiles.value += `${photoDiv.id},`
-			}
+  removeOldPhoto(event) {
+    const photoDiv = event.target.parentNode;
 
-		}
-			photoDiv.remove()
-	}
-}
+    if (photoDiv.id) {
+      const removedFiles = document.querySelector(
+        'input[name="removed_files"]'
+      );
+      if (removedFiles) {
+        removedFiles.value += `${photoDiv.id},`;
+      }
+    }
+    photoDiv.remove();
+  },
+};
 // Galeria de Imagens
 const ImageGallery = {
-  highlight: document.querySelector('.gallery .highlight > img'),
-  previews: document.querySelectorAll('.gallery-preview > img'),
-  setImage(e){
+  highlight: document.querySelector(".gallery .highlight > img"),
+  previews: document.querySelectorAll(".gallery-preview > img"),
+  setImage(e) {
     const { target } = e;
-    ImageGallery.previews.forEach(preview => preview.classList.remove('active'));
-    target.classList.add('active');
+    ImageGallery.previews.forEach((preview) =>
+      preview.classList.remove("active")
+    );
+    target.classList.add("active");
 
     ImageGallery.highlight.src = target.src;
-
-  }
-}
+  },
+};
 
 for (let link of links) {
   if (locale.includes(link.getAttribute("href"))) link.classList.add("active");
@@ -185,18 +185,12 @@ function addPass() {
   steps.appendChild(newPass);
 }
 
-
-
-if(formDelete && deleteButton){
-  deleteButton.addEventListener("click", function(){
+if (formDelete && deleteButton) {
+  deleteButton.addEventListener("click", function () {
     const confirmation = confirm("Você realmente deseja deletar?");
-    if(!confirmation)
-    event.preventDefault();
-    else
-    formDelete.submit();
-    
-  })
-  
+    if (!confirmation) event.preventDefault();
+    else formDelete.submit();
+  });
 }
 
 function checkInputs() {
@@ -268,4 +262,3 @@ const paginate = document.querySelector(".paginate");
 if (paginate) {
   createPaginate(paginate);
 }
-
