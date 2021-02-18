@@ -15,7 +15,31 @@ module.exports = {
       let chefs = await Recipes.chefSelect();
       chefs = chefs.rows;
       
-      return res.render("users/index", { recipes, options: chefs });  
+      let files = [],
+      images=[];
+      let getIdsRecipes = recipes.map(recipe => recipe.id);
+      let filesId = getIdsRecipes.map(async id => {
+        let file = await (await Files.getIdRecipesFiles(id)).rows[0];
+        file.recipe_id = id;
+        return files.push(file)
+      })
+      
+      await Promise.all(filesId);
+      
+      files = files.map(async file => {
+        let image = await (await Files.getFiles(file.file_id)).rows[0];
+        return images.push({
+          ...image,
+          recipe_id: file.recipe_id, 
+          src: `${req.protocol}://${req.headers.host}${image.path.replace("public","")}`,
+  
+        })
+      });
+      
+      await Promise.all(files)
+            
+
+      return res.render("users/index", { recipes, options: chefs, images });  
 
     } catch (error) {
       console.log(error);

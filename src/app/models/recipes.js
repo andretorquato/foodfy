@@ -32,6 +32,8 @@ module.exports = {
       SELECT recipes.*, chefs.name AS chef_create
       FROM recipes
       LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+      
+      ORDER BY updated_at DESC
       LIMIT 6`);
 
   },

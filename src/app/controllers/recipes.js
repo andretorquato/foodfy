@@ -21,19 +21,35 @@ module.exports = {
     try {
       let recipes = await Recipes.paginate(params);
       recipes = recipes.rows;
-      images = [];
+      let files = [],
+      images=[];
       let getIdsRecipes = recipes.map(recipe => recipe.id);
-      getIdsRecipes = getIdsRecipes.map(async id => images.push(await (await Files.getIdRecipesFiles(id)).rows[0]))
+      let filesId = getIdsRecipes.map(async id => {
+        let file = await (await Files.getIdRecipesFiles(id)).rows[0];
+        file.recipe_id = id;
+        return files.push(file)
+      })
       
-      await Promise.all(getIdsRecipes);
+      await Promise.all(filesId);
       
-      console.log(images);
-
+      files = files.map(async file => {
+        let image = await (await Files.getFiles(file.file_id)).rows[0];
+        return images.push({
+          ...image,
+          recipe_id: file.recipe_id, 
+          src: `${req.protocol}://${req.headers.host}${image.path.replace("public","")}`,
+  
+        })
+      });
+      
+      await Promise.all(files)
+            
       const pagination = {
         total: Math.ceil(recipes[0].total / limit),
         page,
       };
-      return res.render("admin/recipes/index", { recipes, pagination, filter });
+      
+      return res.render("admin/recipes/index", { recipes, pagination, filter, images });
     } catch (error) {
       console.log(error);
     }
