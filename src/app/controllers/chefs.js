@@ -5,11 +5,37 @@ module.exports = {
   redirect(req, res) {
     return res.redirect("admin/chefs");
   },
-  index(req, res) {
-    Chefs.allChefs(function(chefs) {
+  async index(req, res) {
+    try {
+      
+      let chefs = await Chefs.allChefs();
+      chefs = chefs.rows;
+      let auxChefs = [];
+      
+      chefs = chefs.map(async chef => {
+        let image = await Files.getFiles(chef.file_id);
+        image = image.rows[0];
+        
+        image = {
+          ...image,
+          src: `${req.protocol}://${req.headers.host}${image.path.replace("public","")}`,
+        }
+        return auxChefs.push({
+          ...chef,
+          image : image.src,
+          imageName: image.name
+        })
+      });
+         
+      await Promise.all(chefs)
+      
+      chefs = auxChefs;
+      console.log(chefs);
       return res.render("admin/chefs/index", { chefs });
-    })
-    
+      
+      } catch (error) {
+        console.log(error);
+      }
   },
   async show(req, res) {
     const { id } = req.params;

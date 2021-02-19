@@ -16,7 +16,7 @@ module.exports = {
     return db.query(query, values);
     
   },
-  allChefs(callback) {
+  allChefs() {
     const query = `
         SELECT chefs.*, count(recipes) AS qtd_recipes
         FROM chefs
@@ -25,11 +25,8 @@ module.exports = {
         ORDER BY qtd_recipes
         `;
 
-    db.query(query, function (err, results) {
-      if (err) throw `Database error ${err}`;
-
-      return callback(results.rows);
-    });
+      return   db.query(query);
+    
   },
   find(id) {
     const query = `
