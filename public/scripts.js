@@ -187,10 +187,15 @@ function addPass() {
 
 if (formDelete && deleteButton) {
   deleteButton.addEventListener("click", function () {
+    confirmDelete();
+  });
+}
+
+function confirmDelete(){
     const confirmation = confirm("Você realmente deseja deletar?");
     if (!confirmation) event.preventDefault();
     else formDelete.submit();
-  });
+  
 }
 
 function checkInputs() {

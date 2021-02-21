@@ -1,0 +1,19 @@
+{% extends 'admin/layout.njk' %}
+{% block content %}
+<form action="/admin/chefs" method="post">
+<div class="edit">
+    
+    <div class="header">
+        <h1>Criar Usuário</h1>
+        <div class="buttons">
+        <button type="submit"class="button check">Novo</button> 
+        <button type="submit"class="button check gray">Cancelar</button>     
+        </div>
+    </div>
+    <div class="form"> 
+        {% include 'admin/users/fields.njk'%}
+    </div>
+    
+</div>
+</form>
+{% endblock content %}

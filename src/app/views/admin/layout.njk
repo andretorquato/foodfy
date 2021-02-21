@@ -7,6 +7,7 @@
     <title>Admin foodfy</title>
     {% endblock header %}
     <link rel="stylesheet" href="../../../styles/admin.css">
+    <link rel="stylesheet" href="../../../styles/users.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -23,8 +24,15 @@
             <a href="/admin/chefs" class="links">
             chefs
             </a>
+            <a href="/admin/users" class="links">
+            usuários
+            </a>
+            
         </div>
         
+        <a href="/admin/login" class="login">
+            SAIR
+            </a>
     </header>
     <main>
         {% block content %}

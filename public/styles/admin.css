@@ -10,11 +10,13 @@ header{
     background-color:#111111;
     width: 100%;
     height: 80px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
+    display: grid;
+
+    grid-template-columns: 30fr 20fr 50fr;
+    
+    
     align-items: center;
-    align-content: center;
+    
 }
 .flex{
     display: flex;
@@ -24,14 +26,22 @@ header{
 .h-40{
     max-height: 40px;
 }
-
+.logo.admin{
+    justify-self: flex-end;
+    padding-right: 13%;
+}
+.login{
+    justify-self: flex-end;
+}
 /* links and index recipes */
 .links{
     opacity: 0.7;
 }
+.login,
 .links.active{
     opacity: 1;
 }
+.login:hover,
 .links:hover{
     filter: brightness(.6);
     transition: 500ms;
@@ -40,6 +50,7 @@ header{
     display: inline-flex;
     padding: 0 2%;
 }
+.login,
 a.links {
     color:#ffffff;
     font-size: 1.2rem;

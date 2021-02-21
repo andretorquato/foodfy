@@ -1,0 +1,33 @@
+
+
+.gray{
+    background-color:#8A8A8A;
+}
+/* HEADER */
+.buttons .button{
+    width: 35% !important;
+    justify-self: flex-end;
+    margin-right:4%;
+}
+
+/* USERS FORM  */
+.items{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    max-width: 100%;
+}
+.items .item{
+    width: 19vw !important;
+}
+.item.input-checkbox{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+}
+
+.item input[type="checkbox"]{
+    width: 16px;
+    margin-right: 1.5%;    
+}

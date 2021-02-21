@@ -1,8 +1,13 @@
-
+main{
+    height: 86vh;
+}
 .card-chef img{
     width:64px;
     height:64px;
+    
     border-radius: 50%;
+    
+    object-fit: cover;
 }
 .card-chef{
     display: grid;
@@ -47,7 +52,8 @@
     margin: 2% 21%;
     flex-wrap: wrap;
 }
-.info.chef  div:first-child{
+.info.chef  .inf{
+    
     max-width: 22%;
     padding: 10% 0;
     display: flex;
@@ -56,10 +62,10 @@
     margin: auto;
 
 }
-.info.chef  div:first-child h1{
+.info.chef  .inf h1{
     white-space: nowrap;
 }
-.info.chef   div:first-child img {
+.info.chef   .inf img.profile {
     width: 200px;
     height: 200px;
     border-radius: 50% !important;
@@ -67,7 +73,7 @@
     object-fit: cover;
 }
 
-/*  USERS CHEFS  */
+/*  HOME CHEFS  */
 
 .cards.chef.index{
     width: 30% !important;
@@ -76,17 +82,10 @@
 .content-card{
     white-space: nowrap;
 }
-
-
 /* SHOW cards */
 
+
 .cards-show{
-    display: grid;
+    display:grid;
     grid-template-columns: repeat(2, 1fr);
-}
-.cards-show .card .image img{
-    max-width:172px !important;
-    max-height:80px;
-    border-radius: 0 !important; 
-    object-fit:none;
 }
