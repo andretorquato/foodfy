@@ -3,9 +3,7 @@ const Files = require("../models/files");
 const { getFiles } = require("../models/files");
 
 module.exports = {
-  redirect(req, res) {
-    return res.redirect("admin/recipes");
-  },
+ 
   async index(req, res) {
     let { filter, page, limit } = req.query;
 

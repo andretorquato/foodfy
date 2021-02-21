@@ -13,11 +13,11 @@ module.exports = {
       console.log(error);
     }
   },
-  async show(req, res) {
+  async profile(req, res) {
     const { id } = req.params;
 
 
-    return res.render("admin/users/show");
+    return res.render("admin/users/profile");
   },
   async edit(req, res) {
     const { id } = req.params;

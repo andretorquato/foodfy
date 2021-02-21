@@ -12,9 +12,17 @@
 <div class="cards-user admin">
     {# {% for user in users %} #}
     
-    <div class="card-user">
-        <div class="image">
-            
+    <div class="card-user list">
+        <div class="content-card">
+            <div class="title">André Torquato Silva</div>
+            <div class="sub-title">andre@torquato.br</div>
+            {# <div class="title">{{user.name}}</div> #}
+            <div class="buttons">
+                <a href="/admin/users/{{user.id}}/edit">Editar</a>
+                <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()" >
+                <button type="submit" class="outline-link">Remover</button>   
+                </form>
+            </div>
         </div>
         <div class="content-card">
             <div class="title">André Torquato Silva</div>
@@ -23,7 +31,51 @@
             <div class="buttons">
                 <a href="/admin/users/{{user.id}}/edit">Editar</a>
                 <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()" >
-                <button type="submit" class="button delete check">Remover</button>   
+                <button type="submit" class="outline-link">Remover</button>   
+                </form>
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="title">André Torquato Silva</div>
+            <div class="sub-title">andre@torquato.br</div>
+            {# <div class="title">{{user.name}}</div> #}
+            <div class="buttons">
+                <a href="/admin/users/{{user.id}}/edit">Editar</a>
+                <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()" >
+                <button type="submit" class="outline-link">Remover</button>   
+                </form>
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="title">André Torquato Silva</div>
+            <div class="sub-title">andre@torquato.br</div>
+            {# <div class="title">{{user.name}}</div> #}
+            <div class="buttons">
+                <a href="/admin/users/{{user.id}}/edit">Editar</a>
+                <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()" >
+                <button type="submit" class="outline-link">Remover</button>   
+                </form>
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="title">André Torquato Silva</div>
+            <div class="sub-title">andre@torquato.br</div>
+            {# <div class="title">{{user.name}}</div> #}
+            <div class="buttons">
+                <a href="/admin/users/{{user.id}}/edit">Editar</a>
+                <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()" >
+                <button type="submit" class="outline-link">Remover</button>   
+                </form>
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="title">André Torquato Silva</div>
+            <div class="sub-title">andre@torquato.br</div>
+            {# <div class="title">{{user.name}}</div> #}
+            <div class="buttons">
+                <a href="/admin/users/{{user.id}}/edit">Editar</a>
+                <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()" >
+                <button type="submit" class="outline-link">Remover</button>   
                 </form>
             </div>
         </div>

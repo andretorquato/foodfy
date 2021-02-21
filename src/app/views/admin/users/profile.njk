@@ -1,0 +1,18 @@
+{% extends 'admin/layout.njk' %} 
+{% block header %}
+<title>{{ user.name }}</title>
+<link rel="stylesheet" href="../../../styles/users.css" />
+{% endblock header %} {% block content %}
+<div class="show">
+  <form action="" method="post" class="profile-user">
+  <div class="header">
+    <h1>Bem vindo {{ user.name }}</h1>
+    <a class="button" href="{{ user.id }}/edit">Salvar</a>
+  </div>
+  
+    <div class="form">
+      {% include 'admin/users/fields.njk'%}
+    </div>
+  </form>
+</div>
+{% endblock content %}

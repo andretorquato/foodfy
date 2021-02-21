@@ -1,5 +1,3 @@
-
-
 .gray{
     background-color:#8A8A8A;
 }
@@ -30,4 +28,64 @@
 .item input[type="checkbox"]{
     width: 16px;
     margin-right: 1.5%;    
+}
+
+.item.half{
+    width: 48%;
+}
+/* INDEX USERS */
+.card-user.list{
+    display: grid !important; 
+    grid-template-columns: repeat(3, 1fr) !important;
+    max-width: 72vw;
+}
+.list .content-card{
+    max-width: 10vw;
+    
+    margin-bottom: 10%;
+}
+.list .content-card .title{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.list .content-card .sub-title{
+    color:#777777;
+
+}
+.list .buttons{
+    display: flex !important;
+    flex-direction: row nowrap !important;
+    justify-content: flex-start;
+
+}
+
+.cards-user.admin{
+    width: 90vw;
+    margin: auto;
+    padding: 4% 6%;
+}
+.list .buttons a{
+    text-decoration: none;
+    font-size: #6558C3;
+    font-weight: 700;
+    
+}
+.outline-link{
+    color:#F55A5A;
+    
+    background-color:transparent;
+
+    font-weight: 700;
+
+    margin-left: 30%;
+
+    transition: color 300ms;
+}
+.outline-link:hover{
+    color: #ff0000;
+}
+
+/* profile */
+.show{
+    margin: 2% 22%;
 }
