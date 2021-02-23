@@ -157,11 +157,12 @@ module.exports = {
       console.log(error);
     }
   },
-  delete(req, res) {
-    const { id } = req.body;
-
+  async delete(req, res) {
+    const { id, file_id } = req.body;
+    
     Chefs.delete(id);
-
+    await Files.deleteChefImg(file_id);
+    
     return res.redirect("/admin/chefs");
   },
 };

@@ -48,8 +48,9 @@ module.exports = {
     async deleteChefImg(id){
         const result = await db.query(`SELECT * FROM files WHERE id = $1`, [id]);
         const file = result.rows[0];
+        await db.query(`DELETE FROM files WHERE id = $1`, [id]);
         fs.unlinkSync(file.path);
 
-        return db.query(`DELETE FROM files WHERE id = $1`, [id]);
+        return;
     }
 }

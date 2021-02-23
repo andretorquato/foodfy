@@ -7,11 +7,11 @@
   <div class="form-build">
     <p class="title">Iniciar Sessão</p>
     <p class="label">Email</p>
-    <input type="email" name="email" placeholder="Digite seu email"/>
+    <input type="email" name="email" placeholder="Digite seu email" onblur="Validate.apply(this, 'isEmail')"/>
     <p class="label">Senha</p>
     <input type="password" name="password"  placeholder="Digite sua senha"/>
     <div class="buttons">
-      <a href="" class="forgot">Perdeu a senha?</a
+      <a href="/admin/forgot-password" class="forgot">Perdeu a senha?</a
       ><button type="submit">Acessar</button>
     </div>
   </div>

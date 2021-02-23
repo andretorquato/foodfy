@@ -18,6 +18,8 @@
   font-size: 1.8rem;
   color: #111111;
   letter-spacing: 1.65px;
+
+  cursor: pointer;
 }
 
 /* FORM */

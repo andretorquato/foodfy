@@ -3,7 +3,6 @@ const Files = require("../models/files");
 const { getFiles } = require("../models/files");
 
 module.exports = {
- 
   async index(req, res) {
     let { filter, page, limit } = req.query;
 
@@ -20,34 +19,41 @@ module.exports = {
       let recipes = await Recipes.paginate(params);
       recipes = recipes.rows;
       let files = [],
-      images=[];
-      let getIdsRecipes = recipes.map(recipe => recipe.id);
-      let filesId = getIdsRecipes.map(async id => {
+        images = [];
+      let getIdsRecipes = recipes.map((recipe) => recipe.id);
+      let filesId = getIdsRecipes.map(async (id) => {
         let file = await (await Files.getIdRecipesFiles(id)).rows[0];
         file.recipe_id = id;
-        return files.push(file)
-      })
-      
+        return files.push(file);
+      });
+
       await Promise.all(filesId);
-      
-      files = files.map(async file => {
+
+      files = files.map(async (file) => {
         let image = await (await Files.getFiles(file.file_id)).rows[0];
         return images.push({
           ...image,
-          recipe_id: file.recipe_id, 
-          src: `${req.protocol}://${req.headers.host}${image.path.replace("public","")}`,
-  
-        })
+          recipe_id: file.recipe_id,
+          src: `${req.protocol}://${req.headers.host}${image.path.replace(
+            "public",
+            ""
+          )}`,
+        });
       });
-      
-      await Promise.all(files)
-            
+
+      await Promise.all(files);
+
       const pagination = {
         total: Math.ceil(recipes[0].total / limit),
         page,
       };
-      
-      return res.render("admin/recipes/index", { recipes, pagination, filter, images });
+
+      return res.render("admin/recipes/index", {
+        recipes,
+        pagination,
+        filter,
+        images,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -74,8 +80,7 @@ module.exports = {
       });
 
       await Promise.all(filesPromise);
-      
-      
+
       files = files.map((file) => ({
         ...file,
         src: `${req.protocol}://${req.headers.host}${file.path.replace(
@@ -212,12 +217,24 @@ module.exports = {
       console.log(error);
     }
   },
-  delete(req, res) {
-    const files = Array(req.body.files);
-    files.map((file) => Files.delete(file));
+  async delete(req, res) {
+    try {
+      let files = req.body.files;
+      if(typeof files == 'string'){
+        files = Array(files);
+      };      
+      files = files.map((file) => file);
+      
 
-    Recipes.delete(req.body.id);
+      const deleteFiles = await files.map((file) => Files.delete(file));
 
-    return res.redirect("/admin");
+      await Promise.all([deleteFiles]).then(() => {
+        Recipes.delete(req.body.id);
+      });
+
+      return res.redirect("/admin");
+    } catch (error) {
+      console.log(error);
+    }
   },
 };

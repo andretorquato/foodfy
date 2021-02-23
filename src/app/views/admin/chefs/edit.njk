@@ -21,6 +21,7 @@
 </form>
         <form action="/admin/chefs?_method=DELETE" method="post"class="form-delete"  style="display:none;">
         <input type="hidden" name="id" value="{{chef.id}}">
+        <input type="hidden" name="file_id" value="{{chef.file_id}}">
         <button type="submit" class="button delete check">Deletar</button>   
         </form>
 {% endblock content %}

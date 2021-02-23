@@ -41,7 +41,9 @@ header .image-banner{
 }
 
 /* ===CONTENTS === */
-
+main{
+    min-width: 900px;
+}
 section h1{
     margin: auto;
     padding: 2%;
