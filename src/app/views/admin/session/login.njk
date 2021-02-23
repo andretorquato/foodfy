@@ -3,13 +3,25 @@
 <title>Faça Login</title>
 {% endblock head %}
  {% block content %}
+ {% include "parts/message.njk" %}
 <form action="/admin/login" method="post">
   <div class="form-build">
     <p class="title">Iniciar Sessão</p>
     <p class="label">Email</p>
-    <input type="email" name="email" placeholder="Digite seu email" onblur="Validate.apply(this, 'isEmail')"/>
+    <input 
+    type="email" 
+    name="email" 
+    placeholder="Digite seu email" 
+    onblur="Validate.apply(this, 'isEmail')" value="{{email}}"
+    {% if error %}
+    class="border-error"
+    {% endif %}
+    />
     <p class="label">Senha</p>
-    <input type="password" name="password"  placeholder="Digite sua senha"/>
+    <input type="password" name="password"  placeholder="Digite sua senha" 
+    {% if error %}
+    class="border-error"
+    {% endif %}/>
     <div class="buttons">
       <a href="/admin/forgot-password" class="forgot">Perdeu a senha?</a
       ><button type="submit">Acessar</button>

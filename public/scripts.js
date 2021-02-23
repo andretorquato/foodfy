@@ -142,16 +142,17 @@ const Validate = {
       div.classList.add("error");
       div.innerHTML = error;
       input.parentNode.appendChild(div);
-      console.log(input);
-      
+      input.classList.add("border-error");
       input.focus();
 
     },
     clearErros(input){
       const errorDiv = input.parentNode.querySelector(".error");
-
+      
       if(errorDiv)
         errorDiv.remove();
+        input.classList.remove("border-error");
+        
     },
     isEmail(value){
       let error = null;

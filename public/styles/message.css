@@ -1,0 +1,23 @@
+.message{
+    
+    position: absolute;
+    right: 1%;
+
+    width: 18vw;
+    height: 10vh;
+
+    display: flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size: 1.1rem;
+    font-weight:600;
+}
+.message.error{
+    
+    
+    color:white;
+    background-color:#DC4747;
+    
+
+}
