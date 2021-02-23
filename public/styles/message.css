@@ -10,14 +10,33 @@
     justify-content:center;
     align-items:center;
 
+    color:white;
+
     font-size: 1.1rem;
     font-weight:600;
+
+    opacity: 1;
+    animation: hidemessage 400ms 5s ease-out forwards;
 }
 .message.error{
-    
-    
-    color:white;
     background-color:#DC4747;
-    
+}
 
+.message.sucess{
+    background-color:#01B12A;
+}
+
+@keyframes hidemessage{
+    10%{
+        right: -10vw;
+        opacity:0.5;
+    }
+    50%{
+        right: -10vw;
+        opacity: 0.2;
+    }
+    100%{
+        right:10px;
+        opacity: 0;
+    }
 }

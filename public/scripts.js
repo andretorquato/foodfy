@@ -1,8 +1,5 @@
 const contents_recipes = document.querySelectorAll(".content_recipe");
 const rows = document.querySelectorAll(".row");
-const locale = location.pathname;
-const links = document.querySelectorAll(".links");
-const teste = "teste";
 const formDelete = document.querySelector(".form-delete");
 const deleteButton = document.querySelector("#button-delete");
 
@@ -112,7 +109,7 @@ const PhotosUpload = {
     photoDiv.remove();
   },
 };
-// Galeria de Imagens
+
 const ImageGallery = {
   highlight: document.querySelector(".gallery .highlight > img"),
   previews: document.querySelectorAll(".gallery-preview > img"),
@@ -126,13 +123,13 @@ const ImageGallery = {
     ImageGallery.highlight.src = target.src;
   },
 };
-// Validates
+
 const Validate = {
     apply(input, func){
       Validate.clearErros(input);
 
       let results = Validate[func](input.value);
-      console.log(results.error);
+      
       if(results.error)
           Validate.displayError(input, results.error);
       
@@ -148,10 +145,11 @@ const Validate = {
     },
     clearErros(input){
       const errorDiv = input.parentNode.querySelector(".error");
+      const allBorders = document.querySelectorAll(".border-error");
       
       if(errorDiv)
         errorDiv.remove();
-        input.classList.remove("border-error");
+        allBorders.forEach(input => input.classList.remove("border-error"));
         
     },
     isEmail(value){
@@ -170,9 +168,17 @@ const Validate = {
     }
 }
 
-for (let link of links) {
-  if (locale.includes(link.getAttribute("href"))) link.classList.add("active");
+const linksActive = {
+  locale: location.pathname,
+  links: document.querySelectorAll(".links"),
+  setActiveRoute(){
+    linksActive.links.forEach(link => {
+      if (linksActive.locale.includes(link.getAttribute("href"))) 
+      link.classList.add("active");
+    })
+  }
 }
+linksActive.setActiveRoute();
 
 for (let content_recipe of contents_recipes) {
   content_recipe.addEventListener("click", function () {
