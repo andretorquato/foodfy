@@ -1,5 +1,4 @@
 const Users = require("../models/users");
-const Files = require("../models/files");
 
 module.exports = {
   redirect(req, res) {
@@ -29,30 +28,19 @@ module.exports = {
   },
   async post(req, res) {
     const keys = Object.keys(req.body);
-
+    console.log(req.body);
     for (let key of keys) {
       if (req.body[key] == "") {
-        return res.send(req.body[key] + "vazio");
+        return res.render("/admin/users/create",{
+          user: req.body,
+          error: "Preencha todos os campos"
+        });
       }
     }
-
-    if (req.files.length == 0) {
-      return res.send("Insira uma foto de usuário");
-    }
-
     try {
-      const userImage = await Files.create({
-        ...req.files[0],
-        path: `${req.files[0].path.replace(/\\/g, "/")}`,
-      });
+      const userId = await Users.create(req.body);
 
-      const data = {
-        ...req.body,
-        file_id: userImage.rows[0].id,
-      };
-      const user = await Users.post(data);
-
-      return res.redirect(`users/${user.rows[0].id}`);
+      return res.redirect(`users/${userId}`);
     } catch (error) {
       console.log(error);
     }

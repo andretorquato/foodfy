@@ -7,7 +7,7 @@ CREATE TABLE "recipes" (
   "title" text NOT NULL,
   "information" text,
   "preparations" text[],
-  "ingredients" text,
+  "ingredients" text[],
   "user_id" int NOT NULL,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
@@ -37,6 +37,7 @@ CREATE TABLE "recipe_files" (
 CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
   "name" text NOT NULL,
+  "email" text NOT NULL UNIQUE,
   "password" text NOT NULL,
   "reset_token" text,
   "reset_token_expires" text,
