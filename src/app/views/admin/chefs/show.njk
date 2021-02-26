@@ -2,7 +2,9 @@
 {% block header %}
 <title>{{ chef.name }}</title>
 <link rel="stylesheet" href="../../../styles/chefs.css" />
-{% endblock header %} {% block content %}
+{% endblock header %} 
+{% block content %}
+{% include "parts/message.njk" %}
 <div class="show">
   <div class="header">
     <h1>Chef: {{ chef.name }}</h1>

@@ -6,8 +6,10 @@ module.exports = {
   },
   async index(req, res) {
     try {
-        
-      return res.render("admin/users/index");
+      let users = await Users.allChefs();
+      users = users.rows;
+      
+      return res.render("admin/users/index", { users });
     } catch (error) {
       console.log(error);
     }

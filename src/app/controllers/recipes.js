@@ -1,6 +1,5 @@
 const Recipes = require("../models/recipes");
 const Files = require("../models/files");
-const { getFiles } = require("../models/files");
 
 module.exports = {
   async index(req, res) {
@@ -44,7 +43,7 @@ module.exports = {
       await Promise.all(files);
 
       const pagination = {
-        total: Math.ceil(recipes[0].total / limit),
+        total: Math.ceil(recipes[0].total / limit) || 1,
         page,
       };
 
@@ -143,12 +142,17 @@ module.exports = {
 
     for (let key of keys) {
       if (req.body[key] == "") {
-        res.send("preencha todos os campos");
-        return;
+        res.render("/admin/recipes/create",{
+          recipe: req.body,
+          error: "Preencha todos os campos"
+        });
       }
     }
     if (req.files.length == 0) {
-      return res.send("Insira pelo menos uma imagem");
+      return res.render("/admin/recipes/create",{
+        recipe: req.body,
+        error: "Insira pelo menos uma imagem"
+      });
     }
     try {
       let idFiles = [];

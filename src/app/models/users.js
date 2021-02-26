@@ -41,5 +41,14 @@ module.exports = {
         const result = await db.query(query, values);
         
         return result.rows[0].id;
-    }
+    },
+    allChefs() {
+        const query = `
+            SELECT * FROM users
+            ORDER BY updated_at DESC
+            `;
+    
+          return db.query(query);
+        
+      },
 }

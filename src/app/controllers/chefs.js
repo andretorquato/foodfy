@@ -99,12 +99,17 @@ module.exports = {
 
     for (let key of keys) {
       if (req.body[key] == "") {
-        return res.send(req.body[key] + "vazio");
+        return res.render("admin/chefs/create", {
+          error:"Preencha todos os campos"
+        })
+        
       }
     }
 
     if (req.files.length == 0) {
-      return res.send("Insira uma foto de usuário");
+      return res.render("admin/chefs/create", {
+        error: "Adicione pelo menos uma imagem"
+      })
     }
 
     try {
@@ -128,14 +133,17 @@ module.exports = {
     const keys = Object.keys(req.body);
     for (let key of keys) {
       if (req.body[key] == "") {
-        res.redirect("admin/chefs/create");
-        alert("preencha todos os campos");
+        res.render("admin/chefs/create", {
+          error:"Preencha todos os campos"
+        });
         return;
       }
     }
 
     if (req.files.length == 0) {
-      return res.send("Insira uma foto de usuário");
+      return res.render("admin/chefs/create",{
+        error: "Insira uma imagem"
+      });
     }
 
     try {
@@ -153,6 +161,7 @@ module.exports = {
       await Files.deleteChefImg(req.body.file_id);
 
       return res.redirect(`/admin/chefs/${req.body.id}`);
+     
     } catch (error) {
       console.log(error);
     }
