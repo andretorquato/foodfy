@@ -5,7 +5,7 @@ async function post(req, res, next){
     const keys = Object.keys(req.body);
     for(key of keys){
         if(req.body[key] == ""){
-            return res.render("/admin/users/create", {
+            return res.render("admin/users/create", {
                 user: req.body,
                 error:"Preencha todos os campos"
             });
@@ -17,13 +17,19 @@ async function post(req, res, next){
         where: { email }
     })
 
-    if( user ) return res.render("/admin/users/create", {
+    if( user ) return res.render("admin/users/create", {
         error: "Este e-mail já foi cadastrado!"
     });
 
     next();    
 }
 
+
+async function update(req, res, next){
+    next();
+}
+
 module.exports = {
-    post
+    post,
+    update
 }

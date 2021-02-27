@@ -41,9 +41,14 @@ module.exports = {
       });
 
       await Promise.all(files);
-
+      
+      let total = 1;
+      if(recipes.length > 0){
+        total = Math.ceil(recipes[0].total / limit);
+      }
+      
       const pagination = {
-        total: Math.ceil(recipes[0].total / limit) || 1,
+        total: total,
         page,
       };
 
@@ -138,41 +143,25 @@ module.exports = {
     return res.render("admin/recipes/create", { options: chefs });
   },
   async post(req, res) {
-    const keys = Object.keys(req.body);
-
-    for (let key of keys) {
-      if (req.body[key] == "") {
-        res.render("/admin/recipes/create",{
-          recipe: req.body,
-          error: "Preencha todos os campos"
-        });
-      }
-    }
-    if (req.files.length == 0) {
-      return res.render("/admin/recipes/create",{
-        recipe: req.body,
-        error: "Insira pelo menos uma imagem"
-      });
-    }
     try {
-      let idFiles = [];
-      let recipes = await Recipes.post(req.body);
+      // let idFiles = [];
+      // let recipe = await Recipes.post(req.body);
 
-      const filesPromise = req.files.map(async (file) => {
-        const id = await Files.create({
-          ...file,
-          path: `${file.path.replace(/\\/g, "/")}`,
-        });
-        idFiles.push(id.rows[0].id);
-      });
+      // const filesPromise = req.files.map(async (file) => {
+      //   const id = await Files.create({
+      //     ...file,
+      //     path: `${file.path.replace(/\\/g, "/")}`,
+      //   });
+      //   idFiles.push(id.rows[0].id);
+      // });
 
-      await Promise.all(filesPromise, recipes).then(() => {
-        idFiles.forEach((idFile) => {
-          Files.createReferenceRecipeImages(recipes.rows[0].id, idFile);
-        });
-      });
+      // await Promise.all(filesPromise, recipe).then(() => {
+      //   idFiles.forEach((idFile) => {
+      //     Files.createReferenceRecipeImages(recipe.id, idFile);
+      //   });
+      // });
 
-      return res.redirect(`/admin/recipes/${recipes.rows[0].id}`);
+      // return res.redirect(`/admin/recipes/${recipe.id}`);
     } catch (error) {
       console.log(error);
     }

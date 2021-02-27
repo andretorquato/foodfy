@@ -3,7 +3,6 @@ CREATE DATABASE foodfy
 CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
   "chef_id" int NOT NULL,
-  "image" text NOT NULL,
   "title" text NOT NULL,
   "information" text,
   "preparations" text[],

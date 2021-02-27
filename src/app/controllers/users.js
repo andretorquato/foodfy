@@ -29,16 +29,7 @@ module.exports = {
     return res.render("admin/users/create");
   },
   async post(req, res) {
-    const keys = Object.keys(req.body);
-    console.log(req.body);
-    for (let key of keys) {
-      if (req.body[key] == "") {
-        return res.render("/admin/users/create",{
-          user: req.body,
-          error: "Preencha todos os campos"
-        });
-      }
-    }
+    
     try {
       const userId = await Users.create(req.body);
 
@@ -46,6 +37,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
+    
   },
   async put(req, res) {
     const keys = Object.keys(req.body);

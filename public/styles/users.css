@@ -9,7 +9,11 @@
     justify-self: flex-end;
     margin-right:4%;
 }
-
+a.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /* USERS FORM  */
 .items{
     width: 100%;
