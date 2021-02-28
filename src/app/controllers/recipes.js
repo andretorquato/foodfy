@@ -144,31 +144,31 @@ module.exports = {
   },
   async post(req, res) {
     try {
-      // let idFiles = [];
-      // let recipe = await Recipes.post(req.body);
+      let idFiles = [];
+      let recipe = await Recipes.post(req.body);
 
-      // const filesPromise = req.files.map(async (file) => {
-      //   const id = await Files.create({
-      //     ...file,
-      //     path: `${file.path.replace(/\\/g, "/")}`,
-      //   });
-      //   idFiles.push(id.rows[0].id);
-      // });
+      const filesPromise = req.files.map(async (file) => {
+        const id = await Files.create({
+          ...file,
+          path: `${file.path.replace(/\\/g, "/")}`,
+        });
+        idFiles.push(id.rows[0].id);
+      });
 
-      // await Promise.all(filesPromise, recipe).then(() => {
-      //   idFiles.forEach((idFile) => {
-      //     Files.createReferenceRecipeImages(recipe.id, idFile);
-      //   });
-      // });
+      await Promise.all(filesPromise, recipe).then(() => {
+        idFiles.forEach((idFile) => {
+          Files.createReferenceRecipeImages(recipe.id, idFile);
+        });
+      });
 
-      // return res.redirect(`/admin/recipes/${recipe.id}`);
+      return res.redirect(`/admin/recipes/${recipe.id}`);
     } catch (error) {
       console.log(error);
     }
   },
   async put(req, res) {
     const keys = Object.keys(req.body);
-
+    console.log(keys);
     for (let key of keys) {
       if (req.body[key] == "" && key != "removed_files") {
         res.redirect("admin/recipes/create");

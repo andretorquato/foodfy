@@ -8,7 +8,7 @@ module.exports = {
     try {
       let users = await Users.allChefs();
       users = users.rows;
-      
+      console.log(req.session.userId);
       return res.render("admin/users/index", { users });
     } catch (error) {
       console.log(error);
@@ -32,8 +32,9 @@ module.exports = {
     
     try {
       const userId = await Users.create(req.body);
-
-      return res.redirect(`users/${userId}`);
+      req.session.userId = userId;
+      console.log(req.session.userId);
+      return res.redirect(`users`);
     } catch (error) {
       console.log(error);
     }

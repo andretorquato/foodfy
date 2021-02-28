@@ -2,14 +2,14 @@
 {% block content %}
 <form action="/admin/users" method="post">
 <div class="edit">
-    
+    {% include 'parts/message.njk' %}
     <div class="header">
         <h1>Criar Usuário</h1>
         <div class="buttons">
         <button type="submit"class="button check">Novo</button>
-        <a href="/admin/users">
-        <button type="button" class="button check gray">Cancelar</button>     
-        </a>
+        
+        <a href="/admin/users" class="button check gray">Cancelar</a>     
+        
         </div>
     </div>
     <div class="form"> 
