@@ -2,7 +2,7 @@
 {% block content %}
 <form action="/admin/users?_method=PUT" method="post">
 <div class="edit">
-    
+    {% include 'parts/message.njk' %}
     <div class="header">
         <h1>Atualizar Usuário</h1>
         <div class="buttons">

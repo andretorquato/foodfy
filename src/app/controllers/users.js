@@ -16,14 +16,14 @@ module.exports = {
   },
   async profile(req, res) {
     const { id } = req.params;
-
-
+    
     return res.render("admin/users/profile");
   },
   async edit(req, res) {
     const { id } = req.params;
-
-    return res.render("admin/users/edit");
+    const notDisplayPassword = true;
+    const user = await Users.findOne({ where: { id }})
+    return res.render("admin/users/edit", { user,  notDisplayPassword});
   },
   create(req, res) {
     return res.render("admin/users/create");
@@ -33,41 +33,21 @@ module.exports = {
     try {
       const userId = await Users.create(req.body);
       req.session.userId = userId;
-      console.log(req.session.userId);
       return res.redirect(`users`);
     } catch (error) {
       console.log(error);
     }
     
   },
-  async put(req, res) {
-    const keys = Object.keys(req.body);
-    for (let key of keys) {
-      if (req.body[key] == "") {
-        res.redirect("admin/users/create");
-        alert("preencha todos os campos");
-        return;
-      }
-    }
-
-    if (req.files.length == 0) {
-      return res.send("Insira uma foto de usuário");
-    }
-
+  async update(req, res) {
+   
     try {
-      const userImage = await Files.create({
-        ...req.files[0],
-        path: `${req.files[0].path.replace(/\\/g, "/")}`,
-      });
-      const data = {
-        ...req.body,
-        file_id: userImage.rows[0].id,
-      };
+      
+      let { user }= req.session;
+      let { email, name, is_admin } = req.body;
 
-      const user = await Users.put(data);
-
-      await Files.deleteUserImg(req.body.file_id);
-
+      console.log(user);
+      console.log(req.body);
       return res.redirect(`/admin/users/${req.body.id}`);
     } catch (error) {
       console.log(error);

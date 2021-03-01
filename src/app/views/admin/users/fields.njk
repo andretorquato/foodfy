@@ -9,10 +9,21 @@
 </div>
 </div>
 <div class="item input-checkbox">
-    <input type="checkbox" name="is_admin" value="true"><p class="title">Administrador</p>
+    <input 
+    type="checkbox" 
+    name="is_admin"
+    {% if user.is_admin == true %}
+    checked
+    value="true" 
+    {%else%}
+    value="false" 
+    {% endif %}
+    ><p class="title">Administrador</p>
 </div>
-
+{% if notDisplayPassword == false %}
 <div class="item half">
     <div class="title">Senha</div>
     <input type="password" name="password" placeholder="Digite a senha">
 </div>
+{% endif %}
+

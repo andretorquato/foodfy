@@ -10,7 +10,7 @@ routes.get('/users/create', UsersController.create);
 routes.get('/users/:id/profile', UsersController.profile);
 routes.get('/users/:id/edit', UsersController.edit);
 routes.post('/users', UserValidator.post,UsersController.post);
-routes.put('/users', UserValidator.update, UsersController.put);
+routes.put('/users', UserValidator.update, UsersController.update);
 routes.delete('/users', UsersController.delete);
 
 
