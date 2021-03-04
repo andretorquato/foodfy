@@ -16,19 +16,12 @@ module.exports = {
         return res.render("admin/session/forgot-password-form");
     },
     login(req, res){
-        const keys = Object.keys(req.body);
-
-        for (let key of keys) {
-          if (req.body[key] == "") {
-            res.render("admin/session/login", {
-                email: req.body.email,
-                error: "Preencha todos os campos",
-            })
-            return;
-          }
-        }
-        
-        return res.render("admin/chefs/index");
+        req.session.userId = req.user.id;
+        return res.redirect("/admin/recipes");
+    },
+    logout(req, res){
+        req.session.destroy();
+        return res.redirect("/admin");
     },
     async forgot(req, res){
         const user = req.user

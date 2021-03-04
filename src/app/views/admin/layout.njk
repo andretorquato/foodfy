@@ -32,9 +32,9 @@
             
         </div>
         
-        <a href="/admin/login" class="login">
-            SAIR
-            </a>
+        <form action="/admin/logout" method="post" class="login">
+            <button type="submit" class="login" style="background-color:transparent;">SAIR</button>
+            </form>
     </header>
     <main>
         {% block content %}

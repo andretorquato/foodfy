@@ -4,7 +4,7 @@ const Files = require("../models/files");
 module.exports = {
   async index(req, res) {
     let { filter, page, limit } = req.query;
-
+    console.log(req.session);
     page = page || 1;
     limit = limit || 4;
     let offset = limit * (page - 1);
