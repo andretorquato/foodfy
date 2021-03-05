@@ -16,7 +16,13 @@ module.exports = {
         return res.render("admin/session/forgot-password-form");
     },
     login(req, res){
-        req.session.userId = req.user.id;
+
+        req.session.user = {
+            name: req.user.name,
+            id: req.user.id,
+            is_admin: req.user.is_admin
+        };
+        console.log(req.session.user);
         return res.redirect("/admin/recipes");
     },
     logout(req, res){
