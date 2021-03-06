@@ -6,6 +6,7 @@ module.exports = {
     return res.redirect("admin/chefs");
   },
   async index(req, res) {
+    const user = req.session.user;
     try {
       let chefs = await Chefs.allChefs();
       chefs = chefs.rows;
@@ -32,8 +33,8 @@ module.exports = {
       await Promise.all(chefs);
 
       chefs = auxChefs;
-
-      return res.render("admin/chefs/index", { chefs });
+      
+      return res.render("admin/chefs/index", { chefs, user });
     } catch (error) {
       console.log(error);
     }

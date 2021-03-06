@@ -146,11 +146,13 @@ a.links {
     font-size: 1.2rem;
     font-weight: 500;
     color: #6558C3;
-
+    
+    
 }
-.card .content-card  .link a:hover{
+.card .content-card  .link:hover{
     opacity: 0.6;
-    font-size: 1.3rem;
+    
+    transform: translateX(4%) scale(1.1);
     transition: 400ms;
 }
 
@@ -389,6 +391,8 @@ a.links {
     opacity:0;
 
     transition: opacity 500ms;
+
+    cursor:pointer;
 }
 
 

@@ -1,14 +1,12 @@
 {% extends 'admin/layout.njk' %};
+{%  import "parts/acessButtons.njk" as panel %}
 {% block header %}
 <title>Usuários</title>
-<link rel="stylesheet" href="../../../styles/users.css">
+<link rel="stylesheet" href="/styles/users.css">
 {% endblock header %}
 {% block content %}
 <div class="content users">
-<div class="header flex">
-        <h1>Usuários</h1>
-        <a class="button h-40" href="users/create">Novo</a>
-    </div>
+{{ panel.acessButtons("Usuários", "Novo", userLogged.is_admin) }}
 <div class="cards-user admin">
     
     

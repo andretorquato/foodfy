@@ -1,13 +1,18 @@
 {% extends 'admin/layout.njk' %};
 {% block header %}
 <title>Chefs</title>
-<link rel="stylesheet" href="../../../styles/chefs.css">
+<link rel="stylesheet" href="/styles/chefs.css">
 {% endblock header %}
 {% block content %}
 <div class="content chefs">
 <div class="header flex">
         <h1>Gerenciar Chefs</h1>
+        {% if user.is_admin == true %}
         <a class="button h-40" href="chefs/create">Criar Novo Chef</a>
+        {% else %}
+        <span></span>
+        {% endif %}
+        
     </div>
 <div class="cards-chef admin">
     {% for chef in chefs %}

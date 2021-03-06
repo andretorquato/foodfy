@@ -5,10 +5,11 @@ module.exports = {
     return res.redirect("admin/users");
   },
   async index(req, res) {
+    const userLogged = req.session.user;
     try {
       let users = await Users.allChefs();
       users = users.rows;
-      return res.render("admin/users/index", { users });
+      return res.render("admin/users/index", { users, userLogged });
     } catch (error) {
       console.log(error);
     }
