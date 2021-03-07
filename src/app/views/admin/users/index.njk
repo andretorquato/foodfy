@@ -5,11 +5,10 @@
 <link rel="stylesheet" href="/styles/users.css">
 {% endblock header %}
 {% block content %}
+{%  include "parts/message.njk" %}
 <div class="content users">
 {{ panel.acessButtons("Usuários", "Novo", userLogged.is_admin) }}
 <div class="cards-user admin">
-    
-    
     <div class="card-user list">
     {% for user in users %}
         <div class="content-card">
@@ -24,7 +23,6 @@
         </div>
         {% endfor %}
     </div>
-    
 </div>
 </div>
 {% endblock content %}

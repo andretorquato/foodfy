@@ -1,3 +1,5 @@
+const User = require('../models/users');
+
 function userIsLogged(req, res, next) {
   if (req.session.user) {
     return res.redirect("/admin/recipes");
@@ -20,8 +22,21 @@ function userIsLoggedAndIsAdmin(req, res, next) {
   }
   next();
 }
+
+async function userProfileAccess(req, res, next) {
+  const { id } = req.params;
+  const { token } = req.query;
+  const user = await User.findOne({ where: { id }});
+
+  if(!req.session.user && !token) return res.redirect("/admin/login");
+
+  if(token != user.reset_token) return res.redirect("/admin/login");
+
+  next();
+}
 module.exports = {
   userIsLogged,
   userIsNotLogged,
-  userIsLoggedAndIsAdmin
+  userIsLoggedAndIsAdmin,
+  userProfileAccess,
 };

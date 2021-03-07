@@ -1,13 +1,31 @@
 <div class="items">
 <div class="item">
     <div class="title">Nome</div>
-    <input type="text" name="name" value="{{user.name}}" placeholder="Digite o nome completo">
+    <input 
+    type="text"
+    name="name"
+    value="{{user.name}}" 
+    placeholder="Digite o nome completo"
+    {% if token %}
+    disabled
+    {% endif %}
+    >
 </div>
 <div class="item">
     <div class="title">Email</div>
-    <input type="email" name="email" value="{{user.email}}" placeholder="Digite o email">
+    <input 
+    type="email" 
+    name="email" 
+    value="{{user.email}}" 
+    placeholder="Digite o email"
+    onblur="Validate.apply(this, 'isEmail')" value="{{email}}"
+    {% if token %}
+    disabled
+    {% endif %}
+    >
 </div>
 </div>
+{% if notDisplayPassword %}
 <div class="item input-checkbox">
     <input 
     type="checkbox" 
@@ -20,10 +38,11 @@
     {% endif %}
     ><p class="title">Administrador</p>
 </div>
-{% if notDisplayPassword == false %}
+{% endif %}
+{% if notDisplayPassword == false or token %}
 <div class="item half">
     <div class="title">Senha</div>
     <input type="password" name="password" placeholder="Digite a senha">
 </div>
 {% endif %}
-
+<input type="hidden" name="token" value="{{token}}">

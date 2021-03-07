@@ -29,12 +29,12 @@ module.exports = {
             ) VALUES($1, $2, $3, $4)
             RETURNING id
         `;
-    const passwordHash = await hash(data.password, 8);
-
+    
+        data.password = "";
     const values = [
       data.name,
       data.email,
-      passwordHash,
+       data.password,
       data.is_admin || false,
     ];
 
@@ -56,7 +56,7 @@ module.exports = {
     Object.keys(fields).map((key, index, array) => {
         if(( index +1 ) < array.length){
             query = `${query} 
-              ${key} = ${fields[key]},
+              ${key} = '${fields[key]}',
             `
         }else{
           query = `${query}

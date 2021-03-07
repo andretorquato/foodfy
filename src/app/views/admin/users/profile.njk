@@ -3,16 +3,18 @@
 <title>{{ user.name }}</title>
 <link rel="stylesheet" href="/styles/users.css" />
 {% endblock header %} {% block content %}
+{%  include "parts/message.njk" %}
 <div class="show">
-  <form action="" method="post" class="profile-user">
+  <form action="/admin/user-create-password?_method=PUT" method="post" class="profile-user">
   <div class="header">
     <h1>Bem vindo {{ user.name }}</h1>
-    <a class="button" href="{{ user.id }}/edit">Salvar</a>
+    <button type="submit" class="button">Salvar</button>
   </div>
   
     <div class="form">
       {% include 'admin/users/fields.njk'%}
     </div>
+    <input type="hidden" name="id" value="{{user.id}}">
   </form>
 </div>
 {% endblock content %}
