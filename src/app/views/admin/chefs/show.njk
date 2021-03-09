@@ -1,4 +1,5 @@
 {% extends 'admin/layout.njk' %} 
+{% import 'parts/acessButtons.njk' as panel %}
 {% block header %}
 <title>{{ chef.name }}</title>
 <link rel="stylesheet" href="/styles/chefs.css" />
@@ -6,10 +7,7 @@
 {% block content %}
 {% include "parts/message.njk" %}
 <div class="show">
-  <div class="header">
-    <h1>Chef: {{ chef.name }}</h1>
-    <a class="button" href="{{ chef.id }}/edit">Editar Chef</a>
-  </div>
+{{ panel.acessButtons("Chef: "+ chef.name, "Editar", user.is_admin, chef.id+"/edit") }}
 
   <div class="info chef">
     <div class="inf">

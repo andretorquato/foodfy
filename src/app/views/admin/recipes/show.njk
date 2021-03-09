@@ -1,13 +1,10 @@
 {% extends 'admin/layout.njk' %}
 {% import 'parts/gallery.njk' as view %}
+{% import 'parts/acessButtons.njk' as panel %}
 
 {% block content %}
 <div class="show">
-    <div class="header">
-        <h1>Receita: {{recipe.title}}</h1>
-        <a class="button" href="{{recipe.id}}/edit">Editar Receita</a>
-    </div>
-
+{{ panel.acessButtons( recipe.title, "Editar", userVerification, recipe.id+"/edit") }}
     <div class="info">
         
         {{ view.gallery(recipe, files, chefs) }}

@@ -82,7 +82,7 @@ module.exports = {
 
     await Promise.all(files);
     
-    return res.render("admin/chefs/show", { chef, recipes, images, photo });
+    return res.render("admin/chefs/show", { chef, recipes, images, photo, user: req.session.user });
   },
   async edit(req, res) {
     const { id } = req.params;

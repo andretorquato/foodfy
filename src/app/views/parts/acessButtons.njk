@@ -1,8 +1,8 @@
-{% macro acessButtons(title, buttonTitle, permission) %}
+{% macro acessButtons(title, buttonTitle, permission, route) %}
     <div class="header flex">
         <h1>{{title}}</h1>
         {% if permission %}
-        <a class="button h-40" href="users/create">{{buttonTitle}}</a>
+        <a class="button h-40" href="{{route}}">{{buttonTitle}}</a>
         {% else %}
         <span></span>
         {% endif %}

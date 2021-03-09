@@ -14,14 +14,14 @@ module.exports = {
          ) VALUES ($1, $2, $3, $4, $5, $6)
          RETURNING id
         `;
-    const user_id = 1;
+    
     const values = [
       data.chef_id,
       data.title,
       Array(data.ingredients),
       Array(data.preparations),
       data.information,
-      user_id
+      data.user_id
     ];
 
     let result = await db.query(query, values);

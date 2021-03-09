@@ -6,7 +6,7 @@
 {% endblock header %}
 {% block content %}
 <div class="content chefs">
-{{ panel.acessButtons("Chefs", "Criar Novo Chef", user.is_admin) }}
+{{ panel.acessButtons("Chefs", "Criar Novo Chef", user.is_admin, "users/create") }}
 <div class="cards-chef admin">
     {% for chef in chefs %}
     

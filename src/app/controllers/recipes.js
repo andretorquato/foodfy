@@ -40,12 +40,12 @@ module.exports = {
       });
 
       await Promise.all(files);
-      
+
       let total = 1;
-      if(recipes.length > 0){
+      if (recipes.length > 0) {
         total = Math.ceil(recipes[0].total / limit);
       }
-      
+
       const pagination = {
         total: total,
         page,
@@ -92,7 +92,16 @@ module.exports = {
         )}`,
       }));
 
-      return res.render("admin/recipes/show", { recipe, chefs, files });
+      const userVerification =
+        req.session.user.is_admin == true ||
+        req.session.user.id == recipe.user_id;
+
+      return res.render("admin/recipes/show", {
+        recipe,
+        chefs,
+        files,
+        userVerification,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -144,7 +153,9 @@ module.exports = {
   async post(req, res) {
     try {
       let idFiles = [];
-      let recipe = await Recipes.post(req.body);
+      const data = req.body;
+      data.user_id = req.session.user.id;
+      let recipe = await Recipes.post(data);
 
       const filesPromise = req.files.map(async (file) => {
         const id = await Files.create({
@@ -167,7 +178,6 @@ module.exports = {
   },
   async put(req, res) {
     const keys = Object.keys(req.body);
-    console.log(keys);
     for (let key of keys) {
       if (req.body[key] == "" && key != "removed_files") {
         res.redirect("admin/recipes/create");
@@ -212,11 +222,10 @@ module.exports = {
   async delete(req, res) {
     try {
       let files = req.body.files;
-      if(typeof files == 'string'){
+      if (typeof files == "string") {
         files = Array(files);
-      };      
+      }
       files = files.map((file) => file);
-      
 
       const deleteFiles = await files.map((file) => Files.delete(file));
 
