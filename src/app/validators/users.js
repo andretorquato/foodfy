@@ -28,10 +28,11 @@ async function update(req, res, next) {
   const keys = Object.keys(req.body);
 
   for (let key of keys) {
-    if (req.body[key] == "") {
+    if (req.body[key] == "" && key != "token" ){
       res.render("admin/users/edit", {
+        notDisplayPassword: true,
         user: req.body,
-        error: "Preencha todos os campos",
+        error: `Preencha todos os campos`,
       });
 
       return;

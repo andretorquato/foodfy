@@ -96,23 +96,6 @@ module.exports = {
     return res.render("admin/chefs/create");
   },
   async post(req, res) {
-    const keys = Object.keys(req.body);
-
-    for (let key of keys) {
-      if (req.body[key] == "") {
-        return res.render("admin/chefs/create", {
-          error:"Preencha todos os campos"
-        })
-        
-      }
-    }
-
-    if (req.files.length == 0) {
-      return res.render("admin/chefs/create", {
-        error: "Adicione pelo menos uma imagem"
-      })
-    }
-
     try {
       const chefImage = await Files.create({
         ...req.files[0],
@@ -131,22 +114,6 @@ module.exports = {
     }
   },
   async put(req, res) {
-    const keys = Object.keys(req.body);
-    for (let key of keys) {
-      if (req.body[key] == "") {
-        res.render("admin/chefs/create", {
-          error:"Preencha todos os campos"
-        });
-        return;
-      }
-    }
-
-    if (req.files.length == 0) {
-      return res.render("admin/chefs/create",{
-        error: "Insira uma imagem"
-      });
-    }
-
     try {
       const chefImage = await Files.create({
         ...req.files[0],
