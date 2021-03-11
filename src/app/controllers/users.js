@@ -33,10 +33,17 @@ module.exports = {
     return res.render("admin/users/edit", { user, notDisplayPassword });
   },
   create(req, res) {
-    return res.render("admin/users/create");
+    const notDisplayPassword = true;
+    return res.render("admin/users/create", { notDisplayPassword });
   },
   async post(req, res) {
+    
+    const initPassword = crypto.randomBytes(2).toString("hex");
+    const hashPassword = await hash(initPassword, 8);
+
     try {
+      
+      req.body.password = hashPassword;
       const userId = await Users.create(req.body);
       const user = await Users.findOne({ where: { id: userId } });
       const userLogged = await Users.findOne({
@@ -57,11 +64,15 @@ module.exports = {
                 <h2>Sejá bem vindo a foodfy! ${user.name}</h2>
                 <p>Para finalizar seu cadastro precisamos que faço o cadastro de sua senha!</p>
                 <p>Clique no link abaixo para criar sua senha</p>
+                <p>Foi gerada uma senha inicial para acesso: ${initPassword}</p>
+                <br>
+                <p>Caso deseje cadastrar sua senha CLIQUE APENAS NO LINK ABAIXO</p>
                     <p>
                         <a href="http://localhost:3000/admin/users/${user.id}/profile?token=${token}" target="_blank">
                         CADASTRANDO SUA SENHA
                         </a>
                     </p>
+
                 `,
       });
 

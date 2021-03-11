@@ -7,7 +7,7 @@
 {% block content %}
 {%  include "parts/message.njk" %}
 <div class="content users">
-{{ panel.acessButtons("Usuários", "Novo", userLogged.is_admin) }}
+{{ panel.acessButtons("Usuários", "Novo", userLogged.is_admin, "users/create") }}
 <div class="cards-user admin">
     <div class="card-user list">
     {% for user in users %}

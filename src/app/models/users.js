@@ -30,7 +30,6 @@ module.exports = {
             RETURNING id
         `;
     
-        data.password = "";
     const values = [
       data.name,
       data.email,

@@ -3,8 +3,9 @@ const User = require("../models/users");
 async function post(req, res, next) {
   const keys = Object.keys(req.body);
   for (key of keys) {
-    if (req.body[key] == "") {
+    if (req.body[key] == "" && key != "token" ) {
       return res.render("admin/users/create", {
+        notDisplayPassword: true,
         user: req.body,
         error: "Preencha todos os campos",
       });
