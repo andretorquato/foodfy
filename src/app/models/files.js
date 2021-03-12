@@ -41,9 +41,10 @@ module.exports = {
         const file = result.rows[0];
         fs.unlinkSync(file.path);
         
-        const deleteFromRecipesFiles = await db.query(`DELETE FROM recipe_files WHERE file_id = $1;`,[id]);
-
-        return deleteFromRecipesFiles, db.query(`DELETE FROM files WHERE id = $1`, [id]);
+        const deleteFromTAbleRecipesFiles = await db.query(`DELETE FROM recipe_files WHERE file_id = $1;`,[id]);
+        const deleteFromTableFiles = db.query(`DELETE FROM files WHERE id = $1`, [id]);
+        
+        return deleteFromTAbleRecipesFiles, deleteFromTableFiles;
     },
     async deleteChefImg(id){
         const result = await db.query(`SELECT * FROM files WHERE id = $1`, [id]);

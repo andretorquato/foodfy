@@ -226,7 +226,6 @@ module.exports = {
         files = Array(files);
       }
       files = files.map((file) => file);
-
       const deleteFiles = await files.map((file) => Files.delete(file));
 
       await Promise.all([deleteFiles]).then(() => {

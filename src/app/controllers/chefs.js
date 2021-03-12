@@ -137,8 +137,30 @@ module.exports = {
   async delete(req, res) {
     const { id, file_id } = req.body;
     
-    Chefs.delete(id);
-    await Files.deleteChefImg(file_id);
+    let chef = await Chefs.find(id);
+    chef = chef.rows[0];
+
+    let recipes = await Chefs.myRecipes(id);
+    recipes = recipes.rows;
+ 
+    recipes.forEach(async (recipe) => {
+
+      let files = [];
+      let filesId = (async () => {
+        let file = await (await Files.getIdRecipesFiles(recipe.id)).rows[0];
+        return files.push(file);
+      });
+      
+      const deleteFiles = await files.map((img_id) => console.log(img_id));
+
+      await Promise.all([deleteFiles]).then(() => {
+        // Recipes.delete(req.body.id);
+      });  
+    })
+    
+
+    // Chefs.delete(id);
+    // await Files.deleteChefImg(file_id);
     
     return res.redirect("/admin/chefs");
   },
