@@ -33,6 +33,13 @@ module.exports = {
     getFiles(id){
         return db.query(`SELECT * FROM files WHERE id = $1`, [id]);
     },
+    async getAllFilesIdFromRecipe(recipeId){
+        query = `SELECT file_id FROM recipe_files WHERE recipe_id = $1`;
+        
+        let result = await db.query(query, [recipeId]);
+        return result.rows;
+
+    },
     getIdRecipesFiles(id){
             return db.query(`SELECT file_id FROM recipe_files WHERE recipe_id = $1`, [id]);
     },
@@ -42,8 +49,8 @@ module.exports = {
         fs.unlinkSync(file.path);
         
         const deleteFromTAbleRecipesFiles = await db.query(`DELETE FROM recipe_files WHERE file_id = $1;`,[id]);
-        const deleteFromTableFiles = db.query(`DELETE FROM files WHERE id = $1`, [id]);
-        
+        const deleteFromTableFiles = await db.query(`DELETE FROM files WHERE id = $1`, [id]);
+
         return deleteFromTAbleRecipesFiles, deleteFromTableFiles;
     },
     async deleteChefImg(id){

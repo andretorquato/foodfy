@@ -1,4 +1,5 @@
 const Chefs = require("../models/chefs");
+const Recipes = require("../models/recipes");
 const Files = require("../models/files");
 
 module.exports = {
@@ -33,7 +34,7 @@ module.exports = {
       await Promise.all(chefs);
 
       chefs = auxChefs;
-      
+
       return res.render("admin/chefs/index", { chefs, user });
     } catch (error) {
       console.log(error);
@@ -81,8 +82,14 @@ module.exports = {
     });
 
     await Promise.all(files);
-    
-    return res.render("admin/chefs/show", { chef, recipes, images, photo, user: req.session.user });
+
+    return res.render("admin/chefs/show", {
+      chef,
+      recipes,
+      images,
+      photo,
+      user: req.session.user,
+    });
   },
   async edit(req, res) {
     const { id } = req.params;
@@ -129,39 +136,31 @@ module.exports = {
       await Files.deleteChefImg(req.body.file_id);
 
       return res.redirect(`/admin/chefs/${req.body.id}`);
-     
     } catch (error) {
       console.log(error);
     }
   },
   async delete(req, res) {
     const { id, file_id } = req.body;
-    
-    let chef = await Chefs.find(id);
-    chef = chef.rows[0];
 
     let recipes = await Chefs.myRecipes(id);
     recipes = recipes.rows;
- 
-    recipes.forEach(async (recipe) => {
 
-      let files = [];
-      let filesId = (async () => {
-        let file = await (await Files.getIdRecipesFiles(recipe.id)).rows[0];
-        return files.push(file);
-      });
-      
-      const deleteFiles = await files.map((img_id) => console.log(img_id));
+    const deleteRecipes = recipes.map(async (recipe) => {
+      files = await Files.getAllFilesIdFromRecipe(recipe.id);
+
+      const deleteFiles = await files.map((file) => Files.delete(file.file_id));
 
       await Promise.all([deleteFiles]).then(() => {
-        // Recipes.delete(req.body.id);
-      });  
-    })
-    
+        return Recipes.delete(recipe.id);
+      });
+    });
 
-    // Chefs.delete(id);
-    // await Files.deleteChefImg(file_id);
-    
+    const deleteAll = await Promise.all(deleteRecipes).then(() => {
+      Chefs.delete(id);
+      Files.deleteChefImg(file_id);
+    });
+
     return res.redirect("/admin/chefs");
   },
 };
