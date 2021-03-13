@@ -132,8 +132,16 @@ module.exports = {
   delete(req, res) {
     const { id } = req.body;
 
-    Users.delete(id);
+    if(id == req.session.user.id) {
+      // load user
+      return res.render("admin/users/index",{
+        error: "Ops... Você não pode deletar sua propria conta :)"
+      })
+    }else{
+      Users.delete(id);
+      return res.redirect("/admin/users");
+    }
 
-    return res.redirect("/admin/users");
+    
   },
 };

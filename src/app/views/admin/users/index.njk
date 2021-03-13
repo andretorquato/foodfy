@@ -16,9 +16,15 @@
             <div class="sub-title">{{user.email}}</div>
             <div class="buttons">
                 <a href="/admin/users/{{user.id}}/edit">Editar</a>
-                <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()" >
+                {% if userLogged.is_admin == true %}
+                <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()">
                 <button type="submit" class="outline-link">Remover</button>   
+                <input type="hidden" name="id" value="{{user.id}}"> 
                 </form>
+                {% else %}
+                <span></span>
+                {% endif %}
+                
             </div>
         </div>
         {% endfor %}
