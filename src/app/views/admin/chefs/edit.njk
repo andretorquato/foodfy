@@ -1,5 +1,6 @@
 {% extends 'admin/layout.njk' %}
 {% block content %}
+{% include "parts/message.njk" %}
 <form action="/admin/chefs?_method=PUT" method="post" enctype="multipart/form-data">
 <div class="edit">
     

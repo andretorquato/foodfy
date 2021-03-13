@@ -1,34 +1,41 @@
-{% extends 'admin/layout.njk' %};
-{%  import "parts/acessButtons.njk" as panel %}
+{% extends 'admin/layout.njk' %}; {% import "parts/acessButtons.njk" as panel %}
 {% block header %}
 <title>Usuários</title>
-<link rel="stylesheet" href="/styles/users.css">
-{% endblock header %}
-{% block content %}
-{%  include "parts/message.njk" %}
+<link rel="stylesheet" href="/styles/users.css" />
+{% endblock header %} {% block content %} {% include "parts/message.njk" %}
 <div class="content users">
-{{ panel.acessButtons("Usuários", "Novo", userLogged.is_admin, "users/create") }}
-<div class="cards-user admin">
+  {{
+    panel.acessButtons("Usuários", "Novo", userLogged.is_admin, "users/create")
+  }}
+  <div class="cards-user admin">
     <div class="card-user list">
-    {% for user in users %}
-        <div class="content-card">
-            <div class="title">{{user.name}}</div>
-            <div class="sub-title">{{user.email}}</div>
-            <div class="buttons">
-                <a href="/admin/users/{{user.id}}/edit">Editar</a>
-                {% if userLogged.is_admin == true %}
-                <form action="/admin/users?_method=DELETE" method="post" onsubmit="confirmDelete()">
-                <button type="submit" class="outline-link">Remover</button>   
-                <input type="hidden" name="id" value="{{user.id}}"> 
-                </form>
-                {% else %}
-                <span></span>
-                {% endif %}
-                
-            </div>
+      {% for user in users %}
+      <div class="content-card">
+        <div class="title">{{ user.name }}</div>
+        <div class="sub-title">{{ user.email }}</div>
+      
+        {% if userLogged.is_admin == true %}
+        <div class="buttons">
+          <a href="/admin/users/{{ user.id }}/edit">Editar</a>
+          <form
+            action="/admin/users?_method=DELETE"
+            method="post"
+            onsubmit="confirmDelete()"
+          >
+            <button type="submit" class="outline-link">Remover</button>
+            <input type="hidden" name="id" value="{{ user.id }}" />
+          </form>
         </div>
-        {% endfor %}
+        {% endif %}
+        {% if userLogged.is_admin == false and userLogged.id == user.id %}
+        <div class="buttons">
+          <a href="/admin/users/{{ user.id }}/profile">Editar</a>
+          <span></span>
+        </div>
+      {% endif %}
+      </div>
+      {% endfor %}
     </div>
-</div>
+  </div>
 </div>
 {% endblock content %}

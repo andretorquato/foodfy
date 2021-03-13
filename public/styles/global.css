@@ -140,10 +140,7 @@ footer p{
  .gallery-preview img.active{
     opacity: 1;
 }
- div:nth-child(1){
-    text-align: center;
 
-}
 .show .info .recipe-info{
     padding: 2% 0;
     color: #777777;

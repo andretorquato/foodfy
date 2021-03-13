@@ -113,15 +113,14 @@ module.exports = {
   async update(req, res) {
     try {
       let { user } = req.session;
-      let { email, name, is_admin, password } = req.body;
+      let { email, name, is_admin } = req.body;
 
-      password = password || "";
+      
 
       Users.update(req.body.id, {
         email,
         name,
-        is_admin,
-        password,
+        is_admin      
       });
 
       return res.redirect(`/admin/users`);

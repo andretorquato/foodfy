@@ -28,12 +28,6 @@ function update(req, res, next){
         return;
       }
     }
-    if (req.files.length == 0) {
-        return res.render("admin/chefs/edit", {
-          error: "Adicione pelo menos uma imagem"
-        })
-      }
-  
     next();
 }
 function photoValidator(req, res, next){

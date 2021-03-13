@@ -122,20 +122,25 @@ module.exports = {
   },
   async put(req, res) {
     try {
-      const chefImage = await Files.create({
-        ...req.files[0],
-        path: `${req.files[0].path.replace(/\\/g, "/")}`,
-      });
-      const data = {
-        ...req.body,
-        file_id: chefImage.rows[0].id,
-      };
+      if (req.files[0]) {
+        const chefImage = await Files.create({
+          ...req.files[0],
+          path: `${req.files[0].path.replace(/\\/g, "/")}`,
+        });
+        const data = {
+          ...req.body,
+          file_id: chefImage.rows[0].id,
+        };
 
-      const chef = await Chefs.put(data);
+        const { name, file_id } = data;
+        const chef = await Chefs.update(req.body.id, { name, file_id });
 
-      await Files.deleteChefImg(req.body.file_id);
-
-      return res.redirect(`/admin/chefs/${req.body.id}`);
+        await Files.deleteChefImg(req.body.file_id);
+      } else {
+        const { name } = req.body;
+        const chef = await Chefs.update(req.body.id, { name });
+      }
+      return await res.redirect(`/admin/chefs/${req.body.id}`);
     } catch (error) {
       console.log(error);
     }

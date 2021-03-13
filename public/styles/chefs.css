@@ -19,7 +19,8 @@ main{
 }
 .cards-chef{
     margin: 0 auto;
-    max-width:800px;
+    max-width:1000px;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
@@ -81,6 +82,12 @@ main{
 }
 .content-card{
     white-space: nowrap;
+}
+.content-card .title,
+.content-card .qtd-recipes
+{
+    text-align: left;
+    padding-left: 8px;
 }
 /* SHOW cards */
 

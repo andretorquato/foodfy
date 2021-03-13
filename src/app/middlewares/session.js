@@ -30,7 +30,7 @@ async function userProfileAccess(req, res, next) {
 
   if(!req.session.user && !token) return res.redirect("/admin/login");
 
-  if(token != user.reset_token) return res.redirect("/admin/login");
+  if(!req.session.user && token != user.reset_token) return res.redirect("/admin/login");
 
   next();
 }

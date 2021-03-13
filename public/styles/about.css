@@ -1,10 +1,13 @@
 .contents_about{
     margin: 40px 20%;
+    
 }
 .content_about h1{
     padding: 20px 10px;
+    text-align: left !important;
 }
 .contents_about p{
+    text-align: left !important;
     padding-top: 20px;
     font-size: 18px;
     color: #444444;
