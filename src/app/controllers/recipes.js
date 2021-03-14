@@ -162,7 +162,7 @@ module.exports = {
           ...file,
           path: `${file.path.replace(/\\/g, "/")}`,
         });
-        idFiles.push(id.rows[0].id);
+        idFiles.push(id);
       });
 
       await Promise.all(filesPromise, recipe).then(() => {
@@ -202,7 +202,7 @@ module.exports = {
             ...file,
             path: `${file.path.replace(/\\/g, "/")}`,
           });
-          idFiles.push(id.rows[0].id);
+          idFiles.push(id);
         });
 
         await Promise.all(filesPromise).then(() => {

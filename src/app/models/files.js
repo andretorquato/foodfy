@@ -2,7 +2,7 @@ const db = require('../../config/db');
 const fs = require('fs');
 
 module.exports = {
-    create(data){
+    async create(data){
         const query = `
             INSERT INTO files(
             name,
@@ -14,7 +14,8 @@ module.exports = {
             data.filename,
             data.path,
         ]
-        return db.query(query, values);
+        const result =  await db.query(query, values);
+        return result.rows[0].id;
     },
     createReferenceRecipeImages(recipe_id, file_id){
         const query = `

@@ -2,18 +2,17 @@ const { date } = require("../../libs/utils");
 const db = require("../../config/db");
 
 module.exports = {
-  post(data) {
+  async post(data) {
     const query = `
          INSERT INTO chefs(
              name,
-             file_id,
-             created_at
-         ) VALUES ($1, $2, $3)
+             file_id
+         ) VALUES ($1, $2)
          RETURNING id
         `;
-    const values = [data.name, data.file_id, date(Date.now()).iso];
-
-    return db.query(query, values);
+    const values = [data.name, data.file_id];
+    const result = await db.query(query, values);
+    return result.rows[0].id;
     
   },
   allChefs() {

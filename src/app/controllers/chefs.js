@@ -104,18 +104,18 @@ module.exports = {
   },
   async post(req, res) {
     try {
-      const chefImage = await Files.create({
+      const idImageChef = await Files.create({
         ...req.files[0],
         path: `${req.files[0].path.replace(/\\/g, "/")}`,
       });
-
+      
       const data = {
         ...req.body,
-        file_id: chefImage.rows[0].id,
+        file_id: idImageChef,
       };
-      const chef = await Chefs.post(data);
+      const chefId = await Chefs.post(data);
 
-      return res.redirect(`chefs/${chef.rows[0].id}`);
+      return res.redirect(`chefs/${chefId}`);
     } catch (error) {
       console.log(error);
     }
@@ -123,13 +123,13 @@ module.exports = {
   async put(req, res) {
     try {
       if (req.files[0]) {
-        const chefImage = await Files.create({
+        const idImageChef = await Files.create({
           ...req.files[0],
           path: `${req.files[0].path.replace(/\\/g, "/")}`,
         });
         const data = {
           ...req.body,
-          file_id: chefImage.rows[0].id,
+          file_id: idImageChef,
         };
 
         const { name, file_id } = data;
