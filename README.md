@@ -1,6 +1,5 @@
 <h1 align="center">
  Foodfy
-<img alt="Chef" title="#Chef" src="./public/screenshots/chef.png" height="100"/>
 </h1>
 
 <p align="center">Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro.</p>
@@ -34,26 +33,26 @@
 
 
 O Foodfy é uma aplicação web completa de gerenciamento de receitas, desenvolvida durante o bootcamp [LaunchBase](https://rocketseat.com.br/launchbase) da [Rocketseat](https://rocketseat.com.br/).
-
-<h3 align="center">Main</h3>
 <p align="center">
-  <img src=".github/main.gif" alt="página principal">
+<img alt="Chef" title="#Chef" src="./public/screenshots/chef.png" height="100"/>
+</p>
+
+<h3 align="center">Home</h3>
+<p align="center">
+  <img src="./public/screenshots/home.jpg" alt="página principal">
 </p>
 
 <br>
 
-<h3 align="center">Admin</h3>
+<h3 align="center">Login</h3>
 <p align="center">
-  <img src=".github/admin.gif" alt="página admin">
+  <img src="./public/screenshots/login.jpg" alt="página admin">
 </p>
-
 <br>
-
-<h3 align="center">Email de boas-vindas</h3>
+<h3 align="center">Demo</h3>
 <p align="center">
-  <img src=".github/welcome_email.png" alt="página admin">
+  <img src="./public/screenshots/example.gif" alt="página admin">
 </p>
-
 <br>
 
 ## Funcionalidades
@@ -150,7 +149,9 @@ Para usar estes recursos, edite o arquivo `mailer.js` dentro da pasta `scr/lib` 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](/LICENSE) para mais detalhes.
 
 ---
-
-By [André Torquato](https://github.com/AndreTorquato)
+ <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/44441254?s=460&u=9b932a2ecaa511f678b3e0cb118c9b536e6e166e&v=4" width="100px;" alt=""/>
+ <br />
+ <sub>By 💛 <b>André Torquato</b></sub> 
+<br>
 
 [![Linkedin Badge](https://img.shields.io/badge/-Andre%20Torquato-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/andretorquatoo/)](https://www.linkedin.com/in/andretorquatoo/) 
