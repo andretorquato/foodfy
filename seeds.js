@@ -86,7 +86,6 @@ async function recipesFile() {
     recipeId = idsRecipes[9].id - 10;
   }
 
-  console.log(idsRecipes[9].id);
   while (recipeNumber < idsRecipes.length) {
     recipeId++;
     recipeNumber++;
@@ -129,7 +128,6 @@ async function createFiles(quantity, type) {
   }
 
   const filesPromise = files.map((file) => Files.create(file));
-
   filesId = await Promise.all(filesPromise);
 
   return filesId;

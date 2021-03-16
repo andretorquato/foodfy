@@ -1,9 +1,75 @@
-const contents_recipes = document.querySelectorAll(".content_recipe");
-const rows = document.querySelectorAll(".row");
-const formDelete = document.querySelector(".form-delete");
-const deleteButton = document.querySelector("#button-delete");
 
-// Algoritmo tratar imagens
+const configPages = {
+  locale: location.pathname,
+  links: document.querySelectorAll(".links"),
+  linksActive() {
+    configPages.links.forEach((link) => {
+      if (configPages.locale.includes(link.getAttribute("href")))
+        link.classList.add("active");
+    });
+  },
+  redirectRecipes() {
+    const contents_recipes = document.querySelectorAll(".content_recipe");
+
+    if (contents_recipes) {
+      const rows = document.querySelectorAll(".row");
+      for (let content_recipe of contents_recipes) {
+        content_recipe.addEventListener("click", function () {
+          let idPage = content_recipe.getAttribute("id");
+          window.location = `/recipes/${idPage}`;
+        });
+      }
+
+      for (let row of rows) {
+        const button = row.querySelector(".button");
+        button.addEventListener("click", function () {
+          if (button.innerHTML == "ESCONDER") {
+            row.querySelector(".display").classList.add("hide");
+            button.innerHTML = "MOSTRAR";
+          } else if (button.innerHTML == "MOSTRAR") {
+            row.querySelector(".display").classList.remove("hide");
+            button.innerHTML = "ESCONDER";
+          }
+        });
+      }
+    }
+  },
+  configForm() {
+    const formDelete = document.querySelector(".form-delete");
+    const deleteButton = document.querySelector("#button-delete");
+    const pageEdit = document.querySelector("#addIngredient");
+
+    if (formDelete && deleteButton) {
+      deleteButton.addEventListener("click", function () {
+        confirmDelete();
+      });
+    }
+
+    if (pageEdit) {
+      document
+        .querySelector("#addIngredient")
+        .addEventListener("click", addIngredient);
+
+      document.querySelector("#addPass").addEventListener("click", addPass);
+
+      document
+        .querySelector("#form-edit")
+        .addEventListener("submit", checkInputs);
+    }
+  },
+  paginateActive() {
+    const paginate = document.querySelector(".paginate");
+
+    if (paginate) {
+      createPaginate(paginate);
+    }
+  },
+};
+configPages.linksActive();
+configPages.redirectRecipes();
+configPages.configForm();
+configPages.paginateActive();
+
 const PhotosUpload = {
   input: "",
   preview: document.querySelector("#photos-preview"),
@@ -125,89 +191,53 @@ const ImageGallery = {
 };
 
 const Validate = {
-    apply(input, func){
-      Validate.clearErros(input);
+  apply(input, func) {
+    Validate.clearErros(input);
 
-      let results = Validate[func](input.value);
-      
-      if(results.error)
-          Validate.displayError(input, results.error);
-      
-    },
-    displayError(input, error){
-      const div = document.createElement('div');
-      div.classList.add("error");
-      div.innerHTML = error;
-      input.parentNode.appendChild(div);
-      input.classList.add("border-error");
-      input.focus();
+    let results = Validate[func](input.value);
 
-    },
-    clearErros(input){
-      const errorDiv = input.parentNode.querySelector(".error");
-      const allBorders = document.querySelectorAll(".border-error");
-      
-      if(errorDiv)
-        errorDiv.remove();
-        allBorders.forEach(input => input.classList.remove("border-error"));
-        
-    },
-    isEmail(value){
-      let error = null;
+    if (results.error) Validate.displayError(input, results.error);
+  },
+  displayError(input, error) {
+    const div = document.createElement("div");
+    div.classList.add("error");
+    div.innerHTML = error;
+    input.parentNode.appendChild(div);
+    input.classList.add("border-error");
+    input.focus();
+  },
+  clearErros(input) {
+    const errorDiv = input.parentNode.querySelector(".error");
+    const allBorders = document.querySelectorAll(".border-error");
 
-      const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (errorDiv) errorDiv.remove();
+    allBorders.forEach((input) => input.classList.remove("border-error"));
+  },
+  isEmail(value) {
+    let error = null;
 
-      if(!value.match(mailFormat))
-          error = "Email invalido";
+    const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if (!value.match(mailFormat)) error = "Email invalido";
+
+    return {
+      error,
+      value,
+    };
+  },
+};
 
 
-      return {
-        error,
-        value
-      }
-    }
-}
+function addPass() {
+  const steps = document.querySelector(".steps");
+  const fieldPass = document.querySelectorAll(".pass");
 
-const linksActive = {
-  locale: location.pathname,
-  links: document.querySelectorAll(".links"),
-  setActiveRoute(){
-    linksActive.links.forEach(link => {
-      if (linksActive.locale.includes(link.getAttribute("href"))) 
-      link.classList.add("active");
-    })
-  }
-}
-linksActive.setActiveRoute();
+  const newPass = fieldPass[fieldPass.length - 1].cloneNode(true);
 
-for (let content_recipe of contents_recipes) {
-  content_recipe.addEventListener("click", function () {
-    let idPage = content_recipe.getAttribute("id");
-    window.location = `/recipes/${idPage}`;
-  });
-}
+  if (newPass.value == "") return false;
 
-for (let row of rows) {
-  const button = row.querySelector(".button");
-  button.addEventListener("click", function () {
-    if (button.innerHTML == "ESCONDER") {
-      row.querySelector(".display").classList.add("hide");
-      button.innerHTML = "MOSTRAR";
-    } else if (button.innerHTML == "MOSTRAR") {
-      row.querySelector(".display").classList.remove("hide");
-      button.innerHTML = "ESCONDER";
-    }
-  });
-}
-const pageEdit = document.querySelector("#addIngredient");
-if (pageEdit) {
-  document
-    .querySelector("#addIngredient")
-    .addEventListener("click", addIngredient);
-
-  document.querySelector("#addPass").addEventListener("click", addPass);
-
-  document.querySelector("#form-edit").addEventListener("submit", checkInputs);
+  newPass.value = "";
+  steps.appendChild(newPass);
 }
 function addIngredient() {
   const ingredients = document.querySelector("#ingredient");
@@ -222,31 +252,11 @@ function addIngredient() {
   newIngredient.value = "";
   ingredients.appendChild(newIngredient);
 }
-function addPass() {
-  const steps = document.querySelector(".steps");
-  const fieldPass = document.querySelectorAll(".pass");
-
-  const newPass = fieldPass[fieldPass.length - 1].cloneNode(true);
-
-  if (newPass.value == "") return false;
-
-  newPass.value = "";
-  steps.appendChild(newPass);
+function confirmDelete() {
+  const confirmation = confirm("Você realmente deseja deletar?");
+  if (!confirmation) event.preventDefault();
+  else formDelete.submit();
 }
-
-if (formDelete && deleteButton) {
-  deleteButton.addEventListener("click", function () {
-    confirmDelete();
-  });
-}
-
-function confirmDelete(){
-    const confirmation = confirm("Você realmente deseja deletar?");
-    if (!confirmation) event.preventDefault();
-    else formDelete.submit();
-  
-}
-
 function checkInputs() {
   const ingredients = document.querySelector("#ingredient");
   const steps = document.querySelector(".steps");
@@ -261,9 +271,7 @@ function checkInputs() {
     if (input.defaultValue == "") steps.removeChild(input);
   }
 }
-
 // Algoritmo de paginação
-
 function pagination(selectedPage, totalPages) {
   let pages = [],
     oldPage;
@@ -310,9 +318,4 @@ function createPaginate(paginate) {
     }
   }
   paginate.innerHTML = elements;
-}
-const paginate = document.querySelector(".paginate");
-
-if (paginate) {
-  createPaginate(paginate);
 }
