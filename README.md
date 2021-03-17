@@ -1,5 +1,5 @@
 <h1 align="center">
- Foodfy
+Foodfy
 </h1>
 
 <p align="center">Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro.</p>
@@ -19,7 +19,7 @@
 
 ## Tópicos 
 <p align="center">
-<a href="#sobre-o-foodfy">Sobre o Foodfy</a> • 
+<h3><a href="#sobre-o-foodfy">Sobre o Foodfy</a> • </h3>
 <a href="#funcionalidades">Funcionalidades</a> • 
 <a href="#tecnologias-e-ferramentas">Tecnologias e Ferramentas</a> • 
 <a href="#instalação-e-uso">Instalação e uso</a> • 
@@ -28,6 +28,8 @@
 </p>
 
 <br>
+
+---
 
 ## Sobre o Foodfy
 
@@ -68,8 +70,7 @@ O Foodfy é uma aplicação web completa de gerenciamento de receitas, desenvolv
 
 <br>
 
-## Tecnologias e Ferramentas
-
+## ℹ Tecnologias e Ferramentas
 As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
 
 - [HTML](https://devdocs.io/html/)
@@ -77,28 +78,29 @@ As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
 - [JavaScript](https://devdocs.io/javascript/)
 - [Nunjucks](https://mozilla.github.io/nunjucks/)
 - [NodeJS](https://nodejs.org/en/)
-- [Nodemailer](https://nodemailer.com/about/)
-- [Express](https://expressjs.com/)
-- [Express Session](https://github.com/expressjs/session)
-- [Multer](https://github.com/expressjs/multer)
 - [PostgreSQL](https://www.postgresql.org/)
-- [BcryptJS](https://github.com/dcodeIO/bcrypt.js)
+- [Express](https://expressjs.com/)
+- [Nodemailer](https://nodemailer.com/about/)
+- [Express Session](https://github.com/expressjs/session)
 - [Faker.js](https://github.com/Marak/Faker.js)
+- [Multer](https://github.com/expressjs/multer)
+- [BcryptJS](https://github.com/dcodeIO/bcrypt.js)
+
 
 <br>
 
 ## Instalação e Uso
 
-Para rodar a aplicação, você precisa instalar o [Node](https://nodejs.org/en/) e o banco de dados [Postgres](https://www.postgresql.org/).
+Para rodar a aplicação, você precisa instalar o [Node](https://nodejs.org/en/) e o banco de dados [PostgreSQL](https://www.postgresql.org/).
 
 Siga os passos abaixo:
 
 ```bash
-# Abra um terminal e copie este repositório com o comando
+# No seu terminal cole este código:
 $ git clone https://github.com/AndreTorquato/foodfy.git
 # ou use a opção de download.
 
-# Entre na pasta com 
+# para acessar a pasta:
 $ cd foodfy
 
 # Instale as dependências
@@ -114,25 +116,25 @@ $ npm install
 # Popule o banco de dados usando o aquivo "seed.js":
 $ node seed.js
 
-# Rode a aplicação
+# Inicialize a aplicação :)
 $ npm start
 ```
-
-**Importante:** Não exclua ou altere as imagens de placeholder diretamente da pasta `public/images`, pois as receitas e chefs gerados pelo `seed.js` compartilham desses arquivos entre si. Porém, é seguro deletá-las pela área administrativa do site.
-
 <br>
+
+---
+**IMPORTANTE:** 
+
+se ocorrer algum erro devido as imagens no projeto a uma pasta chamada `public/backup_images`, copie todas as imagens e cole dentro da `public/images`.
+<br>
+**ESSA APLICAÇÃO FOI FEITA NO WINDOWS SE HOUVER ALGUM ERRO PARA CARREGAR AS IMAGES PODE SER QUE SEJA POR MOTIVOS DAS `"/"`**
+
+---
 
 ### Acessando a Área Administrativa
 
-Selecione um email da tabela users, acesse a tela de login e entre utilizando o mesmo com a senha "admin" (senha padrão).
+Selecione um email da tabela **users** gerada pelo `seeds.js`, acesse a tela de login e entre utilizando o mesmo com a senha **"admin"** (senha padrão).
 
-Dica: usuários administradores possuem a badge "ADMIN" no header:
-<p align="center">
-  <img src=".github/admin_badge.png" alt="página admin">
-</p>
-
-<br>
-
+---
 ### Criando Novos Usuários e Recuperação de Senha
 
 Para usar estes recursos, edite o arquivo `mailer.js` dentro da pasta `scr/lib` com suas credenciais.
