@@ -153,10 +153,17 @@ module.exports = {
   async post(req, res) {
     try {
       let idFiles = [];
-      const data = req.body;
-      data.user_id = req.session.user.id;
-      let recipe = await Recipes.post(data);
-
+      let { title, ingredients, chef_id, preparations, information } = req.body;
+    
+      let idRecipe = await Recipes.create({
+        chef_id,
+        title,
+        information,
+        preparations: Array.isArray(preparations) ? preparations : Array(preparations),
+        ingredients: Array.isArray(ingredients) ? ingredients : Array(ingredients),
+        user_id: req.session.user.id
+      });
+      console.log(idRecipe);
       const filesPromise = req.files.map(async (file) => {
         const id = await Files.create({
           ...file,
@@ -165,13 +172,13 @@ module.exports = {
         idFiles.push(id);
       });
 
-      await Promise.all(filesPromise, recipe).then(() => {
+      await Promise.all(filesPromise, idRecipe).then(() => {
         idFiles.forEach((idFile) => {
-          Files.createReferenceRecipeImages(recipe.id, idFile);
+          Files.createReferenceRecipeImages(idRecipe, idFile);
         });
       });
 
-      return res.redirect(`/admin/recipes/${recipe.id}`);
+      return res.redirect(`/admin/recipes/${idRecipe}`);
     } catch (error) {
       console.log(error);
     }
@@ -227,10 +234,9 @@ module.exports = {
       }
       files = files.map((file) => file);
       const deleteFiles = await files.map((file) => Files.delete(file));
-
-      await Promise.all([deleteFiles]).then(() => {
-        Recipes.delete(req.body.id);
-      });
+      
+      await Promise.all([deleteFiles]);
+      await Recipes.delete(req.body.id);
 
       return res.redirect("/admin");
     } catch (error) {

@@ -1,7 +1,10 @@
-const { date } = require("../../libs/utils");
 const db = require("../../config/db");
 
+const Base = require("../models/Base");
+Base.init({ table: "recipes"});
+
 module.exports = {
+  ...Base,
   async post(data) {
     const query = `
          INSERT INTO recipes(
