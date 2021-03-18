@@ -18,14 +18,14 @@ Foodfy
 </p>
 
 ## Tópicos 
-<p align="center">
-<h3><a href="#sobre-o-foodfy">Sobre o Foodfy</a> • </h3>
-<a href="#funcionalidades">Funcionalidades</a> • 
-<a href="#tecnologias-e-ferramentas">Tecnologias e Ferramentas</a> • 
-<a href="#instalação-e-uso">Instalação e uso</a> • 
-<a href="#licença">Licença</a>
+<h3 align="center">
+:rocket: <a href="#sobre-o-foodfy">Sobre o Foodfy</a> • 
+:sparkles:<a href="#funcionalidades">Funcionalidades</a> • 
+:hammer:<a href="#tecnologias-e-ferramentas">Tecnologias e Ferramentas</a> • 
+:runner: <a href="#instalação-e-uso">Instalação e uso</a> • 
+:page_facing_up:<a href="#licença">Licença</a> • 
 
-</p>
+</h3>
 
 <br>
 
@@ -34,7 +34,7 @@ Foodfy
 ## Sobre o Foodfy
 
 
-O Foodfy é uma aplicação web completa de gerenciamento de receitas, desenvolvida durante o bootcamp [LaunchBase](https://rocketseat.com.br/launchbase) da [Rocketseat](https://rocketseat.com.br/).
+O Foodfy é uma aplicação web completa de gerenciamento de receitas, desenvolvida durante o bootcamp [LaunchBase](https://rocketseat.com.br) da [Rocketseat](https://rocketseat.com.br/).
 <p align="center">
 <img alt="Chef" title="#Chef" src="./public/screenshots/chef.png" height="100"/>
 </p>
@@ -70,7 +70,7 @@ O Foodfy é uma aplicação web completa de gerenciamento de receitas, desenvolv
 
 <br>
 
-## ℹ Tecnologias e Ferramentas
+## Tecnologias e Ferramentas
 As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
 
 - [HTML](https://devdocs.io/html/)
@@ -154,6 +154,8 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](/LICENSE) para m
  <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/44441254?s=460&u=9b932a2ecaa511f678b3e0cb118c9b536e6e166e&v=4" width="100px;" alt=""/>
  <br />
  <sub>By 💛 <b>André Torquato</b></sub> 
+
+<br>
 <br>
 
 [![Linkedin Badge](https://img.shields.io/badge/-Andre%20Torquato-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/andretorquatoo/)](https://www.linkedin.com/in/andretorquatoo/) 
