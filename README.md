@@ -153,7 +153,7 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](/LICENSE) para m
 ---
  <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/44441254?s=460&u=9b932a2ecaa511f678b3e0cb118c9b536e6e166e&v=4" width="100px;" alt=""/>
  <br />
- <sub>By 💛 <b>André Torquato</b></sub> 
+ <sub>By :zap: <b>André Torquato</b></sub> 
 
 <br>
 <br>
