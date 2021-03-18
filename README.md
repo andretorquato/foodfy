@@ -19,11 +19,11 @@ Foodfy
 
 ## Tópicos 
 <h3 align="center">
-:rocket: <a href="#sobre-o-foodfy">Sobre o Foodfy</a> • 
-:sparkles:<a href="#funcionalidades">Funcionalidades</a> • 
-:hammer:<a href="#tecnologias-e-ferramentas">Tecnologias e Ferramentas</a> • 
-:runner: <a href="#instalação-e-uso">Instalação e uso</a> • 
-:page_facing_up:<a href="#licença">Licença</a> • 
+:pushpin:<a href="#sobre-o-foodfy">Sobre o Foodfy</a>
+:sparkles:<a href="#funcionalidades">Funcionalidades</a> 
+:hammer:<a href="#tecnologias-e-ferramentas">Tecnologias e Ferramentas</a>
+:runner: <a href="#instalação-e-uso">Instalação e uso</a>
+:page_facing_up:<a href="#licença">Licença</a>
 
 </h3>
 
