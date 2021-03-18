@@ -10,12 +10,7 @@
     {% for recipe in recipes %}
     <div class="card">
         <div class="image">
-            {% for image in images %}
-            {% if recipe.id == image.recipe_id %}
-            <img src="{{image.src}}" alt="{{image.name}}">
-            {% endif %}
-            {% endfor %}
-            
+            <img src="{{recipe.img}}" alt="{{recipe.img}}">
         </div>
         <div class="content-card">
             <div class="title">{{recipe.title}}</div>

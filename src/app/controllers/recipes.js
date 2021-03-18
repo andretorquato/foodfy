@@ -1,11 +1,15 @@
 const Recipes = require("../models/recipes");
 const Files = require("../models/files");
-
+const Base = require("../models/Base");
+const LoadRecipes = require("../services/LoadRecipes");
+Base.init({table: 'recipes'});
 module.exports = {
+  ...Base,
   async index(req, res) {
     let { filter, page, limit } = req.query;
     page = page || 1;
     limit = limit || 4;
+    let total = 1;
     let offset = limit * (page - 1);
     const params = {
       page,
@@ -16,32 +20,10 @@ module.exports = {
     try {
       let recipes = await Recipes.paginate(params);
       recipes = recipes.rows;
-      let files = [],
-        images = [];
-      let getIdsRecipes = recipes.map((recipe) => recipe.id);
-      let filesId = getIdsRecipes.map(async (id) => {
-        let file = await (await Files.getIdRecipesFiles(id)).rows[0];
-        file.recipe_id = id;
-        return files.push(file);
-      });
+      recipes = await recipes.map(LoadRecipes.format);
 
-      await Promise.all(filesId);
-
-      files = files.map(async (file) => {
-        let image = await (await Files.getFiles(file.file_id)).rows[0];
-        return images.push({
-          ...image,
-          recipe_id: file.recipe_id,
-          src: `${req.protocol}://${req.headers.host}${image.path.replace(
-            "public",
-            ""
-          )}`,
-        });
-      });
-
-      await Promise.all(files);
-
-      let total = 1;
+      recipes = await Promise.all(recipes);
+      
       if (recipes.length > 0) {
         total = Math.ceil(recipes[0].total / limit);
       }
@@ -54,8 +36,7 @@ module.exports = {
       return res.render("admin/recipes/index", {
         recipes,
         pagination,
-        filter,
-        images,
+        filter        
       });
     } catch (error) {
       console.log(error);
@@ -64,33 +45,13 @@ module.exports = {
   async show(req, res) {
     const { id } = req.params;
     try {
-      let recipe = await Recipes.find(id);
-      recipe = recipe.rows[0];
-
+      let recipe = await Base.find(id);
+      recipe = recipe;
+      
+      recipe = await LoadRecipes.format(recipe);
+      console.log(recipe);
       let chefs = await Recipes.chefSelect();
       chefs = chefs.rows;
-
-      let filesPromise = [],
-        files = [];
-      let filesRecipeId = await Files.getIdRecipesFiles(recipe.id);
-      filesRecipeId = filesRecipeId.rows;
-
-      filesRecipeId.map((file) => filesPromise.push(file.file_id));
-
-      filesPromise = filesPromise.map(async (id) => {
-        let file = await Files.getFiles(id);
-        return file, files.push(file.rows[0]);
-      });
-
-      await Promise.all(filesPromise);
-
-      files = files.map((file) => ({
-        ...file,
-        src: `${req.protocol}://${req.headers.host}${file.path.replace(
-          "public",
-          ""
-        )}`,
-      }));
 
       const userVerification =
         req.session.user.is_admin == true ||
@@ -98,8 +59,7 @@ module.exports = {
 
       return res.render("admin/recipes/show", {
         recipe,
-        chefs,
-        files,
+        chefs,        
         userVerification,
       });
     } catch (error) {

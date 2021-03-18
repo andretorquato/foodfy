@@ -31,8 +31,9 @@ module.exports = {
     ]
     return db.query(query, values);
     },
-    getFiles(id){
-        return db.query(`SELECT * FROM files WHERE id = $1`, [id]);
+    async getFiles(id){
+        const result = await db.query(`SELECT * FROM files WHERE id = $1`, [id]);
+        return result.rows[0];
     },
     async getAllFilesIdFromRecipe(recipeId){
         query = `SELECT file_id FROM recipe_files WHERE recipe_id = $1`;
@@ -41,8 +42,9 @@ module.exports = {
         return result.rows;
 
     },
-    getIdRecipesFiles(id){
-            return db.query(`SELECT file_id FROM recipe_files WHERE recipe_id = $1`, [id]);
+    async getIdRecipesFiles(id){
+            const result = await db.query(`SELECT file_id FROM recipe_files WHERE recipe_id = $1`, [id]);
+            return result.rows[0];
     },
     async delete(id){
         const result = await db.query(`SELECT * FROM files WHERE id = $1`, [id]);
