@@ -1,10 +1,7 @@
-{% extends 'home/layout.njk' %} 
-{% block head %}
+{% extends 'home/layout.njk' %} {% block head %}
 <title>Home</title>
 <link rel="stylesheet" type="text/css" href="/styles/index.css" />
-{% endblock head %}
-
-{% block content %}
+{% endblock head %} {% block content %}
 <div class="container">
   <header>
     <div class="banner">
@@ -33,15 +30,12 @@
 
         <div class="content_recipe" id="{{ item.id }}">
           <div class="image_recipe">
-            {% for image in images %} {% if item.id == image.recipe_id %}
-            <img src="{{ image.src }}" alt="{{ image.name }}" />
-            {% endif %} {% endfor %}
+            <img src="{{ item.img }}" alt="{{ item.img }}" />
           </div>
           <div class="info_content">
             <p class="info_title">{{ item.title }}</p>
-            {% for chef in options %} {% if chef.id == item.chef_id %}
-            <p class="sub_title">{{ chef.name }}</p>
-            {% endif %} {% endfor %}
+
+            <p class="sub_title">{{ item.chef_create }}</p>
           </div>
         </div>
 

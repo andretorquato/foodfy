@@ -12,12 +12,7 @@
 
       <div class="content_recipe" id="{{ item.id }}">
         <div class="image_recipe">
-          {% for image in images %}
-          {% if image.recipe_id == item.id %}
-          <img src="{{ image.src }}" alt="{{ image.name }}" />
-          {% endif %}
-          {% endfor %}
-          
+          <img src="{{ item.img }}" alt="{{ item.name }}" />
         </div>
         <div class="info_content">
           <p class="info_title">{{ item.title }}</p>

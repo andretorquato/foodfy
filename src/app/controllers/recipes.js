@@ -2,9 +2,8 @@ const Recipes = require("../models/recipes");
 const Files = require("../models/files");
 const Base = require("../models/Base");
 const LoadRecipes = require("../services/LoadRecipes");
-Base.init({table: 'recipes'});
 module.exports = {
-  ...Base,
+  
   async index(req, res) {
     let { filter, page, limit } = req.query;
     page = page || 1;
@@ -45,11 +44,9 @@ module.exports = {
   async show(req, res) {
     const { id } = req.params;
     try {
-      let recipe = await Base.find(id);
+      let recipe = await Recipes.find(id);
       recipe = recipe;
-      
       recipe = await LoadRecipes.format(recipe);
-      console.log(recipe);
       let chefs = await Recipes.chefSelect();
       chefs = chefs.rows;
 
@@ -70,39 +67,15 @@ module.exports = {
     const { id } = req.params;
     try {
       let recipe = await Recipes.find(id);
-      recipe = recipe.rows[0];
+      recipe = await LoadRecipes.format(recipe);
+      console.log(recipe);
       let chefs = await Recipes.chefSelect();
       chefs = chefs.rows;
 
-      let filesPromise = [],
-        files = [];
-      let filesRecipeId = await Files.getIdRecipesFiles(recipe.id);
-      filesRecipeId = filesRecipeId.rows;
-
-      filesRecipeId.map((file) => filesPromise.push(file.file_id));
-
-      filesPromise = filesPromise.map(async (id) => {
-        let file = await Files.getFiles(id);
-        return files.push(file.rows[0]);
-      });
-
-      await Promise.all(filesPromise);
-
-      files = files.map((file) => ({
-        ...file,
-        src: `${req.protocol}://${req.headers.host}${file.path.replace(
-          "public",
-          ""
-        )}`,
-      }));
-
-      return res.render("admin/recipes/edit", {
-        recipe,
-        options: chefs,
-        files,
-      });
-    } catch (err) {
-      console.log(err);
+   
+      return res.render("admin/recipes/edit", { recipe,options: chefs });
+    } catch (error) {
+      console.log(error);
     }
   },
   async create(req, res) {
@@ -123,7 +96,7 @@ module.exports = {
         ingredients: Array.isArray(ingredients) ? ingredients : Array(ingredients),
         user_id: req.session.user.id
       });
-      console.log(idRecipe);
+      
       const filesPromise = req.files.map(async (file) => {
         const id = await Files.create({
           ...file,
@@ -188,15 +161,18 @@ module.exports = {
   },
   async delete(req, res) {
     try {
-      let files = req.body.files;
+      let files = await LoadRecipes.load('recipe', { where:{ id: req.body.id }});
+      
+      console.log(files);
+
       if (typeof files == "string") {
         files = Array(files);
       }
-      files = files.map((file) => file);
-      const deleteFiles = await files.map((file) => Files.delete(file));
+      // files = files.map((file) => file);
+      // const deleteFiles = await files.map((file) => Files.delete(file));
       
-      await Promise.all([deleteFiles]);
-      await Recipes.delete(req.body.id);
+      // await Promise.all([deleteFiles]);
+      // await Recipes.delete(req.body.id);
 
       return res.redirect("/admin");
     } catch (error) {

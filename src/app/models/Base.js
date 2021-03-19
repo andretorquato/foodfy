@@ -12,6 +12,7 @@ function find(filters, table) {
       });
     });
   }
+  console.log(query);
   return db.query(query);
 }
 
@@ -53,7 +54,7 @@ const Base = {
       const query = `INSERT INTO ${this.table} (${keys.join(",")})
              VALUES (${values.join(",")})
              RETURNING id`;
-    console.log(query);
+    
       const result = await db.query(query);
       
       return result.rows[0].id;

@@ -5,53 +5,15 @@ Base.init({ table: "recipes"});
 
 module.exports = {
   ...Base,
-  async post(data) {
-    const query = `
-         INSERT INTO recipes(
-             chef_id,
-             title,
-             ingredients,
-             preparations,
-             information,
-             user_id
-         ) VALUES ($1, $2, $3, $4, $5, $6)
-         RETURNING id
-        `;
+  async homeLoadingRecipes() {
+    let result = await db.query(`
+    SELECT recipes.*, chefs.name AS chef_create
+    FROM recipes
+    LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
     
-    const values = [
-      data.chef_id,
-      data.title,
-      Array(data.ingredients),
-      Array(data.preparations),
-      data.information,
-      data.user_id
-    ];
-
-    let result = await db.query(query, values);
-    result = result.rows[0];
-    
-    return result;
-  },
-  allChefs() {
-      
-    return db.query(`
-      SELECT recipes.*, chefs.name AS chef_create
-      FROM recipes
-      LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-      
-      ORDER BY updated_at DESC
-      LIMIT 6`);
-
-  },
-  find(id) {
-        return db.query(
-          `
-          SELECT recipes.*, chefs.name AS chef_create
-          FROM recipes
-          LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-          WHERE recipes.id = $1
-          `,
-          [id]);
+    ORDER BY updated_at DESC
+    LIMIT 6`);
+    return result.rows;
   },
   findBy(filter, callback) {
     db.query(
@@ -104,15 +66,10 @@ module.exports = {
     return db.query(query, values);
     
   },
-  delete(id) {
-      
-    return db.query(`DELETE FROM recipes WHERE id = $1`, [id]);
-    
-  },
   chefSelect() {
     return db.query(`SELECT name, id FROM chefs`);
   },
-  paginate(params) {
+  async paginate(params) {
     let { filter, limit, offset, callback } = params;
 
     let query = "";
@@ -137,6 +94,7 @@ module.exports = {
       LIMIT $1 OFFSET $2
     `;
 
-    return db.query(query, [limit, offset]);
+    const result = await db.query(query, [limit, offset]);
+    return result;
   }
 };
