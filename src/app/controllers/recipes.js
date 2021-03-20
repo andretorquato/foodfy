@@ -1,7 +1,7 @@
 const Recipes = require("../models/recipes");
 const Files = require("../models/files");
-const Base = require("../models/Base");
 const LoadRecipes = require("../services/LoadRecipes");
+
 module.exports = {
   
   async index(req, res) {
@@ -20,7 +20,6 @@ module.exports = {
       let recipes = await Recipes.paginate(params);
       recipes = recipes.rows;
       recipes = await recipes.map(LoadRecipes.format);
-
       recipes = await Promise.all(recipes);
       
       if (recipes.length > 0) {
@@ -48,7 +47,6 @@ module.exports = {
       recipe = recipe;
       recipe = await LoadRecipes.format(recipe);
       let chefs = await Recipes.chefSelect();
-      chefs = chefs.rows;
 
       const userVerification =
         req.session.user.is_admin == true ||
@@ -68,11 +66,8 @@ module.exports = {
     try {
       let recipe = await Recipes.find(id);
       recipe = await LoadRecipes.format(recipe);
-      console.log(recipe);
       let chefs = await Recipes.chefSelect();
-      chefs = chefs.rows;
-
-   
+      
       return res.render("admin/recipes/edit", { recipe,options: chefs });
     } catch (error) {
       console.log(error);
@@ -80,7 +75,6 @@ module.exports = {
   },
   async create(req, res) {
     let chefs = await Recipes.chefSelect();
-    chefs = chefs.rows;
     return res.render("admin/recipes/create", { options: chefs });
   },
   async post(req, res) {
@@ -135,6 +129,8 @@ module.exports = {
       await Promise.all(removedFilesPromise);
     }
     try {
+      let { id, title, ingredients, chef_id, preparations, information } = req.body;
+
       if (req.files.length != 0) {
         let idFiles = [];
         const filesPromise = req.files.map(async (file) => {
@@ -151,29 +147,28 @@ module.exports = {
           });
         });
       }
+      await Recipes.update(id,{
+        chef_id,
+        title,
+        information,
+        preparations: Array.isArray(preparations) ? preparations : Array(preparations),
+        ingredients: Array.isArray(ingredients) ? ingredients : Array(ingredients),
+        user_id: req.session.user.id
+      });      
 
-      Recipes.put(req.body);
-
-      return res.redirect(`/admin/recipes/${req.body.id}`);
+      return res.redirect(`/admin/recipes/${id}`);
     } catch (error) {
       console.log(error);
     }
   },
   async delete(req, res) {
     try {
-      let files = await LoadRecipes.load('recipe', { where:{ id: req.body.id }});
+      let recipe = await Recipes.findOne({where: { id: req.body.id }});
+      recipe = await LoadRecipes.format(recipe);
+      const deleteFiles = await recipe.files.map(file => Files.delete(file.id));
       
-      console.log(files);
-
-      if (typeof files == "string") {
-        files = Array(files);
-      }
-      // files = files.map((file) => file);
-      // const deleteFiles = await files.map((file) => Files.delete(file));
+      await Promise.all(deleteFiles).then(async () => await Recipes.delete(req.body.id));
       
-      // await Promise.all([deleteFiles]);
-      // await Recipes.delete(req.body.id);
-
       return res.redirect("/admin");
     } catch (error) {
       console.log(error);

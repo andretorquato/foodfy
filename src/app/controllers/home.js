@@ -57,9 +57,6 @@ module.exports = {
       let recipe = await Recipes.find(index);
       recipe = await LoadRecipes.format(recipe);      
       let chefs = await Recipes.chefSelect();
-      chefs = chefs.rows;
-
-
       return res.render("home/recipe", { item: recipe, chefs });
     } catch (error) {
       console.log(error);

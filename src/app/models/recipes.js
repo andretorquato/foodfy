@@ -30,44 +30,9 @@ module.exports = {
       }
     );
   },
-  put(data) {
-    const query = `
-            UPDATE recipes SET
-            chef_id=($1),
-            title=($2),
-            ingredients=($3),
-            preparations=($4),
-            information=($5)
-            WHERE id = $6
-        `;
-    
-        
-    
-    
-    if(typeof data.ingredients == 'string'){
-      data.ingredients = Array(data.ingredients);
-    }
-    if(typeof data.preparations == 'string'){
-      data.preparations = Array(data.preparations);
-    }
-
-    data.preparations.map(preparation => preparation != "");
-    data.ingredients.map(ingredient => ingredient != "");
-    
-    const values = [
-      data.chef_id,
-      data.title,
-      data.ingredients,
-      data.preparations,
-      data.information,
-      data.id,
-    ];
-    
-    return db.query(query, values);
-    
-  },
-  chefSelect() {
-    return db.query(`SELECT name, id FROM chefs`);
+  async chefSelect() {
+    const result = await db.query(`SELECT name, id FROM chefs`);
+    return result;
   },
   async paginate(params) {
     let { filter, limit, offset, callback } = params;

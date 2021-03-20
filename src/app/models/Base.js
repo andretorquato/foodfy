@@ -12,7 +12,6 @@ function find(filters, table) {
       });
     });
   }
-  console.log(query);
   return db.query(query);
 }
 
@@ -66,8 +65,12 @@ const Base = {
     try {
       let update = [];
 
-      Object.keys(filters).map((key) => {
-        const line = `${key} = '${fields[key]}'`;
+      Object.keys(fields).map((key) => {
+        let line;
+        Array.isArray(fields[key]) ?
+         line = `${key} = '{"${fields[key].join('","')}"}'` 
+         : line = `${key} = '${fields[key]}'`
+
         update.push(line);
       });
 
