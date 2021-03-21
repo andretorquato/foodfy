@@ -2,6 +2,7 @@ const Chefs = require("../models/chefs");
 const Recipes = require("../models/recipes");
 const Files = require("../models/files");
 const LoadRecipes = require("../services/LoadRecipes");
+const LoadChefs = require("../services/LoadChefs");
 
 module.exports = {
   redirect(req, res) {
@@ -33,12 +34,14 @@ module.exports = {
     };
     try {
       let recipes = await Recipes.paginate(params);
+      
       recipes = recipes.rows;
+      let totalRecipes = recipes[0].total;
       recipes = recipes.map(LoadRecipes.format);
       
       recipes = await Promise.all(recipes);
       const pagination = {
-        total: Math.ceil(recipes[0].total / limit),
+        total: Math.ceil(totalRecipes / limit),
         page,
       };
 
@@ -68,29 +71,9 @@ module.exports = {
   async chefs(req, res) {
     try {
       let chefs = await Chefs.allChefs();
-      chefs = chefs.rows;
-      let auxChefs = [];
 
-      chefs = chefs.map(async (chef) => {
-        let image = await Files.getFiles(chef.file_id);
-        image = image.rows[0];
-
-        image = {
-          ...image,
-          src: `${req.protocol}://${req.headers.host}${image.path.replace(
-            "public",
-            ""
-          )}`,
-        };
-        return {
-          ...chef,
-          image: image.src,
-          imageName: image.name,
-        };
-      });
-
+      chefs = chefs.map(LoadChefs.format);
       chefs = await Promise.all(chefs);
-
       return res.render("home/chefs", { chefs });
     } catch (error) {
       console.log(error);

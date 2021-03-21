@@ -1,21 +1,11 @@
-const { date } = require("../../libs/utils");
 const db = require("../../config/db");
+const Base = require("../models/Base");
+
+Base.init({ table: "chefs"});
 
 module.exports = {
-  async post(data) {
-    const query = `
-         INSERT INTO chefs(
-             name,
-             file_id
-         ) VALUES ($1, $2)
-         RETURNING id
-        `;
-    const values = [data.name, data.file_id];
-    const result = await db.query(query, values);
-    return result.rows[0].id;
-    
-  },
-  allChefs() {
+  ...Base,
+  async allChefs() {
     const query = `
         SELECT chefs.*, count(recipes) AS qtd_recipes
         FROM chefs
@@ -24,10 +14,11 @@ module.exports = {
         ORDER BY qtd_recipes
         `;
 
-      return   db.query(query);
+      const results = await db.query(query);
+      return results.rows;
     
   },
-  find(id) {
+  async find(id) {
     const query = `
         SELECT chefs.*, count(recipes) AS qtd_recipes
         FROM chefs
@@ -35,40 +26,10 @@ module.exports = {
         WHERE chefs.id = $1
         GROUP BY chefs.id
         `;
-
-      return db.query(query, [id]);    
+      const result = await db.query(query, [id]);
+      return result.rows[0];
   },
-  async update(id, fields) {
-    try {
-      let query = "UPDATE chefs SET"
-
-      Object.keys(fields).map((key, index, array) => {
-          if(( index +1 ) < array.length){
-              query = `${query} 
-                ${key} = '${fields[key]}',
-              `
-          }else{
-            query = `${query}
-              ${key} = '${fields[key]}'
-                WHERE id = ${id}
-            `
-          }
-      })
-      await db.query(query);  
-      return;
-    } catch (error) {
-      console.error(error);
-    }
-  
-    
-    
-  },
-  delete(id) {
-    
-    return db.query(`DELETE FROM chefs WHERE id = $1`, [id]);
-    
-  },
-  myRecipes(id){
+  async myRecipes(id){
       const query = `
       SELECT recipes.*
       FROM recipes
@@ -76,7 +37,7 @@ module.exports = {
       WHERE chefs.id = $1 
       GROUP BY recipes.id
       `;
-
-    return  db.query(query, [id]);      
+    const results = await db.query(query, [id]);
+    return results.rows;
   }
 };

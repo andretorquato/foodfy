@@ -11,7 +11,7 @@
 
   <div class="info chef">
     <div class="inf">
-      <img class="profile" src="{{ photo.src }}" alt="{{ photo.name }}" />
+      <img class="profile" src="{{ chef.img.src }}" alt="{{ chef.name }}" />
       <h1>{{ chef.name }}</h1>
       <p class="author">{{ chef.qtd_recipes }} Receitas</p>
     </div>
@@ -21,13 +21,7 @@
         {% for recipe in recipes %}
         <div class="card">
           <div class="image">
-            {% for image in images %}
-            {% if image.recipe_id == recipe.id %}
-            <img src="{{ image.src }}" alt="{{ image.name }}" />
-            {% endif %}
-            
-            {% endfor %}
-            
+            <img src="{{ recipe.img.src }}" alt="{{ recipe.name }}" />
           </div>
           <div class="content-card">
             <div class="title">{{ recipe.title }}</div>

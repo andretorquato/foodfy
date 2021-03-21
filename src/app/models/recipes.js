@@ -32,7 +32,7 @@ module.exports = {
   },
   async chefSelect() {
     const result = await db.query(`SELECT name, id FROM chefs`);
-    return result;
+    return result.rows;
   },
   async paginate(params) {
     let { filter, limit, offset, callback } = params;
