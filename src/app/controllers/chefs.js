@@ -29,7 +29,7 @@ module.exports = {
     chef.img = await LoadChefs.getImages(chef.file_id);
     
     let recipes = await Chefs.myRecipes(id);
-    recipes = recipes.map(LoadChefs.format);
+    recipes = recipes.map(LoadRecipes.format);
     recipes = await Promise.all(recipes);
     return res.render("admin/chefs/show", {
       chef,

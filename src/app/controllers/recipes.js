@@ -19,11 +19,13 @@ module.exports = {
     try {
       let recipes = await Recipes.paginate(params);
       recipes = recipes.rows;
+      let totalRecipes = recipes[0].total;
       recipes = await recipes.map(LoadRecipes.format);
-      recipes = await Promise.all(recipes);
       
+      recipes = await Promise.all(recipes);
+      console.log(recipes);
       if (recipes.length > 0) {
-        total = Math.ceil(recipes[0].total / limit);
+        total = Math.ceil(totalRecipes / limit);
       }
 
       const pagination = {

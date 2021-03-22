@@ -11,8 +11,7 @@ module.exports = {
   async index(req, res) {
     const userLogged = req.session.user;
     try {
-      let users = await Users.allChefs();
-      users = users.rows;
+      let users = await Users.findAll();
       return res.render("admin/users/index", { users, userLogged });
     } catch (error) {
       console.log(error);
@@ -40,11 +39,18 @@ module.exports = {
     
     const initPassword = crypto.randomBytes(2).toString("hex");
     const hashPassword = await hash(initPassword, 8);
-
+    let { name, email, password, is_admin } = req.body;
+    
+    is_admin = is_admin ? true : false;
     try {
-      
-      req.body.password = hashPassword;
-      const userId = await Users.create(req.body);
+  
+      password = hashPassword;
+      const userId = await Users.create({
+         name,
+         email,
+         password,
+         is_admin
+      });
       const user = await Users.findOne({ where: { id: userId } });
       const userLogged = await Users.findOne({
         where: { id: req.session.user.id },
@@ -112,10 +118,7 @@ module.exports = {
   },
   async update(req, res) {
     try {
-      let { user } = req.session;
       let { email, name, is_admin } = req.body;
-
-      
 
       Users.update(req.body.id, {
         email,
