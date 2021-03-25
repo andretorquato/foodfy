@@ -1,6 +1,9 @@
 const Chefs = require("../models/chefs");
 const Recipes = require("../models/recipes");
 const Files = require("../models/files");
+const LoadChefs = require("../services/LoadChefs");
+const LoadRecipes = require("../services/LoadRecipes");
+
 
 module.exports = {
   redirect(req, res) {
@@ -10,31 +13,9 @@ module.exports = {
     const user = req.session.user;
     try {
       let chefs = await Chefs.allChefs();
-      chefs = chefs.rows;
-      let auxChefs = [];
-
-      chefs = chefs.map(async (chef) => {
-        let image = await Files.getFiles(chef.file_id);
-        image = image.rows[0];
-
-        image = {
-          ...image,
-          src: `${req.protocol}://${req.headers.host}${image.path.replace(
-            "public",
-            ""
-          )}`,
-        };
-        return auxChefs.push({
-          ...chef,
-          image: image.src,
-          imageName: image.name,
-        });
-      });
-
-      await Promise.all(chefs);
-
-      chefs = auxChefs;
-
+      chefs = chefs.map(LoadChefs.format);   
+      chefs = await Promise.all(chefs);
+      
       return res.render("admin/chefs/index", { chefs, user });
     } catch (error) {
       console.log(error);
@@ -44,76 +25,38 @@ module.exports = {
     const { id } = req.params;
 
     let chef = await Chefs.find(id);
-    chef = chef.rows[0];
-
-    let photo = await Files.getFiles(chef.file_id);
-    photo = photo.rows[0];
-    photo = {
-      ...photo,
-      src: `${req.protocol}://${req.headers.host}${photo.path.replace(
-        "public",
-        ""
-      )}`,
-    };
-
+    
+    chef.img = await LoadChefs.getImages(chef.file_id);
+    
     let recipes = await Chefs.myRecipes(id);
-    recipes = recipes.rows;
-    let files = [],
-      images = [];
-    let getIdsRecipes = recipes.map((recipe) => recipe.id);
-    let filesId = getIdsRecipes.map(async (id) => {
-      let file = await (await Files.getIdRecipesFiles(id)).rows[0];
-      file.recipe_id = id;
-      return files.push(file);
-    });
-
-    await Promise.all(filesId);
-
-    files = files.map(async (file) => {
-      let image = await (await Files.getFiles(file.file_id)).rows[0];
-      return images.push({
-        ...image,
-        recipe_id: file.recipe_id,
-        src: `${req.protocol}://${req.headers.host}${image.path.replace(
-          "public",
-          ""
-        )}`,
-      });
-    });
-
-    await Promise.all(files);
-
+    recipes = recipes.map(LoadRecipes.format);
+    recipes = await Promise.all(recipes);
     return res.render("admin/chefs/show", {
       chef,
       recipes,
-      images,
-      photo,
       user: req.session.user,
     });
   },
   async edit(req, res) {
     const { id } = req.params;
-
     let chef = await Chefs.find(id);
-    chef = chef.rows[0];
-
     return res.render("admin/chefs/edit", { chef });
   },
   create(req, res) {
     return res.render("admin/chefs/create");
   },
   async post(req, res) {
+    const image = req.files[0];
     try {
       const idImageChef = await Files.create({
-        ...req.files[0],
-        path: `${req.files[0].path.replace(/\\/g, "/")}`,
+        ...image,
+        path: `${image.path.replace(/\\/g, "/")}`,
       });
       
-      const data = {
-        ...req.body,
-        file_id: idImageChef,
-      };
-      const chefId = await Chefs.post(data);
+      const chefId = await Chefs.create({
+         name: req.body.name, 
+         file_id: idImageChef
+        });
 
       return res.redirect(`chefs/${chefId}`);
     } catch (error) {
@@ -149,14 +92,12 @@ module.exports = {
     const { id, file_id } = req.body;
 
     let recipes = await Chefs.myRecipes(id);
-    recipes = recipes.rows;
-
     const deleteRecipes = recipes.map(async (recipe) => {
       files = await Files.getAllFilesIdFromRecipe(recipe.id);
 
       const deleteFiles = await files.map((file) => Files.delete(file.file_id));
 
-      await Promise.all([deleteFiles]).then(() => {
+      await Promise.all(deleteFiles).then(() => {
         return Recipes.delete(recipe.id);
       });
     });

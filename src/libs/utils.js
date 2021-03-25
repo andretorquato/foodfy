@@ -9,5 +9,13 @@ module.exports = {
             iso: `${year}-${month}-${day}`,
             format: `${day}/${month}/${year}`
         }
+    },
+    checkToDelete(path){
+        const contain  = string => /(recipe|face)/gi.test(string);
+        if(contain(path)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
