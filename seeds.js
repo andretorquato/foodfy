@@ -5,7 +5,6 @@ const Users = require("./src/app/models/users");
 const Chefs = require("./src/app/models/chefs");
 const Recipes = require("./src/app/models/recipes");
 const Files = require("./src/app/models/files");
-const files = require("./src/app/models/files");
 
 let idsUsers = [];
 let idsChefs = [];

@@ -9,8 +9,6 @@
         <button type="button" id="button-delete" class="button delete check">Deletar</button>   
         <button type="submit" class="button check recipe">Salvar Receita</button> 
         </div>
-        
-        
     </div>
     <div class="form"> 
         {% include 'admin/recipes/fields.njk'%}
@@ -21,7 +19,7 @@
 </form>
         <form action="/admin/recipes?_method=DELETE" method="post" class="form-delete" style="display:none;">
         <input type="hidden" name="id" value="{{recipe.id}}">
-        {% for file in files %}
+        {% for file in recipe.files %}
         <input type="hidden" name="files" value="{{file.id}}">
         {% endfor %}
         <button type="submit" class="button delete check">Deletar</button>   

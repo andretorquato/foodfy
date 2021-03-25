@@ -1,75 +1,3 @@
-
-const configPages = {
-  locale: location.pathname,
-  links: document.querySelectorAll(".links"),
-  linksActive() {
-    configPages.links.forEach((link) => {
-      if (configPages.locale.includes(link.getAttribute("href")))
-        link.classList.add("active");
-    });
-  },
-  redirectRecipes() {
-    const contents_recipes = document.querySelectorAll(".content_recipe");
-
-    if (contents_recipes) {
-      const rows = document.querySelectorAll(".row");
-      for (let content_recipe of contents_recipes) {
-        content_recipe.addEventListener("click", function () {
-          let idPage = content_recipe.getAttribute("id");
-          window.location = `/recipes/${idPage}`;
-        });
-      }
-
-      for (let row of rows) {
-        const button = row.querySelector(".button");
-        button.addEventListener("click", function () {
-          if (button.innerHTML == "ESCONDER") {
-            row.querySelector(".display").classList.add("hide");
-            button.innerHTML = "MOSTRAR";
-          } else if (button.innerHTML == "MOSTRAR") {
-            row.querySelector(".display").classList.remove("hide");
-            button.innerHTML = "ESCONDER";
-          }
-        });
-      }
-    }
-  },
-  configForm() {
-    const formDelete = document.querySelector(".form-delete");
-    const deleteButton = document.querySelector("#button-delete");
-    const pageEdit = document.querySelector("#addIngredient");
-
-    if (formDelete && deleteButton) {
-      deleteButton.addEventListener("click", function () {
-        confirmDelete();
-      });
-    }
-
-    if (pageEdit) {
-      document
-        .querySelector("#addIngredient")
-        .addEventListener("click", addIngredient);
-
-      document.querySelector("#addPass").addEventListener("click", addPass);
-
-      document
-        .querySelector("#form-edit")
-        .addEventListener("submit", checkInputs);
-    }
-  },
-  paginateActive() {
-    const paginate = document.querySelector(".paginate");
-
-    if (paginate) {
-      createPaginate(paginate);
-    }
-  },
-};
-configPages.linksActive();
-configPages.redirectRecipes();
-configPages.configForm();
-configPages.paginateActive();
-
 const PhotosUpload = {
   input: "",
   preview: document.querySelector("#photos-preview"),
@@ -175,6 +103,76 @@ const PhotosUpload = {
     photoDiv.remove();
   },
 };
+const configPages = {
+  locale: location.pathname,
+  links: document.querySelectorAll(".links"),
+  linksActive() {
+    configPages.links.forEach((link) => {
+      if (configPages.locale.includes(link.getAttribute("href")))
+        link.classList.add("active");
+    });
+  },
+  redirectRecipes() {
+    const contents_recipes = document.querySelectorAll(".content_recipe");
+
+    if (contents_recipes) {
+      const rows = document.querySelectorAll(".row");
+      for (let content_recipe of contents_recipes) {
+        content_recipe.addEventListener("click", function () {
+          let idPage = content_recipe.getAttribute("id");
+          window.location = `/recipes/${idPage}`;
+        });
+      }
+
+      for (let row of rows) {
+        const button = row.querySelector(".button");
+        button.addEventListener("click", function () {
+          if (button.innerHTML == "ESCONDER") {
+            row.querySelector(".display").classList.add("hide");
+            button.innerHTML = "MOSTRAR";
+          } else if (button.innerHTML == "MOSTRAR") {
+            row.querySelector(".display").classList.remove("hide");
+            button.innerHTML = "ESCONDER";
+          }
+        });
+      }
+    }
+  },
+  configForm() {
+    const formDelete = document.querySelector(".form-delete");
+    const deleteButton = document.querySelector("#button-delete");
+    const pageEdit = document.querySelector("#addIngredient");
+
+    if (formDelete && deleteButton) {
+      deleteButton.addEventListener("click", function () {
+        confirmDelete();
+      });
+    }
+
+    if (pageEdit) {
+      document
+        .querySelector("#addIngredient")
+        .addEventListener("click", addIngredient);
+
+      document.querySelector("#addPass").addEventListener("click", addPass);
+
+      document
+        .querySelector("#form-edit")
+        .addEventListener("submit", checkInputs);
+    }
+  },
+  paginateActive() {
+    const paginate = document.querySelector(".paginate");
+
+    if (paginate) {
+      createPaginate(paginate);
+    }
+  },
+};
+configPages.linksActive();
+configPages.redirectRecipes();
+configPages.configForm();
+configPages.paginateActive();
 
 const ImageGallery = {
   highlight: document.querySelector(".gallery .highlight > img"),
@@ -226,8 +224,6 @@ const Validate = {
     };
   },
 };
-
-
 function addPass() {
   const steps = document.querySelector(".steps");
   const fieldPass = document.querySelectorAll(".pass");
@@ -254,6 +250,7 @@ function addIngredient() {
 }
 function confirmDelete() {
   const confirmation = confirm("Você realmente deseja deletar?");
+  const formDelete = document.querySelector(".form-delete");
   if (!confirmation) event.preventDefault();
   else formDelete.submit();
 }
