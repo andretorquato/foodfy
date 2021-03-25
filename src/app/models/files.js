@@ -1,6 +1,6 @@
 const db = require('../../config/db');
 const fs = require('fs');
-
+const { checkToDelete } = require('../../libs/utils');
 module.exports = {
     async create(data){
         const query = `
@@ -49,7 +49,8 @@ module.exports = {
     async delete(id){
         const result = await db.query(`SELECT * FROM files WHERE id = $1`, [id]);
         const file = result.rows[0];
-        fs.unlinkSync(file.path);
+        if(!checkToDelete(file.path))
+            fs.unlinkSync(file.path);
         
         const deleteFromTAbleRecipesFiles = await db.query(`DELETE FROM recipe_files WHERE file_id = $1;`,[id]);
         const deleteFromTableFiles = await db.query(`DELETE FROM files WHERE id = $1`, [id]);
@@ -60,7 +61,8 @@ module.exports = {
         const result = await db.query(`SELECT * FROM files WHERE id = $1`, [id]);
         const file = result.rows[0];
         await db.query(`DELETE FROM files WHERE id = $1`, [id]);
-        fs.unlinkSync(file.path);
+        if(!checkToDelete(file.path))
+            fs.unlinkSync(file.path);
 
         return;
     }

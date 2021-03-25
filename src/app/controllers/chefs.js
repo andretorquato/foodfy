@@ -97,7 +97,7 @@ module.exports = {
 
       const deleteFiles = await files.map((file) => Files.delete(file.file_id));
 
-      await Promise.all([deleteFiles]).then(() => {
+      await Promise.all(deleteFiles).then(() => {
         return Recipes.delete(recipe.id);
       });
     });

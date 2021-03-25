@@ -23,7 +23,6 @@ module.exports = {
       recipes = await recipes.map(LoadRecipes.format);
       
       recipes = await Promise.all(recipes);
-      console.log(recipes);
       if (recipes.length > 0) {
         total = Math.ceil(totalRecipes / limit);
       }
