@@ -47,7 +47,7 @@ async function createChefs() {
     });
   }
 
-  const chefsPromise = chefs.map((chef) => Chefs.post(chef));
+  const chefsPromise = chefs.map((chef) => Chefs.create(chef));
 
   idsChefs = await Promise.all(chefsPromise);
 }
@@ -73,35 +73,30 @@ async function createRecipes() {
     });
   }
 
-  const recipesPromise = recipes.map((recipe) => Recipes.post(recipe));
+  const recipesPromise = recipes.map(async (recipe) => {
+    let idRecipe= await Recipes.create(recipe);
+    await recipesFile(idRecipe);
+    return idRecipe;
+  });
 
   idsRecipes = await Promise.all(recipesPromise);
 }
-async function recipesFile() {
+async function recipesFile(id) {
   const recipesFile = [];
-  let recipeNumber = 0;
-  recipeId = 0;
-  if (idsRecipes[9].id > 10) {
-    recipeId = idsRecipes[9].id - 10;
-  }
-
-  while (recipeNumber < idsRecipes.length) {
-    recipeId++;
-    recipeNumber++;
+  let qtdFiles= 0;
+  while (qtdFiles < 6) {
+    qtdFiles++;
     let fileId = await createFiles(6, "recipe");
-    let recipe = 0;
-    while (recipe < fileId.length) {
       recipesFile.push({
         name: faker.name.firstName(),
-        recipe_id: recipeId,
+        recipe_id: id,
         file_id: fileId[Math.floor(Math.random() * 6)],
       });
-      recipe++;
-    }
   }
 
-  const RecipesPromise = recipesFile.map((recipe) =>
-    Files.createReferenceRecipeImages(recipe.recipe_id, recipe.file_id)
+  const RecipesPromise = recipesFile.map((recipe) =>{
+    console.log(recipe);
+    Files.createReferenceRecipeImages(recipe.recipe_id, recipe.file_id)}
   );
 }
 async function createFiles(quantity, type) {
@@ -119,7 +114,7 @@ async function createFiles(quantity, type) {
   }
   while (files.length < quantity) {
     files.push({
-      name: faker.image.image(),
+      name: faker.image.imageUrl(),
       path: `public/images/${generate.name}${Math.ceil(
         Math.random() * generate.quantity
       )}.${generate.imgType}`,
@@ -136,7 +131,6 @@ async function init() {
   await createUsers();
   await createChefs();
   await createRecipes();
-  await recipesFile();
 }
 
 init();

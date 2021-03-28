@@ -1,6 +1,5 @@
 const Chefs = require("../models/chefs");
 const Recipes = require("../models/recipes");
-const Files = require("../models/files");
 const LoadRecipes = require("../services/LoadRecipes");
 const LoadChefs = require("../services/LoadChefs");
 
@@ -36,7 +35,7 @@ module.exports = {
       let recipes = await Recipes.paginate(params);
       
       recipes = recipes.rows;
-      let totalRecipes = recipes[0].total;
+      let totalRecipes = recipes[0] ? recipes[0].total : 1;
       recipes = recipes.map(LoadRecipes.format);
       
       recipes = await Promise.all(recipes);
@@ -58,8 +57,10 @@ module.exports = {
     const { index } = req.params;
     try {
       let recipe = await Recipes.find(index);
+      
       recipe = await LoadRecipes.format(recipe);      
       let chefs = await Recipes.chefSelect();
+      
       return res.render("home/recipe", { item: recipe, chefs });
     } catch (error) {
       console.log(error);

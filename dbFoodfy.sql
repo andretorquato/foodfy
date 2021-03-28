@@ -86,3 +86,19 @@ CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON users
 FOR EACH ROW 
 EXECUTE PROCEDURE trigger_set_timestamp();
+
+-- if you need reset the database
+DROP DATABASE IF EXISTS foodfy
+
+DELETE FROM recipe_files;
+DELETE FROM recipes;
+DELETE FROM users;
+DELETE FROM chefs;
+DELETE FROM files;
+
+
+ALTER SEQUENCE users_id_seq RESTART WITH 1;
+ALTER SEQUENCE chefs_id_seq RESTART WITH 1;
+ALTER SEQUENCE recipes_id_seq RESTART WITH 1;
+ALTER SEQUENCE recipe_files_id_seq RESTART WITH 1;
+ALTER SEQUENCE files_id_seq RESTART WITH 1;
