@@ -113,6 +113,12 @@ $ npm install
 # Abra e edite o arquivo "db.js" dentro da pasta "src/config"
 # com o seu user e password do Postgres.
 
+# crie uma conta no site https://mailtrap.io
+# após cadastrar  SMTP Settings > integrations > Selecione Nodemailer
+# copie as credencias  que aparecer lá
+# adicione no projeto; src > libs > mailer.js
+
+
 # Popule o banco de dados usando o aquivo "seed.js":
 $ node seed.js
 
